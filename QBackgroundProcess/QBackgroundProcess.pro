@@ -13,10 +13,14 @@ TEMPLATE = lib
 
 DEFINES += QBACKGROUNDPROCESS_LIBRARY
 
-SOURCES += qbackgroundprocess.cpp
+SOURCES += qbackgroundprocess.cpp \
+    qbackgroundprocess_p.cpp \
+    qtexception.cpp
 
 HEADERS += qbackgroundprocess.h\
-        qbackgroundprocess_global.h
+        qbackgroundprocess_global.h \
+    qbackgroundprocess_p.h \
+    qtexception.h
 
 unix {
     target.path = /usr/lib
