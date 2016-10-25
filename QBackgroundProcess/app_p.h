@@ -5,6 +5,7 @@
 #include <QLockFile>
 #include <QScopedPointer>
 #include <QLocalServer>
+#include "masterconnecter.h"
 #include "terminal_p.h"
 
 namespace QBackgroundProcess {
@@ -22,11 +23,13 @@ public:
 	bool autoStart;
 
 	QString instanceId;
+
 	QScopedPointer<QLockFile> masterLock;
 	QLocalServer *masterServer;
 	QList<Terminal*> activeTerminals;
-
 	std::function<int(QStringList)> startupFunc;
+
+	MasterConnecter *master;
 
 	AppPrivate(App *q_ptr);
 

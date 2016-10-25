@@ -18,7 +18,8 @@ SOURCES += \
     app.cpp \
     app_p.cpp \
     terminal.cpp \
-    terminal_p.cpp
+    terminal_p.cpp \
+    masterconnecter.cpp
 
 HEADERS += QBackgroundProcess\
 	qbackgroundprocess_global.h \
@@ -26,7 +27,8 @@ HEADERS += QBackgroundProcess\
     app.h \
 	app_p.h \
     terminal.h \
-    terminal_p.h
+    terminal_p.h \
+    masterconnecter.h
 
 unix {
     target.path = /usr/lib

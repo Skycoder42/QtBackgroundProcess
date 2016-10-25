@@ -45,7 +45,8 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	instanceId(),
 	masterLock(nullptr),
 	masterServer(nullptr),
-	startupFunc()
+	startupFunc(),
+	master(nullptr)
 {}
 
 void AppPrivate::setInstanceId(const QString &id)
@@ -196,5 +197,5 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 
 void AppPrivate::beginMasterConnect(const QStringList &arguments, bool isStarter)
 {
-	Q_UNIMPLEMENTED();
+	this->master = new MasterConnecter(this->instanceId, arguments, isStarter, this);
 }
