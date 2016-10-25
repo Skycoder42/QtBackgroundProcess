@@ -14,14 +14,6 @@ App::App(int &argc, char **argv) :
 
 App::~App(){}
 
-bool App::isMaster() const
-{
-	if(d->masterLock)
-		return d->masterLock->isLocked();
-	else
-		return false;
-}
-
 QString App::instanceID() const
 {
 	return d->instanceId;
@@ -51,6 +43,11 @@ int App::exec()
 	res = QCoreApplication::exec();
 	d->running = false;
 	return res;
+}
+
+QList<Terminal *> App::connectedTerminals() const
+{
+	return d->activeTerminals;
 }
 
 void App::setInstanceID(QString instanceID, bool useAsSeed)

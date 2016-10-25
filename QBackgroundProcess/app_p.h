@@ -5,6 +5,7 @@
 #include <QLockFile>
 #include <QScopedPointer>
 #include <QLocalServer>
+#include "terminal_p.h"
 
 namespace QBackgroundProcess {
 
@@ -23,10 +24,11 @@ public:
 	QString instanceId;
 	QScopedPointer<QLockFile> masterLock;
 	QLocalServer *masterServer;
+	QList<Terminal*> activeTerminals;
 
 	std::function<int(QStringList)> startupFunc;
 
-	AppPrivate(QObject *parent);
+	AppPrivate(App *q_ptr);
 
 	void setInstanceId(const QString &id);
 
@@ -39,8 +41,12 @@ private slots:
 	int testMasterRunning(const QStringList &arguments);
 
 	void newTerminalConnected();
+	void terminalLoaded(TerminalPrivate *terminal, bool success);
 
 	void beginMasterConnect(const QStringList &arguments, bool isStarter);
+
+private:
+	App *q_ptr;
 };
 
 }

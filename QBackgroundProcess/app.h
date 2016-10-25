@@ -8,6 +8,8 @@
 
 namespace QBackgroundProcess {
 
+class Terminal;
+
 class QBACKGROUNDPROCESSSHARED_EXPORT NotAllowedInRunningStateException : public QtException {
 public:
 	NotAllowedInRunningStateException(const QString &reason);
@@ -17,6 +19,7 @@ class AppPrivate;
 class QBACKGROUNDPROCESSSHARED_EXPORT App : public QCoreApplication
 {
 	Q_OBJECT
+	friend class AppPrivate;
 
 	Q_PROPERTY(QString instanceID READ instanceID WRITE setInstanceID)
 	Q_PROPERTY(bool autoStartMaster READ autoStartMaster WRITE setAutoStartMaster)
@@ -26,16 +29,20 @@ public:
 	App(int &argc, char **argv);
 	~App();
 
-	Q_INVOKABLE bool isMaster() const;
 	QString instanceID() const;
 	bool autoStartMaster() const;
 
 	void setStartupFunction(const std::function<int(QStringList)> &function);
 	int exec();
 
+	QList<Terminal*> connectedTerminals() const;
+
 public slots:
 	void setInstanceID(QString instanceID, bool useAsSeed = true);
 	void setAutoStartMaster(bool autoStartMaster);
+
+signals:
+	void newTerminalConnected(QBackgroundProcess::Terminal *terminal, QPrivateSignal);
 
 private:
 	AppPrivate* d_ptr;

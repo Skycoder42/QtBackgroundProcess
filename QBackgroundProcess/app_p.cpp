@@ -37,8 +37,9 @@ QString AppPrivate::generateSingleId(const QString &seed)
 	return fullId;
 }
 
-AppPrivate::AppPrivate(QObject *parent) :
-	QObject(parent),
+AppPrivate::AppPrivate(App *q_ptr) :
+	QObject(q_ptr),
+	q_ptr(q_ptr),
 	running(false),
 	autoStart(false),
 	instanceId(),
@@ -86,7 +87,7 @@ int AppPrivate::makeMaster(const QStringList &arguments)
 			Qt::QueuedConnection);
 	if(!this->masterServer->listen(this->instanceId)) {
 		qCritical() << "Failed to create local server with error:"
-					<< this->masterServer->errorString();
+					<< qUtf8Printable(this->masterServer->errorString());
 		return EXIT_FAILURE;
 	}
 
@@ -94,7 +95,7 @@ int AppPrivate::makeMaster(const QStringList &arguments)
 	if(!this->masterLock->tryLock(5000)) {//wait at most 5 sec
 		this->masterServer->close();
 		qCritical() << "Unable to start master process. Failed with lock error:"
-					<< this->masterLock->error();
+					<< qUtf8Printable(this->masterLock->error());
 		return EXIT_FAILURE;
 	} else {
 		if(this->startupFunc) {
@@ -170,7 +171,27 @@ int AppPrivate::testMasterRunning(const QStringList &arguments)
 
 void AppPrivate::newTerminalConnected()
 {
+	while(this->masterServer->hasPendingConnections()) {
+		auto termp = new TerminalPrivate(this->masterServer->nextPendingConnection(), this);
+		connect(termp, &TerminalPrivate::statusLoadComplete,
+				this, &AppPrivate::terminalLoaded);
+	}
+}
 
+void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
+{
+	if(success) {
+		//DEBUG
+		qDebug() << terminal->status;
+
+		auto rTerm = new Terminal(terminal, this);
+		connect(rTerm, &Terminal::destroyed, this, [=](){
+			this->activeTerminals.removeOne(rTerm);
+		});
+		this->activeTerminals.append(rTerm);
+		emit this->q_ptr->newTerminalConnected(rTerm, App::QPrivateSignal());
+	} else
+		terminal->deleteLater();
 }
 
 void AppPrivate::beginMasterConnect(const QStringList &arguments, bool isStarter)
