@@ -58,6 +58,9 @@ void TerminalPrivate::readyRead()
 				this->status = doc.object();
 				this->isLoading = false;
 				emit statusLoadComplete(this, true);
+
+				//DEBUG
+				this->socket->write("Config sent to master succesfully\n");
 			}
 		}
 	}

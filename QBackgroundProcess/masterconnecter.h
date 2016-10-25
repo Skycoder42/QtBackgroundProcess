@@ -3,10 +3,12 @@
 
 #include <QObject>
 #include <QLocalSocket>
+#include <QRunnable>
+#include <QThreadPool>
 
 namespace QBackgroundProcess {
 
-class MasterConnecter : public QObject
+class MasterConnecter : public QObject, public QRunnable
 {
 	Q_OBJECT
 public:
@@ -14,6 +16,10 @@ public:
 							 const QStringList &arguments,
 							 bool isStarter,
 							 QObject *parent = nullptr);
+	~MasterConnecter();
+
+	// QRunnable interface
+	void run() override;
 
 private slots:
 	void connected();
@@ -21,11 +27,15 @@ private slots:
 	void error(QLocalSocket::LocalSocketError socketError);
 	void readyRead();
 
+	void doWrite(const QByteArray &data);
+
 private:
 	const QStringList arguments;
 	const bool isStarter;
 
 	QLocalSocket *socket;
+	QThreadPool *readThread;
+	bool isRunning;
 };
 
 }

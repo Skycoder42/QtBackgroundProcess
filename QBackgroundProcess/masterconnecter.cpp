@@ -3,6 +3,8 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QtEndian>
+#include <QFile>
+#include <iostream>
 #include "app.h"
 using namespace QBackgroundProcess;
 
@@ -10,8 +12,13 @@ MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &a
 	QObject(parent),
 	arguments(arguments),
 	isStarter(isStarter),
-	socket(new QLocalSocket(this))
+	socket(new QLocalSocket(this)),
+	readThread(new QThreadPool(this)),
+	isRunning(true)
 {
+	this->setAutoDelete(false);
+	this->readThread->setMaxThreadCount(1);
+
 	connect(this->socket, &QLocalSocket::connected,
 			this, &MasterConnecter::connected);
 	connect(this->socket, &QLocalSocket::disconnected,
@@ -22,6 +29,34 @@ MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &a
 			this, &MasterConnecter::readyRead);
 
 	this->socket->connectToServer(instanceId);
+}
+
+MasterConnecter::~MasterConnecter()
+{
+	this->isRunning = false;
+	this->readThread->waitForDone(5000);
+}
+
+void MasterConnecter::run()
+{
+	QFile inFile;
+	inFile.open(stdin, QIODevice::ReadOnly);
+	while(this->isRunning) {
+		if(inFile.error() != QFile::NoError)
+			break;
+
+		auto data = inFile.readLine();
+		if(data.isEmpty())
+			QThread::msleep(100);
+		else {
+			QMetaObject::invokeMethod(this, "doWrite", Qt::QueuedConnection,
+									  Q_ARG(QByteArray, data));
+		}
+	}
+
+	inFile.close();
+	if(this->isRunning)
+		qCritical() << "stdin was unexpectedly closed! The terminal will not be able to foreward input to the master anymore!";
 }
 
 void MasterConnecter::connected()
@@ -39,7 +74,8 @@ void MasterConnecter::connected()
 	this->socket->write(data);
 	this->socket->flush();
 
-	//TODO start background process to foreward input
+	//begin stdin reading
+	this->readThread->start(this);
 }
 
 void MasterConnecter::disconnected()
@@ -59,5 +95,12 @@ void MasterConnecter::error(QLocalSocket::LocalSocketError socketError)
 
 void MasterConnecter::readyRead()
 {
-	//TODO write stdout
+	auto data  = this->socket->readAll();
+	std::cout.write(data.constData(), data.size());
+}
+
+void MasterConnecter::doWrite(const QByteArray &data)
+{
+	this->socket->write(data);
+	this->socket->flush();
 }
