@@ -1,4 +1,4 @@
-#include "qbackgroundprocess_p.h"
+#include "app_p.h"
 #include <QRegularExpression>
 #include <QThread>
 #include <QDir>
@@ -9,10 +9,11 @@
 #include <unistd.h>
 #include <sys/types.h>
 #endif
+using namespace QBackgroundProcess;
 
-const QString QBackgroundProcessPrivate::masterArgument(QStringLiteral("__qbckgrndprcss$start#master~"));
+const QString AppPrivate::masterArgument(QStringLiteral("__qbckgrndprcss$start#master~"));
 
-QString QBackgroundProcessPrivate::generateSingleId(const QString &seed)
+QString AppPrivate::generateSingleId(const QString &seed)
 {
 	auto fullId = QCoreApplication::applicationName().toLower();
 	fullId.remove(QRegularExpression(QStringLiteral("[^a-zA-Z0-9_]")));
@@ -36,15 +37,17 @@ QString QBackgroundProcessPrivate::generateSingleId(const QString &seed)
 	return fullId;
 }
 
-QBackgroundProcessPrivate::QBackgroundProcessPrivate(QObject *parent) :
+AppPrivate::AppPrivate(QObject *parent) :
 	QObject(parent),
 	running(false),
+	autoStart(false),
 	instanceId(),
-	startupFunc(),
-	masterLock(nullptr)
+	masterLock(nullptr),
+	masterServer(nullptr),
+	startupFunc()
 {}
 
-void QBackgroundProcessPrivate::setInstanceId(const QString &id)
+void AppPrivate::setInstanceId(const QString &id)
 {
 	this->instanceId = id;
 	auto lockPath = QDir::temp().absoluteFilePath(id + QStringLiteral(".lock"));
@@ -52,7 +55,7 @@ void QBackgroundProcessPrivate::setInstanceId(const QString &id)
 	this->masterLock->setStaleLockTime(0);
 }
 
-int QBackgroundProcessPrivate::initControlFlow()
+int AppPrivate::initControlFlow()
 {
 	//start/make master
 	auto args = QCoreApplication::arguments();
@@ -67,30 +70,47 @@ int QBackgroundProcessPrivate::initControlFlow()
 		}//TODO else if user start
 	}
 
-	//neither start nor make master --> "normal" client
-	return this->testMasterRunning(args);
+	//neither start nor make master --> "normal" client or autostart
+	if(this->autoStart)
+		return this->startMaster(args, true);
+	else
+		return this->testMasterRunning(args);
 }
 
-int QBackgroundProcessPrivate::makeMaster(const QStringList &arguments)
+int AppPrivate::makeMaster(const QStringList &arguments)
 {
-	//TODO start server
+	//create local server --> do first to make shure clients only see a "valid" master lock if the master started successfully
+	this->masterServer = new QLocalServer(this);
+	connect(this->masterServer, &QLocalServer::newConnection,
+			this, &AppPrivate::newTerminalConnected,
+			Qt::QueuedConnection);
+	if(!this->masterServer->listen(this->instanceId)) {
+		qCritical() << "Failed to create local server with error:"
+					<< this->masterServer->errorString();
+		return EXIT_FAILURE;
+	}
 
 	//get the lock
 	if(!this->masterLock->tryLock(5000)) {//wait at most 5 sec
+		this->masterServer->close();
 		qCritical() << "Unable to start master process. Failed with lock error:"
 					<< this->masterLock->error();
 		return EXIT_FAILURE;
 	} else {
 		if(this->startupFunc) {
 			auto res = this->startupFunc(arguments);
-			if(res != EXIT_SUCCESS)
-				return res;//TODO close down
+			if(res != EXIT_SUCCESS) {
+				//cleanup
+				this->masterServer->close();
+				this->masterLock->unlock();
+				return res;
+			}
 		}
 		return EXIT_SUCCESS;
 	}
 }
 
-int QBackgroundProcessPrivate::startMaster(const QStringList &arguments)
+int AppPrivate::startMaster(const QStringList &arguments, bool hideWarning)
 {
 	//check if master already lives
 	if(this->masterLock->tryLock()) {//no master alive
@@ -113,7 +133,8 @@ int QBackgroundProcessPrivate::startMaster(const QStringList &arguments)
 			}
 		}
 
-		if(ok) {//master started --> start to connect
+		if(ok) {//master started --> start to connect (after safety delay)
+			QThread::msleep(250);
 			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
 									  Q_ARG(QStringList, arguments),
 									  Q_ARG(bool, true));
@@ -123,7 +144,8 @@ int QBackgroundProcessPrivate::startMaster(const QStringList &arguments)
 			return EXIT_FAILURE;
 		}
 	} else {//master is running --> ok
-		qWarning() << "Master is already running. Start arguments will be passed to it as is";
+		if(!hideWarning)
+			qWarning() << "Master is already running. Start arguments will be passed to it as is";
 		QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
 								  Q_ARG(QStringList, arguments),
 								  Q_ARG(bool, false));
@@ -131,7 +153,7 @@ int QBackgroundProcessPrivate::startMaster(const QStringList &arguments)
 	}
 }
 
-int QBackgroundProcessPrivate::testMasterRunning(const QStringList &arguments)
+int AppPrivate::testMasterRunning(const QStringList &arguments)
 {
 	if(this->masterLock->tryLock()) {
 		this->masterLock->unlock();
@@ -146,7 +168,12 @@ int QBackgroundProcessPrivate::testMasterRunning(const QStringList &arguments)
 	}
 }
 
-void QBackgroundProcessPrivate::beginMasterConnect(const QStringList &arguments, bool isStarter)
+void AppPrivate::newTerminalConnected()
+{
+
+}
+
+void AppPrivate::beginMasterConnect(const QStringList &arguments, bool isStarter)
 {
 	Q_UNIMPLEMENTED();
 }

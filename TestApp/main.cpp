@@ -1,9 +1,9 @@
-#include <qbackgroundprocess.h>
+#include <QBackgroundProcess>
 #include <QDebug>
 
 int main(int argc, char *argv[])
 {
-	QBackgroundProcess a(argc, argv);
+	QBackgroundProcess::App a(argc, argv);
 
 	a.setStartupFunction([&](const QStringList &args){
 		qDebug() << "I AM THE MASTER :D I was started with:"

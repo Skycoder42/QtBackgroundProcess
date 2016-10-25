@@ -5,6 +5,8 @@
 #include <exception>
 #include <QString>
 
+namespace QBackgroundProcess {
+
 //! A basic exception type for Qt Exceptions
 class QBACKGROUNDPROCESSSHARED_EXPORT QtException : public std::exception
 {
@@ -23,5 +25,7 @@ private:
 	const QByteArray error;
 	const int eCode;
 };
+
+}
 
 #endif // QTEXCEPTION_H

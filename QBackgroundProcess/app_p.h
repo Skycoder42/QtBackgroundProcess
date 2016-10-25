@@ -1,11 +1,14 @@
-#ifndef QBACKGROUNDPROCESSPRIVATE_H
-#define QBACKGROUNDPROCESSPRIVATE_H
+#ifndef QBACKGROUNDPROCESS_APPPRIVATE_H
+#define QBACKGROUNDPROCESS_APPPRIVATE_H
 
-#include "qbackgroundprocess.h"
+#include "app.h"
 #include <QLockFile>
 #include <QScopedPointer>
+#include <QLocalServer>
 
-class QBackgroundProcessPrivate : public QObject
+namespace QBackgroundProcess {
+
+class AppPrivate : public QObject
 {
 	Q_OBJECT
 
@@ -15,13 +18,15 @@ public:
 	static QString generateSingleId(const QString &seed = QString());
 
 	bool running;
+	bool autoStart;
 
 	QString instanceId;
+	QScopedPointer<QLockFile> masterLock;
+	QLocalServer *masterServer;
+
 	std::function<int(QStringList)> startupFunc;
 
-	QScopedPointer<QLockFile> masterLock;
-
-	QBackgroundProcessPrivate(QObject *parent);
+	AppPrivate(QObject *parent);
 
 	void setInstanceId(const QString &id);
 
@@ -30,10 +35,14 @@ public slots:
 
 private slots:
 	int makeMaster(const QStringList &arguments);
-	int startMaster(const QStringList &arguments);
+	int startMaster(const QStringList &arguments, bool hideWarning = false);
 	int testMasterRunning(const QStringList &arguments);
+
+	void newTerminalConnected();
 
 	void beginMasterConnect(const QStringList &arguments, bool isStarter);
 };
 
-#endif // QBACKGROUNDPROCESSPRIVATE_H
+}
+
+#endif // QBACKGROUNDPROCESS_APPPRIVATE_H

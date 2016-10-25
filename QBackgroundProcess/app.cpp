@@ -1,19 +1,20 @@
-#include "qbackgroundprocess.h"
-#include "qbackgroundprocess_p.h"
+#include "app.h"
+#include "app_p.h"
+using namespace QBackgroundProcess;
 
 #ifdef d
 #undef d
 #endif
 #define d this->d_ptr
 
-QBackgroundProcess::QBackgroundProcess(int &argc, char **argv) :
+App::App(int &argc, char **argv) :
 	QCoreApplication(argc, argv),
-	d_ptr(new QBackgroundProcessPrivate(this))
+	d_ptr(new AppPrivate(this))
 {}
 
-QBackgroundProcess::~QBackgroundProcess(){}
+App::~App(){}
 
-bool QBackgroundProcess::isMaster() const
+bool App::isMaster() const
 {
 	if(d->masterLock)
 		return d->masterLock->isLocked();
@@ -21,23 +22,28 @@ bool QBackgroundProcess::isMaster() const
 		return false;
 }
 
-QString QBackgroundProcess::instanceID() const
+QString App::instanceID() const
 {
 	return d->instanceId;
 }
 
-void QBackgroundProcess::setStartupFunction(const std::function<int(QStringList)> &function)
+bool App::autoStartMaster() const
+{
+	return d->autoStart;
+}
+
+void App::setStartupFunction(const std::function<int(QStringList)> &function)
 {
 	d->startupFunc = function;
 }
 
-int QBackgroundProcess::exec()
+int App::exec()
 {
 	d->running = true;
 
 	//generate the single id
 	if(d->instanceId.isNull())
-		d->setInstanceId(QBackgroundProcessPrivate::generateSingleId());
+		d->setInstanceId(AppPrivate::generateSingleId());
 
 	auto res = d->initControlFlow();
 	if(res != EXIT_SUCCESS)
@@ -47,15 +53,20 @@ int QBackgroundProcess::exec()
 	return res;
 }
 
-void QBackgroundProcess::setInstanceID(QString instanceID, bool useAsSeed)
+void App::setInstanceID(QString instanceID, bool useAsSeed)
 {
 	if(d->running)
 		throw NotAllowedInRunningStateException(QStringLiteral("Change the instance id"));
 
 	if(useAsSeed)
-		d->setInstanceId(QBackgroundProcessPrivate::generateSingleId(instanceID));
+		d->setInstanceId(AppPrivate::generateSingleId(instanceID));
 	else
 		d->setInstanceId(instanceID);
+}
+
+void App::setAutoStartMaster(bool autoStartMaster)
+{
+	d->autoStart = autoStartMaster;
 }
 
 
