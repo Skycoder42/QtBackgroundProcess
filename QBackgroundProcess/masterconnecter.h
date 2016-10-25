@@ -3,23 +3,20 @@
 
 #include <QObject>
 #include <QLocalSocket>
-#include <QRunnable>
-#include <QThreadPool>
+#include <QThread>
 
 namespace QBackgroundProcess {
 
-class MasterConnecter : public QObject, public QRunnable
+class MasterConnecter : public QObject
 {
 	Q_OBJECT
+
 public:
 	explicit MasterConnecter(const QString &instanceId,
 							 const QStringList &arguments,
 							 bool isStarter,
 							 QObject *parent = nullptr);
 	~MasterConnecter();
-
-	// QRunnable interface
-	void run() override;
 
 private slots:
 	void connected();
@@ -30,12 +27,19 @@ private slots:
 	void doWrite(const QByteArray &data);
 
 private:
+	class InThread : public QThread {
+	public:
+		InThread(MasterConnecter *parent);
+
+	protected:
+		void run() override;
+	};
+
 	const QStringList arguments;
 	const bool isStarter;
 
 	QLocalSocket *socket;
-	QThreadPool *readThread;
-	bool isRunning;
+	InThread *readThread;
 };
 
 }
