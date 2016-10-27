@@ -18,6 +18,9 @@ public:
 
 	QLocalSocket *socket;
 	QJsonObject status;
+	bool autoDelete;
+
+	void beginSoftDisconnect();
 
 signals:
 	void statusLoadComplete(TerminalPrivate *terminal, bool successful);
@@ -28,9 +31,11 @@ private slots:
 	void disconnected();
 	void error(QLocalSocket::LocalSocketError socketError);
 	void readyRead();
+	void writeReady();
 
 private:
 	bool isLoading;
+	bool disconnecting;
 };
 
 }

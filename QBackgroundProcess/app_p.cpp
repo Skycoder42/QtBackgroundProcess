@@ -182,9 +182,6 @@ void AppPrivate::newTerminalConnected()
 void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 {
 	if(success) {
-		//DEBUG
-		qDebug() << terminal->status;
-
 		auto rTerm = new Terminal(terminal, this);
 		connect(rTerm, &Terminal::destroyed, this, [=](){
 			this->activeTerminals.removeOne(rTerm);

@@ -1,1 +1,2 @@
 #include "app.h"
+#include "terminal.h"

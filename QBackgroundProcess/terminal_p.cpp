@@ -1,13 +1,16 @@
 #include "terminal_p.h"
 #include <QtEndian>
 #include <QJsonDocument>
+#include <QTimer>
 using namespace QBackgroundProcess;
 
 TerminalPrivate::TerminalPrivate(QLocalSocket *socket, QObject *parent) :
 	QObject(parent),
 	socket(socket),
 	status(),
-	isLoading(true)
+	autoDelete(false),
+	isLoading(true),
+	disconnecting(false)
 {
 	socket->setParent(this);
 
@@ -17,15 +20,30 @@ TerminalPrivate::TerminalPrivate(QLocalSocket *socket, QObject *parent) :
 			this, &TerminalPrivate::error);
 	connect(socket, &QLocalSocket::readyRead,
 			this, &TerminalPrivate::readyRead);
+	connect(socket, &QLocalSocket::bytesWritten,
+			this, &TerminalPrivate::writeReady);
+}
+
+void TerminalPrivate::beginSoftDisconnect()
+{
+	this->disconnecting = true;
+	if(this->socket->bytesToWrite() > 0) {
+		QTimer::singleShot(3000, this, [=](){
+			if(this->socket->state() == QLocalSocket::ConnectedState)
+				this->socket->disconnectFromServer();
+		});
+		this->socket->flush();
+	} else
+		this->socket->disconnectFromServer();
 }
 
 void TerminalPrivate::disconnected()
 {
-	if(this->isLoading)
+	if(this->isLoading) {
 		emit statusLoadComplete(this, false);
-	else
-		;//TODO foreward session end
-	this->socket->close();
+		this->socket->close();
+	} else if(this->autoDelete && this->parent())
+		this->parent()->deleteLater();
 }
 
 void TerminalPrivate::error(QLocalSocket::LocalSocketError socketError)
@@ -34,9 +52,8 @@ void TerminalPrivate::error(QLocalSocket::LocalSocketError socketError)
 		if(this->isLoading) {
 			qWarning() << "Terminal closed due to connection error while loading terminal status:"
 					   << qUtf8Printable(this->socket->errorString());
-			this->socket->disconnectFromServer();
-		} else
-			;//TODO foreward error and end ???
+		}
+		this->socket->disconnectFromServer();
 	}
 }
 
@@ -58,10 +75,17 @@ void TerminalPrivate::readyRead()
 				this->status = doc.object();
 				this->isLoading = false;
 				emit statusLoadComplete(this, true);
-
-				//DEBUG
-				this->socket->write("Config sent to master succesfully\n");
 			}
 		}
+	}
+}
+
+void TerminalPrivate::writeReady()
+{
+	if(this->disconnecting && this->socket->bytesToWrite() == 0) {
+		QTimer::singleShot(500, this, [=](){
+			if(this->socket->state() == QLocalSocket::ConnectedState)
+				this->socket->disconnectFromServer();
+		});
 	}
 }
