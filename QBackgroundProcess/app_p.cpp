@@ -42,6 +42,7 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	q_ptr(q_ptr),
 	running(false),
 	autoStart(false),
+	ignoreExtraStart(false),
 	instanceId(),
 	masterLock(nullptr),
 	masterServer(nullptr),
@@ -66,10 +67,8 @@ int AppPrivate::initControlFlow()
 		if(args[0] == masterArgument) {
 			args.removeFirst();
 			return this->makeMaster(args);
-		} else if(args[0] == QStringLiteral("start")) {
-			args.removeFirst();
+		} else if(args[0] == QStringLiteral("start"))
 			return this->startMaster(args);
-		}//TODO else if user start
 	}
 
 	//neither start nor make master --> "normal" client or autostart
@@ -119,7 +118,7 @@ int AppPrivate::startMaster(const QStringList &arguments, bool hideWarning)
 		auto ok = false;
 
 		auto args = arguments;
-		args.prepend(masterArgument);
+		args.replace(0, masterArgument);
 		if(QProcess::startDetached(QCoreApplication::applicationFilePath(), args)) {//start MASTER with additional start params
 			//wait for the master to start
 			this->masterLock->unlock();
@@ -146,12 +145,21 @@ int AppPrivate::startMaster(const QStringList &arguments, bool hideWarning)
 			return EXIT_FAILURE;
 		}
 	} else {//master is running --> ok
-		if(!hideWarning)
-			qWarning() << "Master is already running. Start arguments will be passed to it as is";
-		QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
-								  Q_ARG(QStringList, arguments),
-								  Q_ARG(bool, false));
-		return EXIT_SUCCESS;
+		if(this->ignoreExtraStart) {
+			qWarning() << "Start commands ignored because master is already running!\n"
+						  "The terminal will connect with an empty argument list!";
+			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
+									  Q_ARG(QStringList, QStringList()),
+									  Q_ARG(bool, false));
+			return EXIT_SUCCESS;
+		} else {
+			if(!hideWarning)
+				qWarning() << "Master is already running. Start arguments will be passed to it as is";
+			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
+									  Q_ARG(QStringList, arguments),
+									  Q_ARG(bool, false));
+			return EXIT_SUCCESS;
+		}
 	}
 }
 

@@ -23,6 +23,7 @@ class QBACKGROUNDPROCESSSHARED_EXPORT App : public QCoreApplication
 
 	Q_PROPERTY(QString instanceID READ instanceID WRITE setInstanceID)
 	Q_PROPERTY(bool autoStartMaster READ autoStartMaster WRITE setAutoStartMaster)
+	Q_PROPERTY(bool ignoreMultiStarts READ ignoreMultiStarts WRITE setIgnoreMultiStarts)
 	//TODO auto redirect qDebug
 
 public:
@@ -31,6 +32,7 @@ public:
 
 	QString instanceID() const;
 	bool autoStartMaster() const;
+	bool ignoreMultiStarts() const;
 
 	void setStartupFunction(const std::function<int(QStringList)> &function);
 	int exec();
@@ -40,6 +42,7 @@ public:
 public slots:
 	void setInstanceID(QString instanceID, bool useAsSeed = true);
 	void setAutoStartMaster(bool autoStartMaster);
+	void setIgnoreMultiStarts(bool ignoreMultiStarts);
 
 signals:
 	void newTerminalConnected(QBackgroundProcess::Terminal *terminal, QPrivateSignal);

@@ -24,6 +24,11 @@ bool App::autoStartMaster() const
 	return d->autoStart;
 }
 
+bool App::ignoreMultiStarts() const
+{
+	return d->ignoreExtraStart;
+}
+
 void App::setStartupFunction(const std::function<int(QStringList)> &function)
 {
 	d->startupFunc = function;
@@ -64,6 +69,11 @@ void App::setInstanceID(QString instanceID, bool useAsSeed)
 void App::setAutoStartMaster(bool autoStartMaster)
 {
 	d->autoStart = autoStartMaster;
+}
+
+void App::setIgnoreMultiStarts(bool ignoreMultiStarts)
+{
+	d->ignoreExtraStart = ignoreMultiStarts;
 }
 
 

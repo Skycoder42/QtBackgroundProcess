@@ -40,7 +40,6 @@ void MasterConnecter::connected()
 	QJsonObject status;
 	status[QStringLiteral("isStarter")] = this->isStarter;
 	status[QStringLiteral("arguments")] = QJsonArray::fromStringList(this->arguments);
-	//TODO add readonly/writeonly info, if useful?
 
 	auto data = QJsonDocument(status).toBinaryData();
 	QByteArray dataSize(sizeof(quint32), Qt::Uninitialized);
