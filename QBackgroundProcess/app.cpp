@@ -29,6 +29,11 @@ bool App::ignoreMultiStarts() const
 	return d->ignoreExtraStart;
 }
 
+bool App::autoKillTerminals() const
+{
+	return d->autoKill;
+}
+
 void App::setStartupFunction(const std::function<int(QStringList)> &function)
 {
 	d->startupFunc = function;
@@ -74,6 +79,17 @@ void App::setAutoStartMaster(bool autoStartMaster)
 void App::setIgnoreMultiStarts(bool ignoreMultiStarts)
 {
 	d->ignoreExtraStart = ignoreMultiStarts;
+}
+
+void App::setAutoKillTerminals(bool autoKillTerminals, bool killCurrent)
+{
+	d->autoKill = autoKillTerminals;
+	if(killCurrent) {
+		foreach(auto terminal, d->activeTerminals) {
+			terminal->setAutoDelete(true);
+			terminal->disconnectTerminal();
+		}
+	}
 }
 
 

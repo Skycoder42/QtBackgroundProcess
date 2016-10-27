@@ -43,6 +43,7 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	running(false),
 	autoStart(false),
 	ignoreExtraStart(false),
+	autoKill(false),
 	instanceId(),
 	masterLock(nullptr),
 	masterServer(nullptr),
@@ -193,9 +194,17 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 		auto rTerm = new Terminal(terminal, this);
 		connect(rTerm, &Terminal::destroyed, this, [=](){
 			this->activeTerminals.removeOne(rTerm);
+			emit this->q_ptr->connectedTerminalsChanged(this->activeTerminals, App::QPrivateSignal());
 		});
 		this->activeTerminals.append(rTerm);
-		emit this->q_ptr->newTerminalConnected(rTerm, App::QPrivateSignal());
+		emit this->q_ptr->connectedTerminalsChanged(this->activeTerminals, App::QPrivateSignal());
+
+		emit this->q_ptr->commandReceived(rTerm->arguments(), App::QPrivateSignal());
+		if(this->autoKill) {
+			rTerm->setAutoDelete(true);
+			rTerm->disconnectTerminal();
+		} else
+			emit this->q_ptr->newTerminalConnected(rTerm, App::QPrivateSignal());
 	} else
 		terminal->deleteLater();
 }
