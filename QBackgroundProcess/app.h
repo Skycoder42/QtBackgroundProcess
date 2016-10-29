@@ -24,6 +24,7 @@ class QBACKGROUNDPROCESSSHARED_EXPORT App : public QCoreApplication
 	Q_PROPERTY(QString instanceID READ instanceID WRITE setInstanceID)
 	Q_PROPERTY(bool autoStartMaster READ autoStartMaster WRITE setAutoStartMaster)
 	Q_PROPERTY(bool ignoreMultiStarts READ ignoreMultiStarts WRITE setIgnoreMultiStarts)
+	//TODO autoDeleteTerms
 	Q_PROPERTY(bool autoKillTerminals READ autoKillTerminals WRITE setAutoKillTerminals)
 	Q_PROPERTY(QList<Terminal*> connectedTerminals READ connectedTerminals NOTIFY connectedTerminalsChanged)
 	//TODO auto redirect qDebug

@@ -14,6 +14,7 @@ class QBACKGROUNDPROCESSSHARED_EXPORT GlobalTerminal : public QIODevice
 
 public:
 	explicit GlobalTerminal(App *app, QObject *parent = nullptr);
+	~GlobalTerminal();
 
 	bool isSequential() const override;
 	bool canReadLine() const override;

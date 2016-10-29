@@ -1,7 +1,6 @@
 #include <QBackgroundProcess>
 #include <QDebug>
 #include <QTimer>
-#include <QPointer>
 
 #define TERMINAL_MODE 0
 #define MASTER_MODE 1
@@ -41,12 +40,9 @@ int main(int argc, char *argv[])
 				terminal->write("42\n");
 
 				terminal->setAutoDelete(true);
-				QPointer<QBackgroundProcess::Terminal> pTerm(terminal);
 				QTimer::singleShot(5000, [=](){
-					if(pTerm) {
-						pTerm->write("Dude, do you even terminal?\n");
-						pTerm->disconnectTerminal();
-					}
+					terminal->write("Dude, do you even terminal?\n");
+					terminal->disconnectTerminal();
 				});
 			});
 		} else {
@@ -56,11 +52,6 @@ int main(int argc, char *argv[])
 			});
 
 			auto gTerm = new QBackgroundProcess::GlobalTerminal(&a, &a);
-			auto tmr = new QTimer(&a);
-			QObject::connect(tmr, &QTimer::timeout, [=](){
-				gTerm->write("Mikeichalt");
-			});
-			tmr->start(1000);
 		}
 
 		return EXIT_SUCCESS;

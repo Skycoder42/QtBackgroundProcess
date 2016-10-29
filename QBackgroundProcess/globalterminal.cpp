@@ -9,6 +9,11 @@ GlobalTerminal::GlobalTerminal(App *app, QObject *parent) :
 	this->open(QIODevice::WriteOnly | QIODevice::Unbuffered);
 }
 
+GlobalTerminal::~GlobalTerminal()
+{
+	this->QIODevice::close();
+}
+
 bool GlobalTerminal::isSequential() const
 {
 	return true;
