@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
 {
 	QBackgroundProcess::App a(argc, argv);
 
+	//instead of settings a startup func you can simply override QBackgroundProcess::App::startupApp
 	a.setStartupFunction([&](const QStringList &args){
 		qDebug() << "I AM THE MASTER :D I was started with:"
 				 << args;
@@ -66,6 +67,7 @@ int main(int argc, char *argv[])
 
 		return EXIT_SUCCESS;
 	});
+	//instead of settings a shutdown func you can simply override QBackgroundProcess::App:shutdownApp
 	a.setShutdownFunction([](QBackgroundProcess::Terminal *terminal) {
 		terminal->write(QString("Shutdown invoked with: (" + terminal->arguments().join(", ") + ")\n").toUtf8());
 		if(terminal->arguments().contains("baum")) {
