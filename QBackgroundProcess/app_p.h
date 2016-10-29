@@ -7,6 +7,7 @@
 #include <QLocalServer>
 #include "masterconnecter.h"
 #include "terminal_p.h"
+#include "globalterminal.h"
 
 namespace QBackgroundProcess {
 
@@ -18,6 +19,7 @@ public:
 	static const QString masterArgument;
 
 	static QString generateSingleId(const QString &seed = QString());
+	static AppPrivate *p_ptr(App *app);
 
 	bool running;
 	bool autoStart;

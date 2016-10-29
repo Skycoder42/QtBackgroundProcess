@@ -2,8 +2,6 @@
 #include "app_p.h"
 using namespace QBackgroundProcess;
 
-QPointer<GlobalTerminal> GlobalTerminal::writeOwner(nullptr);
-
 GlobalTerminal::GlobalTerminal(App *app, QObject *parent) :
 	QIODevice(parent),
 	app(app)
@@ -19,38 +17,6 @@ bool GlobalTerminal::isSequential() const
 bool GlobalTerminal::canReadLine() const
 {
 	return false;
-}
-
-bool GlobalTerminal::isWriteMode() const
-{
-	return this->writeMode;
-}
-
-bool GlobalTerminal::activateWriteMode(bool activateWriteMode)
-{
-	if(activateWriteMode) {
-		if(this->writeMode)
-			return true;
-		else {
-			if(writeOwner.isNull()) {
-				writeOwner = this;//TODO activate
-				emit writeModeChanged(activateWriteMode);
-				return true;
-			} else
-				return false;
-		}
-	} else {
-		if(!this->writeMode)
-			return true;
-		else {
-			if(writeOwner == this) {
-				writeOwner = nullptr;//TODO deactivate
-				emit writeModeChanged(activateWriteMode);
-				return true;
-			} else
-				return false;
-		}
-	}
 }
 
 qint64 GlobalTerminal::readData(char *data, qint64 maxlen)

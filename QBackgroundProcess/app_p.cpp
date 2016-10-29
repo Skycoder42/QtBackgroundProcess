@@ -37,6 +37,11 @@ QString AppPrivate::generateSingleId(const QString &seed)
 	return fullId;
 }
 
+AppPrivate *AppPrivate::p_ptr(App *app)
+{
+	return app->d_ptr;
+}
+
 AppPrivate::AppPrivate(App *q_ptr) :
 	QObject(q_ptr),
 	q_ptr(q_ptr),
