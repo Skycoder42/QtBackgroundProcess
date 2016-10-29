@@ -5,7 +5,7 @@
 
 #define TERMINAL_MODE 0
 #define MASTER_MODE 1
-#define MODE MASTER_MODE
+#define MODE TERMINAL_MODE
 
 int main(int argc, char *argv[])
 {
@@ -65,6 +65,16 @@ int main(int argc, char *argv[])
 		}
 
 		return EXIT_SUCCESS;
+	});
+	a.setShutdownFunction([](QBackgroundProcess::Terminal *terminal) {
+		terminal->write(QString("Shutdown invoked with: (" + terminal->arguments().join(", ") + ")\n").toUtf8());
+		if(terminal->arguments().contains("baum")) {
+			terminal->write("Shutdown accepted!\n");
+			return true;
+		} else {
+			terminal->write("Shutdown denied!\n");
+			return false;
+		}
 	});
 
 	return a.exec();

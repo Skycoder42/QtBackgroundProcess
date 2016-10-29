@@ -24,6 +24,13 @@ bool GlobalTerminal::canReadLine() const
 	return false;
 }
 
+void GlobalTerminal::flush()
+{
+	auto terms = this->app->connectedTerminals();
+	foreach(auto term, terms)
+		term->flush();
+}
+
 qint64 GlobalTerminal::readData(char *data, qint64 maxlen)
 {
 	Q_UNUSED(data);

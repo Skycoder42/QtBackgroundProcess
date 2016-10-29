@@ -82,6 +82,11 @@ void Terminal::setAutoDelete(bool autoDelete)
 	d->autoDelete = autoDelete;
 }
 
+void Terminal::flush()
+{
+	d->socket->flush();
+}
+
 qint64 Terminal::readData(char *data, qint64 maxlen)
 {
 	return d->socket->read(data, maxlen);

@@ -54,6 +54,7 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	masterLock(nullptr),
 	masterServer(nullptr),
 	startupFunc(),
+	shutdownFunc(),
 	master(nullptr)
 {}
 
@@ -105,16 +106,13 @@ int AppPrivate::makeMaster(const QStringList &arguments)
 					<< qUtf8Printable(this->masterLock->error());
 		return EXIT_FAILURE;
 	} else {
-		if(this->startupFunc) {
-			auto res = this->startupFunc(arguments);
-			if(res != EXIT_SUCCESS) {
-				//cleanup
-				this->masterServer->close();
-				this->masterLock->unlock();
-				return res;
-			}
+		auto res = this->q_ptr->startupApp(arguments);
+		if(res != EXIT_SUCCESS) {
+			//cleanup
+			this->masterServer->close();
+			this->masterLock->unlock();
 		}
-		return EXIT_SUCCESS;
+		return res;
 	}
 }
 
@@ -209,7 +207,7 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 
 		//test stop command
 		if(!rTerm->arguments().isEmpty() && rTerm->arguments().first() == QStringLiteral("stop"))
-			QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection);
+			this->stopMaster(rTerm);
 
 		if(this->autoKill) {
 			rTerm->setAutoDelete(true);
@@ -218,6 +216,22 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 			emit this->q_ptr->newTerminalConnected(rTerm, App::QPrivateSignal());
 	} else
 		terminal->deleteLater();
+}
+
+void AppPrivate::stopMaster(Terminal *term)
+{
+	int eCode = EXIT_SUCCESS;
+	if(this->q_ptr->shutdownApp(term, eCode)) {
+		foreach(auto termin, this->activeTerminals)
+			termin->flush();
+		QMetaObject::invokeMethod(this, "doExit", Qt::QueuedConnection,
+								  Q_ARG(int, eCode));
+	}
+}
+
+void AppPrivate::doExit(int code)
+{
+	QCoreApplication::exit(code);
 }
 
 void AppPrivate::beginMasterConnect(const QStringList &arguments, bool isStarter)

@@ -33,6 +33,7 @@ public:
 	QLocalServer *masterServer;
 	QList<Terminal*> activeTerminals;
 	std::function<int(QStringList)> startupFunc;
+	std::function<bool(Terminal*, int&)> shutdownFunc;
 
 	MasterConnecter *master;
 
@@ -50,6 +51,8 @@ private slots:
 
 	void newTerminalConnected();
 	void terminalLoaded(TerminalPrivate *terminal, bool success);
+	void stopMaster(Terminal *term);
+	void doExit(int code);
 
 	void beginMasterConnect(const QStringList &arguments, bool isStarter);
 

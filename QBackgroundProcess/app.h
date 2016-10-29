@@ -40,6 +40,10 @@ public:
 	bool autoKillTerminals() const;
 
 	void setStartupFunction(const std::function<int(QStringList)> &function);
+	void setShutdownFunction(const std::function<bool(QStringList)> &function);
+	void setShutdownFunction(const std::function<bool(QStringList, int&)> &function);
+	void setShutdownFunction(const std::function<bool(Terminal*)> &function);
+	void setShutdownFunction(const std::function<bool(Terminal*, int&)> &function);
 	int exec();
 
 	QList<Terminal*> connectedTerminals() const;
@@ -56,6 +60,10 @@ signals:
 	void commandReceived(const QStringList &arguments, QPrivateSignal);
 
 	void connectedTerminalsChanged(QList<Terminal*> connectedTerminals, QPrivateSignal);
+
+protected:
+	virtual int startupApp(const QStringList &arguments);
+	virtual bool shutdownApp(Terminal *terminal, int &exitCode);
 
 private:
 	AppPrivate* d_ptr;

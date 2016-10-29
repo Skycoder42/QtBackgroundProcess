@@ -44,6 +44,32 @@ void App::setStartupFunction(const std::function<int(QStringList)> &function)
 	d->startupFunc = function;
 }
 
+void App::setShutdownFunction(const std::function<bool(QStringList)> &function)
+{
+	d->shutdownFunc = [function](Terminal *t, int&){
+		return function(t->arguments());
+	};
+}
+
+void App::setShutdownFunction(const std::function<bool(QStringList, int&)> &function)
+{
+	d->shutdownFunc = [function](Terminal *t, int &r){
+		return function(t->arguments(), r);
+	};
+}
+
+void App::setShutdownFunction(const std::function<bool(Terminal*)> &function)
+{
+	d->shutdownFunc = [function](Terminal *t, int&){
+		return function(t);
+	};
+}
+
+void App::setShutdownFunction(const std::function<bool(Terminal*, int&)> &function)
+{
+	d->shutdownFunc = function;
+}
+
 int App::exec()
 {
 	d->running = true;
@@ -104,6 +130,22 @@ void App::setAutoKillTerminals(bool autoKillTerminals, bool killCurrent)
 			terminal->disconnectTerminal();
 		}
 	}
+}
+
+int App::startupApp(const QStringList &arguments)
+{
+	if(d->startupFunc)
+		return d->startupFunc(arguments);
+	else
+		return EXIT_SUCCESS;
+}
+
+bool App::shutdownApp(Terminal *terminal, int &exitCode)
+{
+	if(d->shutdownFunc)
+		return d->shutdownFunc(terminal, exitCode);
+	else
+		return true;
 }
 
 

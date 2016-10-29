@@ -33,6 +33,8 @@ public slots:
 	void disconnectTerminal();
 	void setAutoDelete(bool autoDelete);
 
+	void flush();
+
 signals:
 	void terminalDisconnected();
 	void terminalError(int errorCode);
