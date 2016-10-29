@@ -24,7 +24,7 @@ class QBACKGROUNDPROCESSSHARED_EXPORT App : public QCoreApplication
 	Q_PROPERTY(QString instanceID READ instanceID WRITE setInstanceID)
 	Q_PROPERTY(bool autoStartMaster READ autoStartMaster WRITE setAutoStartMaster)
 	Q_PROPERTY(bool ignoreMultiStarts READ ignoreMultiStarts WRITE setIgnoreMultiStarts)
-	//TODO autoDeleteTerms
+	Q_PROPERTY(bool autoDeleteTerminals READ autoDeleteTerminals WRITE setAutoDeleteTerminals)
 	Q_PROPERTY(bool autoKillTerminals READ autoKillTerminals WRITE setAutoKillTerminals)
 	Q_PROPERTY(QList<Terminal*> connectedTerminals READ connectedTerminals NOTIFY connectedTerminalsChanged)
 	//TODO auto redirect qDebug
@@ -36,6 +36,7 @@ public:
 	QString instanceID() const;
 	bool autoStartMaster() const;
 	bool ignoreMultiStarts() const;
+	bool autoDeleteTerminals() const;
 	bool autoKillTerminals() const;
 
 	void setStartupFunction(const std::function<int(QStringList)> &function);
@@ -43,11 +44,11 @@ public:
 
 	QList<Terminal*> connectedTerminals() const;
 
-
 public slots:
 	void setInstanceID(QString instanceID, bool useAsSeed = true);
 	void setAutoStartMaster(bool autoStartMaster);
 	void setIgnoreMultiStarts(bool ignoreMultiStarts);
+	void setAutoDeleteTerminals(bool autoDeleteTerminals, bool changeCurrent = false);
 	void setAutoKillTerminals(bool autoKillTerminals, bool killCurrent = false);
 
 signals:
@@ -58,6 +59,7 @@ signals:
 
 private:
 	AppPrivate* d_ptr;
+	bool m_autoDeleteTerminals;
 };
 
 }

@@ -48,6 +48,7 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	running(false),
 	autoStart(false),
 	ignoreExtraStart(false),
+	autoDelete(false),
 	autoKill(false),
 	instanceId(),
 	masterLock(nullptr),
@@ -195,16 +196,21 @@ void AppPrivate::newTerminalConnected()
 
 void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 {
-	if(success) {
+	if(success) {		
 		auto rTerm = new Terminal(terminal, this);
+		rTerm->setAutoDelete(this->autoDelete);
 		connect(rTerm, &Terminal::destroyed, this, [=](){
 			this->activeTerminals.removeOne(rTerm);
 			emit this->q_ptr->connectedTerminalsChanged(this->activeTerminals, App::QPrivateSignal());
 		});
 		this->activeTerminals.append(rTerm);
 		emit this->q_ptr->connectedTerminalsChanged(this->activeTerminals, App::QPrivateSignal());
-
 		emit this->q_ptr->commandReceived(rTerm->arguments(), App::QPrivateSignal());
+
+		//test stop command
+		if(!rTerm->arguments().isEmpty() && rTerm->arguments().first() == QStringLiteral("stop"))
+			QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection);
+
 		if(this->autoKill) {
 			rTerm->setAutoDelete(true);
 			rTerm->disconnectTerminal();

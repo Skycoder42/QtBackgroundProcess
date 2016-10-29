@@ -24,6 +24,7 @@ public:
 	bool running;
 	bool autoStart;
 	bool ignoreExtraStart;
+	bool autoDelete;
 	bool autoKill;
 
 	QString instanceId;

@@ -29,6 +29,11 @@ bool App::ignoreMultiStarts() const
 	return d->ignoreExtraStart;
 }
 
+bool App::autoDeleteTerminals() const
+{
+	return d->autoDelete;
+}
+
 bool App::autoKillTerminals() const
 {
 	return d->autoKill;
@@ -79,6 +84,15 @@ void App::setAutoStartMaster(bool autoStartMaster)
 void App::setIgnoreMultiStarts(bool ignoreMultiStarts)
 {
 	d->ignoreExtraStart = ignoreMultiStarts;
+}
+
+void App::setAutoDeleteTerminals(bool autoDeleteTerminals, bool changeCurrent)
+{
+	d->autoDelete = autoDeleteTerminals;
+	if(changeCurrent) {
+		foreach(auto terminal, d->activeTerminals)
+			terminal->setAutoDelete(autoDeleteTerminals);
+	}
 }
 
 void App::setAutoKillTerminals(bool autoKillTerminals, bool killCurrent)

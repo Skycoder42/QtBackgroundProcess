@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
 			});
 		} else {
 			//a.setAutoKillTerminals(true, true);
+			a.setAutoDeleteTerminals(true, true);
 			QObject::connect(&a, &QBackgroundProcess::App::commandReceived, [](QStringList a){
 				qDebug() << "Command received:" << a;
 			});
