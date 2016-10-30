@@ -61,7 +61,7 @@ void TerminalPrivate::error(QLocalSocket::LocalSocketError socketError)
 void TerminalPrivate::readyRead()
 {
 	if(this->isLoading) {
-		if(this->socket->bytesAvailable() < sizeof(quint32))
+		if(this->socket->bytesAvailable() < (qint64)sizeof(quint32))
 			return;
 		auto size = qFromBigEndian<quint32>(this->socket->peek(sizeof(quint32)));
 		if(this->socket->bytesAvailable() >= (qint64)(size + sizeof(quint32))) {

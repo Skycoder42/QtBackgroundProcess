@@ -79,7 +79,6 @@ void AppPrivate::formatedMasterDebugMessage(QtMsgType type, const QMessageLogCon
 
 AppPrivate::AppPrivate(App *q_ptr) :
 	QObject(q_ptr),
-	q_ptr(q_ptr),
 	running(false),
 	autoStart(false),
 	ignoreExtraStart(false),
@@ -90,7 +89,8 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	masterServer(nullptr),
 	startupFunc(),
 	shutdownFunc(),
-	master(nullptr)
+	master(nullptr),
+	q_ptr(q_ptr)
 {}
 
 void AppPrivate::setInstanceId(const QString &id)
