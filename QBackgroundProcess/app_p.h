@@ -6,6 +6,7 @@
 #include <QScopedPointer>
 #include <QLocalServer>
 #include <QPointer>
+#include <QLoggingCategory>
 #include "masterconnecter.h"
 #include "terminal_p.h"
 #include "globalterminal.h"
