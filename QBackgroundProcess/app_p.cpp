@@ -11,6 +11,9 @@
 #endif
 using namespace QBackgroundProcess;
 
+//logging category
+Q_LOGGING_CATEGORY(QBackgroundProcess::loggingCategory, "QBackgroundProcess")
+
 const QString AppPrivate::masterArgument(QStringLiteral("__qbckgrndprcss$start#master~"));
 
 QString AppPrivate::generateSingleId(const QString &seed)
@@ -94,7 +97,7 @@ int AppPrivate::makeMaster(const QStringList &arguments)
 			this, &AppPrivate::newTerminalConnected,
 			Qt::QueuedConnection);
 	if(!this->masterServer->listen(this->instanceId)) {
-		qCritical() << "Failed to create local server with error:"
+		qCCritical(loggingCategory) << "Failed to create local server with error:"
 					<< qUtf8Printable(this->masterServer->errorString());
 		return EXIT_FAILURE;
 	}
@@ -102,7 +105,7 @@ int AppPrivate::makeMaster(const QStringList &arguments)
 	//get the lock
 	if(!this->masterLock->tryLock(5000)) {//wait at most 5 sec
 		this->masterServer->close();
-		qCritical() << "Unable to start master process. Failed with lock error:"
+		qCCritical(loggingCategory) << "Unable to start master process. Failed with lock error:"
 					<< qUtf8Printable(this->masterLock->error());
 		return EXIT_FAILURE;
 	} else {
@@ -146,12 +149,12 @@ int AppPrivate::startMaster(const QStringList &arguments, bool hideWarning)
 									  Q_ARG(bool, true));
 			return EXIT_SUCCESS;
 		} else {
-			qCritical() << "Failed to start master process! No master lock was detected.";
+			qCCritical(loggingCategory) << "Failed to start master process! No master lock was detected.";
 			return EXIT_FAILURE;
 		}
 	} else {//master is running --> ok
 		if(this->ignoreExtraStart) {
-			qWarning() << "Start commands ignored because master is already running!\n"
+			qCWarning(loggingCategory) << "Start commands ignored because master is already running!\n"
 						  "The terminal will connect with an empty argument list!";
 			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
 									  Q_ARG(QStringList, QStringList()),
@@ -159,7 +162,7 @@ int AppPrivate::startMaster(const QStringList &arguments, bool hideWarning)
 			return EXIT_SUCCESS;
 		} else {
 			if(!hideWarning)
-				qWarning() << "Master is already running. Start arguments will be passed to it as is";
+				qCWarning(loggingCategory) << "Master is already running. Start arguments will be passed to it as is";
 			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
 									  Q_ARG(QStringList, arguments),
 									  Q_ARG(bool, false));
@@ -172,7 +175,7 @@ int AppPrivate::testMasterRunning(const QStringList &arguments)
 {
 	if(this->masterLock->tryLock()) {
 		this->masterLock->unlock();
-		qCritical() << "Master process is not running! Please launch it by using:"
+		qCCritical(loggingCategory) << "Master process is not running! Please launch it by using:"
 					<< QCoreApplication::applicationFilePath() + QStringLiteral(" start");
 		return EXIT_FAILURE;
 	} else {

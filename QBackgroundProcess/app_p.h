@@ -60,6 +60,8 @@ private:
 	App *q_ptr;
 };
 
+Q_DECLARE_LOGGING_CATEGORY(loggingCategory)
+
 }
 
 #endif // QBACKGROUNDPROCESS_APPPRIVATE_H

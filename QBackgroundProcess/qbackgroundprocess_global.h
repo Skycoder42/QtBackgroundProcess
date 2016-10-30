@@ -2,6 +2,7 @@
 #define QBACKGROUNDPROCESS_GLOBAL_H
 
 #include <QtCore/qglobal.h>
+#include <QLoggingCategory>
 
 #if defined(QBACKGROUNDPROCESS_LIBRARY)
 #  define QBACKGROUNDPROCESSSHARED_EXPORT Q_DECL_EXPORT

@@ -1,11 +1,11 @@
 #include "masterconnecter.h"
+#include "app_p.h"
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QtEndian>
 #include <QFile>
 #include <iostream>
-#include "app.h"
 using namespace QBackgroundProcess;
 
 MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &arguments, bool isStarter, QObject *parent) :
@@ -61,7 +61,7 @@ void MasterConnecter::disconnected()
 void MasterConnecter::error(QLocalSocket::LocalSocketError socketError)
 {
 	if(socketError != QLocalSocket::PeerClosedError) {
-		qCritical() << "Connection to Master process failed with error:"
+		qCCritical(loggingCategory) << "Connection to Master process failed with error:"
 					<< qUtf8Printable(this->socket->errorString());
 		this->socket->disconnectFromServer();
 	}
@@ -106,5 +106,5 @@ void MasterConnecter::InThread::run()
 
 	inFile.close();
 	if(!this->isInterruptionRequested())
-		qCritical() << "stdin was unexpectedly closed! The terminal will not be able to foreward input to the master anymore!";
+		qCCritical(loggingCategory) << "stdin was unexpectedly closed! The terminal will not be able to foreward input to the master anymore!";
 }

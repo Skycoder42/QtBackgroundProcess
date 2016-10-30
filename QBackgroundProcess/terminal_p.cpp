@@ -1,4 +1,5 @@
 #include "terminal_p.h"
+#include "app_p.h"
 #include <QtEndian>
 #include <QJsonDocument>
 #include <QTimer>
@@ -50,7 +51,7 @@ void TerminalPrivate::error(QLocalSocket::LocalSocketError socketError)
 {
 	if(socketError != QLocalSocket::PeerClosedError) {
 		if(this->isLoading) {
-			qWarning() << "Terminal closed due to connection error while loading terminal status:"
+			qCWarning(loggingCategory) << "Terminal closed due to connection error while loading terminal status:"
 					   << qUtf8Printable(this->socket->errorString());
 		}
 		this->socket->disconnectFromServer();
@@ -68,7 +69,7 @@ void TerminalPrivate::readyRead()
 			auto doc = QJsonDocument::fromBinaryData(this->socket->read(size));
 
 			if(doc.isNull()) {
-				qWarning() << "Invalid Terminal status received. Data is corrupted. Terminal will be disconnected";
+				qCWarning(loggingCategory) << "Invalid Terminal status received. Data is corrupted. Terminal will be disconnected";
 				this->socket->disconnectFromServer();
 				return;
 			} else {
