@@ -64,6 +64,7 @@ void MasterConnecter::error(QLocalSocket::LocalSocketError socketError)
 		qCCritical(loggingCategory) << "Connection to Master process failed with error:"
 					<< qUtf8Printable(this->socket->errorString());
 		this->socket->disconnectFromServer();
+		qApp->exit(EXIT_FAILURE);
 	}
 }
 

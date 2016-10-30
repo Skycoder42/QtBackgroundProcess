@@ -16,6 +16,7 @@ using namespace QBackgroundProcess;
 Q_LOGGING_CATEGORY(QBackgroundProcess::loggingCategory, "QBackgroundProcess")
 
 const QString AppPrivate::masterArgument(QStringLiteral("__qbckgrndprcss$start#master~"));
+QPointer<GlobalTerminal> AppPrivate::debugTerm(nullptr);
 
 QString AppPrivate::generateSingleId(const QString &seed)
 {
@@ -48,46 +49,32 @@ AppPrivate *AppPrivate::p_ptr(App *app)
 
 void AppPrivate::termDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-	Q_UNUSED(type);
-	if(context.category || context.category == "default")
-		std::cerr << msg.toStdString() << std::endl;
-	else
-		std::cerr << context.category << msg.toStdString() << std::endl;
+	std::cerr << formatMessage(type, context, msg, false).toStdString();
+	std::cerr.flush();
 }
 
 void AppPrivate::formatedTermDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-	Q_UNUSED(context);
+	std::cerr << formatMessage(type, context, msg, true).toStdString();
+	std::cerr.flush();
+}
 
-	QString resStr;
-	if(context.category && QByteArray(context.category) != "default") {
-		resStr = QStringLiteral("%1: %2")
-					 .arg(context.category)
-					 .arg(msg);
+void AppPrivate::masterDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+	if(debugTerm) {
+		debugTerm->write(formatMessage(type, context, msg, false));
+		debugTerm->flush();
 	} else
-		resStr = msg;
-	switch(type) {
-	case QtMsgType::QtInfoMsg:
-		resStr = QStringLiteral("[Info]     ") + resStr;
-		break;
-	case QtMsgType::QtDebugMsg:
-		resStr = QStringLiteral("[Debug]    ") + resStr;
-		break;
-	case QtMsgType::QtWarningMsg:
-		resStr = QStringLiteral("[Warning]  ") + resStr;
-		break;
-	case QtMsgType::QtCriticalMsg:
-		resStr = QStringLiteral("[Critical] ") + resStr;
-		break;
-	case QtMsgType::QtFatalMsg:
-		resStr = QStringLiteral("[Fatal]    ") + resStr;
-		qt_assert_x(context.function, qUtf8Printable(resStr), context.file, context.line);
-		break;
-	default:
-		Q_UNREACHABLE();
-	}
+		termDebugMessage(type, context, msg);
+}
 
-	std::cerr << resStr.toStdString() << std::endl;
+void AppPrivate::formatedMasterDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+	if(debugTerm) {
+		debugTerm->write(formatMessage(type, context, msg, true));
+		debugTerm->flush();
+	} else
+		formatedTermDebugMessage(type, context, msg);
 }
 
 AppPrivate::AppPrivate(App *q_ptr) :
@@ -285,4 +272,39 @@ void AppPrivate::doExit(int code)
 void AppPrivate::beginMasterConnect(const QStringList &arguments, bool isStarter)
 {
 	this->master = new MasterConnecter(this->instanceId, arguments, isStarter, this);
+}
+
+QByteArray AppPrivate::formatMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg, bool doFormat)
+{
+	QString resStr;
+	if(context.category && QByteArray(context.category) != "default") {
+		resStr = QStringLiteral("%1: %2\n")
+					 .arg(context.category)
+					 .arg(msg);
+	} else
+		resStr = msg + QStringLiteral("\n");
+
+	if(doFormat) {
+		switch(type) {
+		case QtMsgType::QtInfoMsg:
+			resStr = QStringLiteral("[Info]     ") + resStr;
+			break;
+		case QtMsgType::QtDebugMsg:
+			resStr = QStringLiteral("[Debug]    ") + resStr;
+			break;
+		case QtMsgType::QtWarningMsg:
+			resStr = QStringLiteral("[Warning]  ") + resStr;
+			break;
+		case QtMsgType::QtCriticalMsg:
+			resStr = QStringLiteral("[Critical] ") + resStr;
+			break;
+		case QtMsgType::QtFatalMsg:
+			resStr = QStringLiteral("[Fatal]    ") + resStr;
+			break;
+		default:
+			Q_UNREACHABLE();
+		}
+	}
+
+	return resStr.toUtf8();
 }

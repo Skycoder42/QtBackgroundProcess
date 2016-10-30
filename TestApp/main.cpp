@@ -16,6 +16,9 @@ int main(int argc, char *argv[])
 
 	//instead of settings a startup func you can simply override QBackgroundProcess::App::startupApp
 	a.setStartupFunction([&](const QStringList &args){
+		//Uncomment the line below so send all debug output to all terminals instead of showing it in the master
+		//QBackgroundProcess::App::activateMasterDebugRedirect();
+
 		qDebug() << "I AM THE MASTER :D I was started with:"
 				 << args;
 

@@ -27,10 +27,10 @@ class QBACKGROUNDPROCESSSHARED_EXPORT App : public QCoreApplication
 	Q_PROPERTY(bool autoDeleteTerminals READ autoDeleteTerminals WRITE setAutoDeleteTerminals)
 	Q_PROPERTY(bool autoKillTerminals READ autoKillTerminals WRITE setAutoKillTerminals)
 	Q_PROPERTY(QList<Terminal*> connectedTerminals READ connectedTerminals NOTIFY connectedTerminalsChanged)
-	//TODO auto redirect qDebug
 
 public:
 	static QtMessageHandler activateTerminalDebugRedirect(bool format = true);
+	static QtMessageHandler activateMasterDebugRedirect(bool format = true);
 
 	App(int &argc, char **argv);
 	~App();

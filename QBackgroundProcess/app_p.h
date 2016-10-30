@@ -5,6 +5,7 @@
 #include <QLockFile>
 #include <QScopedPointer>
 #include <QLocalServer>
+#include <QPointer>
 #include "masterconnecter.h"
 #include "terminal_p.h"
 #include "globalterminal.h"
@@ -23,6 +24,8 @@ public:
 
 	static void termDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 	static void formatedTermDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+	static void masterDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+	static void formatedMasterDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
 	bool running;
 	bool autoStart;
@@ -39,6 +42,8 @@ public:
 	std::function<bool(Terminal*, int&)> shutdownFunc;
 
 	MasterConnecter *master;
+
+	static QPointer<GlobalTerminal> debugTerm;
 
 	AppPrivate(App *q_ptr);
 
@@ -61,6 +66,8 @@ private slots:
 
 private:
 	App *q_ptr;
+
+	static QByteArray formatMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg, bool doFormat);
 };
 
 Q_DECLARE_LOGGING_CATEGORY(loggingCategory)

@@ -15,6 +15,17 @@ QtMessageHandler App::activateTerminalDebugRedirect(bool format)
 		return qInstallMessageHandler(AppPrivate::termDebugMessage);
 }
 
+QtMessageHandler App::activateMasterDebugRedirect(bool format)
+{
+	if(AppPrivate::debugTerm)
+		AppPrivate::debugTerm->deleteLater();
+	AppPrivate::debugTerm = new GlobalTerminal(qApp, qApp);
+	if(format)
+		return qInstallMessageHandler(AppPrivate::formatedMasterDebugMessage);
+	else
+		return qInstallMessageHandler(AppPrivate::masterDebugMessage);
+}
+
 App::App(int &argc, char **argv) :
 	QCoreApplication(argc, argv),
 	d_ptr(new AppPrivate(this))
