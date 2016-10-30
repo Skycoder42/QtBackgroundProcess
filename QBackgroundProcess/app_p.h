@@ -21,6 +21,9 @@ public:
 	static QString generateSingleId(const QString &seed = QString());
 	static AppPrivate *p_ptr(App *app);
 
+	static void termDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+	static void formatedTermDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+
 	bool running;
 	bool autoStart;
 	bool ignoreExtraStart;

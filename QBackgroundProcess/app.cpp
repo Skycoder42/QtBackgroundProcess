@@ -7,6 +7,14 @@ using namespace QBackgroundProcess;
 #endif
 #define d this->d_ptr
 
+QtMessageHandler App::activateTerminalDebugRedirect(bool format)
+{
+	if(format)
+		return qInstallMessageHandler(AppPrivate::formatedTermDebugMessage);
+	else
+		return qInstallMessageHandler(AppPrivate::termDebugMessage);
+}
+
 App::App(int &argc, char **argv) :
 	QCoreApplication(argc, argv),
 	d_ptr(new AppPrivate(this))

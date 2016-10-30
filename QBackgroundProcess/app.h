@@ -30,6 +30,8 @@ class QBACKGROUNDPROCESSSHARED_EXPORT App : public QCoreApplication
 	//TODO auto redirect qDebug
 
 public:
+	static QtMessageHandler activateTerminalDebugRedirect(bool format = true);
+
 	App(int &argc, char **argv);
 	~App();
 

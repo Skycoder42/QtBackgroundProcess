@@ -10,6 +10,9 @@
 int main(int argc, char *argv[])
 {
 	QBackgroundProcess::App a(argc, argv);
+	QBackgroundProcess::App::activateTerminalDebugRedirect();
+
+	qDebug() << "TEST";
 
 	//instead of settings a startup func you can simply override QBackgroundProcess::App::startupApp
 	a.setStartupFunction([&](const QStringList &args){

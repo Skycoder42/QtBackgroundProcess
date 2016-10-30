@@ -3,6 +3,7 @@
 #include <QThread>
 #include <QDir>
 #include <QProcess>
+#include <iostream>
 #ifdef Q_OS_WIN
 #include <qt_windows.h>
 #else
@@ -43,6 +44,50 @@ QString AppPrivate::generateSingleId(const QString &seed)
 AppPrivate *AppPrivate::p_ptr(App *app)
 {
 	return app->d_ptr;
+}
+
+void AppPrivate::termDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+	Q_UNUSED(type);
+	if(context.category || context.category == "default")
+		std::cerr << msg.toStdString() << std::endl;
+	else
+		std::cerr << context.category << msg.toStdString() << std::endl;
+}
+
+void AppPrivate::formatedTermDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+	Q_UNUSED(context);
+
+	QString resStr;
+	if(context.category && QByteArray(context.category) != "default") {
+		resStr = QStringLiteral("%1: %2")
+					 .arg(context.category)
+					 .arg(msg);
+	} else
+		resStr = msg;
+	switch(type) {
+	case QtMsgType::QtInfoMsg:
+		resStr = QStringLiteral("[Info]     ") + resStr;
+		break;
+	case QtMsgType::QtDebugMsg:
+		resStr = QStringLiteral("[Debug]    ") + resStr;
+		break;
+	case QtMsgType::QtWarningMsg:
+		resStr = QStringLiteral("[Warning]  ") + resStr;
+		break;
+	case QtMsgType::QtCriticalMsg:
+		resStr = QStringLiteral("[Critical] ") + resStr;
+		break;
+	case QtMsgType::QtFatalMsg:
+		resStr = QStringLiteral("[Fatal]    ") + resStr;
+		qt_assert_x(context.function, qUtf8Printable(resStr), context.file, context.line);
+		break;
+	default:
+		Q_UNREACHABLE();
+	}
+
+	std::cerr << resStr.toStdString() << std::endl;
 }
 
 AppPrivate::AppPrivate(App *q_ptr) :
