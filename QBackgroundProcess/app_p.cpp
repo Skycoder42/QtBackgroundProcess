@@ -305,6 +305,9 @@ QByteArray AppPrivate::formatMessage(QtMsgType type, const QMessageLogContext &c
 			Q_UNREACHABLE();
 		}
 	}
-
+	
+	if(type == QtMsgType::QtFatalMsg)
+		qt_assert_x(context.function, qUtf8Printable(resStr), context.file, context.line);
+	
 	return resStr.toUtf8();
 }
