@@ -71,7 +71,7 @@ protected:
 
 private:
 	AppPrivate* d_ptr;
-	bool m_autoDeleteTerminals;
+	bool m_autoDeleteTerminals;//CRITICAL REMOVE!!!!!!!!!!!!!!!!!!!!!!!!
 };
 
 }
