@@ -19,6 +19,8 @@ class AppPrivate : public QObject
 
 public:
 	static const QString masterArgument;
+	static const QString purgeArgument;
+	static const QString startArgument;
 
 	static QString generateSingleId(const QString &seed = QString());
 	static AppPrivate *p_ptr(App *app);
@@ -57,6 +59,7 @@ private slots:
 	int makeMaster(const QStringList &arguments);
 	int startMaster(const QStringList &arguments, bool hideWarning = false);
 	int testMasterRunning(const QStringList &arguments);
+	int purgeMaster(const QStringList &arguments);
 
 	void newTerminalConnected();
 	void terminalLoaded(TerminalPrivate *terminal, bool success);

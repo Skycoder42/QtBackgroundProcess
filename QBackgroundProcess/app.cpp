@@ -94,11 +94,12 @@ int App::exec()
 	d->running = true;
 
 	//generate the single id
-	if(d->instanceId.isNull())
-		d->setInstanceId(AppPrivate::generateSingleId());
+	this->createDefaultInstanceID(false);
 
 	auto res = d->initControlFlow();
-	if(res != EXIT_SUCCESS)
+	if(res == -1)//special case
+		return EXIT_SUCCESS;
+	else if(res != EXIT_SUCCESS)
 		return res;
 	res = QCoreApplication::exec();
 	d->running = false;

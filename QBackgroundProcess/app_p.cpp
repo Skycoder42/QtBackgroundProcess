@@ -16,6 +16,8 @@ using namespace QBackgroundProcess;
 Q_LOGGING_CATEGORY(QBackgroundProcess::loggingCategory, "QBackgroundProcess")
 
 const QString AppPrivate::masterArgument(QStringLiteral("__qbckgrndprcss$start#master~"));
+const QString AppPrivate::purgeArgument(QStringLiteral("purge_master"));
+const QString AppPrivate::startArgument(QStringLiteral("start"));
 QPointer<GlobalTerminal> AppPrivate::debugTerm(nullptr);
 
 QString AppPrivate::generateSingleId(const QString &seed)
@@ -110,7 +112,10 @@ int AppPrivate::initControlFlow()
 		if(args[0] == masterArgument) {
 			args.removeFirst();
 			return this->makeMaster(args);
-		} else if(args[0] == QStringLiteral("start"))
+		} else if(args[0] == purgeArgument) {
+			args.removeFirst();
+			return this->purgeMaster(args);
+		} else if(args[0] == startArgument)
 			return this->startMaster(args);
 	}
 
@@ -216,6 +221,39 @@ int AppPrivate::testMasterRunning(const QStringList &arguments)
 								  Q_ARG(bool, false));
 		return EXIT_SUCCESS;
 	}
+}
+
+int AppPrivate::purgeMaster(const QStringList &arguments)
+{
+	if(arguments.isEmpty() || arguments[0] != "accept") {
+		std::cout << "Are you shure you want to purge the master lock and server?\n"
+				  << "Only do this if the master process is not running anymore, but the lock/server "
+					 "are not available (for example after a crash)\n"
+				  << "Purging while the master process is still running will crash it.\n"
+				  << "Press (y) to purge, or (n) to cancel:";
+		std::cout.flush();
+		char res = (char)std::cin.get();
+		if(res != 'y' && res != 'Y')
+			return EXIT_FAILURE;
+	}
+
+	auto res = 0;
+
+	if(!this->masterLock->isLocked() || this->masterLock->removeStaleLockFile())
+		std::cout << "Master lockfile successfully removed" << std::endl;
+	else {
+		std::cout << "Failed to remove master lockfile" << std::endl;
+		res |= 0x02;
+	}
+
+	if(QLocalServer::removeServer(this->instanceId))
+		std::cout << "Master server successfully removed" << std::endl;
+	else {
+		std::cout << "Failed to remove master server" << std::endl;
+		res |= 0x04;
+	}
+
+	return res == 0 ? -1 : res;
 }
 
 void AppPrivate::newTerminalConnected()
