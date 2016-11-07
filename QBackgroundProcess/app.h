@@ -21,7 +21,7 @@ class QBACKGROUNDPROCESSSHARED_EXPORT App : public QCoreApplication
 	Q_OBJECT
 	friend class AppPrivate;
 
-	Q_PROPERTY(QString instanceID READ instanceID WRITE setInstanceID)
+	Q_PROPERTY(QString instanceID READ instanceID WRITE setInstanceID RESET createDefaultInstanceID)
 	Q_PROPERTY(bool autoStartMaster READ autoStartMaster WRITE setAutoStartMaster)
 	Q_PROPERTY(bool ignoreMultiStarts READ ignoreMultiStarts WRITE setIgnoreMultiStarts)
 	Q_PROPERTY(bool autoDeleteTerminals READ autoDeleteTerminals WRITE setAutoDeleteTerminals)
@@ -46,11 +46,13 @@ public:
 	void setShutdownFunction(const std::function<bool(QStringList, int&)> &function);
 	void setShutdownFunction(const std::function<bool(Terminal*)> &function);
 	void setShutdownFunction(const std::function<bool(Terminal*, int&)> &function);
+
 	int exec();
 
 	QList<Terminal*> connectedTerminals() const;
 
 public slots:
+	void createDefaultInstanceID(bool overwrite = true);
 	void setInstanceID(QString instanceID, bool useAsSeed = true);
 	void setAutoStartMaster(bool autoStartMaster);
 	void setIgnoreMultiStarts(bool ignoreMultiStarts);

@@ -110,6 +110,12 @@ QList<Terminal *> App::connectedTerminals() const
 	return d->activeTerminals;
 }
 
+void App::createDefaultInstanceID(bool overwrite)
+{
+	if(overwrite || d->instanceId.isNull())
+		d->setInstanceId(AppPrivate::generateSingleId());
+}
+
 void App::setInstanceID(QString instanceID, bool useAsSeed)
 {
 	if(d->running)
