@@ -10,9 +10,9 @@ using namespace QBackgroundProcess;
 QtMessageHandler App::activateTerminalDebugRedirect(bool format)
 {
 	if(format)
-		return qInstallMessageHandler(AppPrivate::formatedTermDebugMessage);
-	else
-		return qInstallMessageHandler(AppPrivate::termDebugMessage);
+		qSetMessagePattern(AppPrivate::messageFormat);
+
+	return qInstallMessageHandler(AppPrivate::termDebugMessage);
 }
 
 QtMessageHandler App::activateMasterDebugRedirect(bool format)
@@ -20,10 +20,11 @@ QtMessageHandler App::activateMasterDebugRedirect(bool format)
 	if(AppPrivate::debugTerm)
 		AppPrivate::debugTerm->deleteLater();
 	AppPrivate::debugTerm = new GlobalTerminal(qApp, qApp);
+
 	if(format)
-		return qInstallMessageHandler(AppPrivate::formatedMasterDebugMessage);
-	else
-		return qInstallMessageHandler(AppPrivate::masterDebugMessage);
+		qSetMessagePattern(AppPrivate::messageFormat);
+
+	return qInstallMessageHandler(AppPrivate::masterDebugMessage);
 }
 
 App::App(int &argc, char **argv) :

@@ -22,13 +22,13 @@ public:
 	static const QString purgeArgument;
 	static const QString startArgument;
 
+	static const QString messageFormat;
+
 	static QString generateSingleId(const QString &seed = QString());
 	static AppPrivate *p_ptr(App *app);
 
 	static void termDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
-	static void formatedTermDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 	static void masterDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
-	static void formatedMasterDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
 	bool running;
 	bool autoStart;
@@ -70,8 +70,6 @@ private slots:
 
 private:
 	App *q_ptr;
-
-	static QByteArray formatMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg, bool doFormat);
 };
 
 Q_DECLARE_LOGGING_CATEGORY(loggingCategory)
