@@ -20,6 +20,7 @@ QString App::defaultLogPath()
 			.arg(basePath)
 			.arg(QCoreApplication::applicationName());
 #else
+	//TODO check if root, else use user directory!
 	return QStringLiteral("/var/log/%1.log").arg(QCoreApplication::applicationName());
 #endif
 }
