@@ -1,5 +1,9 @@
 #include "app.h"
 #include "app_p.h"
+#ifdef Q_OS_WIN
+#include <QDir>
+#include <QStandardPaths>
+#endif
 using namespace QBackgroundProcess;
 
 #ifdef d
@@ -7,22 +11,55 @@ using namespace QBackgroundProcess;
 #endif
 #define d this->d_ptr
 
+QString App::defaultLogPath()
+{
+#ifdef Q_OS_WIN
+	auto basePath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+	QDir(basePath).mkpath(".");
+	return QStringLiteral("%1/%2.log")
+			.arg(basePath)
+			.arg(QCoreApplication::applicationName());
+#else
+	return QStringLiteral("/var/log/%1.log").arg(QCoreApplication::applicationName());
+#endif
+}
+
 QtMessageHandler App::activateTerminalDebugRedirect(bool format)
 {
 	if(format)
-		qSetMessagePattern(AppPrivate::messageFormat);
+		qSetMessagePattern(AppPrivate::terminalMessageFormat);
 
 	return qInstallMessageHandler(AppPrivate::termDebugMessage);
 }
 
 QtMessageHandler App::activateMasterDebugRedirect(bool format)
 {
-	if(AppPrivate::debugTerm)
-		AppPrivate::debugTerm->deleteLater();
-	AppPrivate::debugTerm = new GlobalTerminal(qApp, qApp);
+	auto self = AppPrivate::p_ptr();
+	if(self->debugTerm)
+		self->debugTerm->deleteLater();
+	self->debugTerm = new GlobalTerminal(qApp, self);
 
 	if(format)
-		qSetMessagePattern(AppPrivate::messageFormat);
+		qSetMessagePattern(AppPrivate::masterMessageFormat);
+
+	return qInstallMessageHandler(AppPrivate::masterDebugMessage);
+}
+
+QtMessageHandler App::activateMasterLogging(QString logFile, bool format)
+{
+	auto self = AppPrivate::p_ptr();
+	if(self->logFile) {
+		self->logFile->close();
+		self->logFile->deleteLater();
+	}
+	if(!logFile.isNull()) {
+		self->logFile = new QFile(logFile, self);
+		if(!self->logFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
+			self->logFile->deleteLater();
+	}
+
+	if(format)
+		qSetMessagePattern(AppPrivate::masterMessageFormat);
 
 	return qInstallMessageHandler(AppPrivate::masterDebugMessage);
 }

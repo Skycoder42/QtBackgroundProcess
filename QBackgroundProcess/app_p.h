@@ -7,6 +7,7 @@
 #include <QLocalServer>
 #include <QPointer>
 #include <QLoggingCategory>
+#include <QFile>
 #include "masterconnecter.h"
 #include "terminal_p.h"
 #include "globalterminal.h"
@@ -22,10 +23,11 @@ public:
 	static const QString purgeArgument;
 	static const QString startArgument;
 
-	static const QString messageFormat;
+	static const QString terminalMessageFormat;
+	static const QString masterMessageFormat;
 
 	static QString generateSingleId(const QString &seed = QString());
-	static AppPrivate *p_ptr(App *app);
+	static AppPrivate *p_ptr();
 
 	static void termDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 	static void masterDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
@@ -46,9 +48,11 @@ public:
 
 	MasterConnecter *master;
 
-	static QPointer<GlobalTerminal> debugTerm;
+	QPointer<GlobalTerminal> debugTerm;
+	QPointer<QFile> logFile;
 
 	AppPrivate(App *q_ptr);
+	~AppPrivate();
 
 	void setInstanceId(const QString &id);
 

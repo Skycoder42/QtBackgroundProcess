@@ -18,14 +18,21 @@ Q_LOGGING_CATEGORY(QBackgroundProcess::loggingCategory, "QBackgroundProcess")
 const QString AppPrivate::masterArgument(QStringLiteral("__qbckgrndprcss$start#master~"));
 const QString AppPrivate::purgeArgument(QStringLiteral("purge_master"));
 const QString AppPrivate::startArgument(QStringLiteral("start"));
-const QString AppPrivate::messageFormat(QStringLiteral("%{if-debug}[Debug]    %{endif}"
-													   "%{if-info}[Info]     %{endif}"
-													   "%{if-warning}[Warning]  %{endif}"
-													   "%{if-critical}[Critical] %{endif}"
-													   "%{if-fatal}[Fatal]    %{endif}"
-													   "%{if-category}%{category}: %{endif}"
-													   "%{message}\n"));
-QPointer<GlobalTerminal> AppPrivate::debugTerm(nullptr);
+const QString AppPrivate::terminalMessageFormat(QStringLiteral("%{if-debug}[Debug]    %{endif}"
+															   "%{if-info}[Info]     %{endif}"
+															   "%{if-warning}[Warning]  %{endif}"
+															   "%{if-critical}[Critical] %{endif}"
+															   "%{if-fatal}[Fatal]    %{endif}"
+															   "%{if-category}%{category}: %{endif}"
+															   "%{message}\n"));
+const QString AppPrivate::masterMessageFormat(QStringLiteral("[%{time} "
+															 "%{if-debug}Debug]    %{endif}"
+															 "%{if-info}Info]     %{endif}"
+															 "%{if-warning}Warning]  %{endif}"
+															 "%{if-critical}Critical] %{endif}"
+															 "%{if-fatal}Fatal]    %{endif}"
+															 "%{if-category}%{category}: %{endif}"
+															 "%{message}\n"));
 
 QString AppPrivate::generateSingleId(const QString &seed)
 {
@@ -51,9 +58,9 @@ QString AppPrivate::generateSingleId(const QString &seed)
 	return fullId;
 }
 
-AppPrivate *AppPrivate::p_ptr(App *app)
+AppPrivate *AppPrivate::p_ptr()
 {
-	return app->d_ptr;
+	return qApp->d_ptr;
 }
 
 void AppPrivate::termDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg)
@@ -67,14 +74,26 @@ void AppPrivate::termDebugMessage(QtMsgType type, const QMessageLogContext &cont
 
 void AppPrivate::masterDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-	if(debugTerm) {
-		debugTerm->write(qFormatLogMessage(type, context, msg).toUtf8());
-		debugTerm->flush();
+	auto self = p_ptr();
+	auto message = qFormatLogMessage(type, context, msg).toUtf8();
+	auto any = false;
 
-		if(type == QtMsgType::QtFatalMsg)
-			qt_assert_x(context.function, qUtf8Printable(msg), context.file, context.line);
-	} else
+	if(self->debugTerm) {
+		self->debugTerm->write(message);
+		self->debugTerm->flush();
+		any = true;
+	}
+
+	if(self->logFile) {
+		self->logFile->write(message);
+		self->logFile->flush();
+		any = true;
+	}
+
+	if(!any)
 		termDebugMessage(type, context, msg);
+	else if(type == QtMsgType::QtFatalMsg)
+		qt_assert_x(context.function, qUtf8Printable(msg), context.file, context.line);
 }
 
 AppPrivate::AppPrivate(App *q_ptr) :
@@ -90,8 +109,16 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	startupFunc(),
 	shutdownFunc(),
 	master(nullptr),
+	debugTerm(nullptr),
+	logFile(nullptr),
 	q_ptr(q_ptr)
 {}
+
+AppPrivate::~AppPrivate()
+{
+	if(logFile)
+		logFile->close();
+}
 
 void AppPrivate::setInstanceId(const QString &id)
 {

@@ -12,12 +12,13 @@ int main(int argc, char *argv[])
 	QBackgroundProcess::App a(argc, argv);
 	QBackgroundProcess::App::activateTerminalDebugRedirect();
 
-	qDebug() << "TEST";
+	qDebug() << "Log file located at:" << QBackgroundProcess::App::defaultLogPath();
 
 	//instead of settings a startup func you can simply override QBackgroundProcess::App::startupApp
 	a.setStartupFunction([&](const QStringList &args){
+		QBackgroundProcess::App::activateMasterLogging();
 		//Uncomment the line below so send all debug output to all terminals instead of showing it in the master
-		//QBackgroundProcess::App::activateMasterDebugRedirect();
+		//QBackgroundProcess::App::activateMasterDebugRedirect();//this can be used together with the logging, if both are activated, both will work
 
 		qDebug() << "I AM THE MASTER :D I was started with:"
 				 << args;

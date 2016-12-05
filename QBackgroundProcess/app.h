@@ -29,8 +29,11 @@ class QBACKGROUNDPROCESSSHARED_EXPORT App : public QCoreApplication
 	Q_PROPERTY(QList<Terminal*> connectedTerminals READ connectedTerminals NOTIFY connectedTerminalsChanged)
 
 public:
+	static QString defaultLogPath();
+
 	static QtMessageHandler activateTerminalDebugRedirect(bool format = true);
 	static QtMessageHandler activateMasterDebugRedirect(bool format = true);
+	static QtMessageHandler activateMasterLogging(QString logFile = defaultLogPath(), bool format = true);
 
 	App(int &argc, char **argv);
 	~App();
