@@ -1,6 +1,8 @@
 #include "globalterminal.h"
 #include "app_p.h"
 
+#include <QTimer>
+
 namespace QBackgroundProcess {
 
 class GlobalTerminalPrivate {
@@ -31,6 +33,14 @@ GlobalTerminal::GlobalTerminal(App *app, QObject *parent, bool enableBootBuffer)
 		connect(app, &App::connectedTerminalsChanged,
 				this, &GlobalTerminal::tryPushBuffer);
 		d->buffer->open(QIODevice::WriteOnly);
+
+		QTimer::singleShot(10*1000, this, [this](){//wait up to 10 seconds for the first terminal to connect
+			if(d->buffer) {
+				d->buffer->close();
+				d->buffer->deleteLater();
+				d->buffer = nullptr;
+			}
+		});
 	}
 
 	this->open(QIODevice::WriteOnly | QIODevice::Unbuffered);
