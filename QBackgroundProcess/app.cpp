@@ -38,7 +38,7 @@ QtMessageHandler App::activateMasterDebugRedirect(bool format)
 	auto self = AppPrivate::p_ptr();
 	if(self->debugTerm)
 		self->debugTerm->deleteLater();
-	self->debugTerm = new GlobalTerminal(qApp, self);
+	self->debugTerm = new GlobalTerminal(qApp, self, true);
 
 	if(format)
 		qSetMessagePattern(AppPrivate::masterMessageFormat);

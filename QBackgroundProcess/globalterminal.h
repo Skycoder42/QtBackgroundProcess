@@ -8,12 +8,14 @@
 namespace QBackgroundProcess {
 
 class App;
+class Terminal;
+class GlobalTerminalPrivate;
 class QBACKGROUNDPROCESSSHARED_EXPORT GlobalTerminal : public QIODevice
 {
 	Q_OBJECT
 
 public:
-	explicit GlobalTerminal(App *app, QObject *parent = nullptr);
+	explicit GlobalTerminal(App *app, QObject *parent = nullptr, bool enableBootBuffer = false);
 	~GlobalTerminal();
 
 	bool isSequential() const override;
@@ -26,11 +28,16 @@ protected:
 	qint64 readData(char *data, qint64 maxlen) override;
 	qint64 writeData(const char *data, qint64 len) override;
 
+private slots:
+	void tryPushBuffer(QList<Terminal*> terms);
+
 private:
-	App *app;
+	QScopedPointer<GlobalTerminalPrivate> d_ptr;
 
 	bool open(OpenMode mode) override;
 	void close() override;
+
+	void pushBuffer(QList<Terminal*> terms);
 };
 
 }

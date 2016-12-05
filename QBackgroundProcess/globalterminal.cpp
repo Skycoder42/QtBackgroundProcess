@@ -1,11 +1,38 @@
 #include "globalterminal.h"
 #include "app_p.h"
+
+namespace QBackgroundProcess {
+
+class GlobalTerminalPrivate {
+public:
+	App *app;
+	QBuffer *buffer;
+
+	GlobalTerminalPrivate(App *app, bool enableBootBuffer, GlobalTerminal *q_ptr) :
+		app(app),
+		buffer(enableBootBuffer ? new QBuffer(q_ptr) : nullptr)
+	{}
+};
+
+}
+
 using namespace QBackgroundProcess;
 
-GlobalTerminal::GlobalTerminal(App *app, QObject *parent) :
+#ifdef d
+#undef d
+#endif
+#define d this->d_ptr
+
+GlobalTerminal::GlobalTerminal(App *app, QObject *parent, bool enableBootBuffer) :
 	QIODevice(parent),
-	app(app)
+	d_ptr(new GlobalTerminalPrivate(app, enableBootBuffer, this))
 {
+	if(enableBootBuffer) {
+		connect(app, &App::connectedTerminalsChanged,
+				this, &GlobalTerminal::tryPushBuffer);
+		d->buffer->open(QIODevice::WriteOnly);
+	}
+
 	this->open(QIODevice::WriteOnly | QIODevice::Unbuffered);
 }
 
@@ -26,7 +53,9 @@ bool GlobalTerminal::canReadLine() const
 
 void GlobalTerminal::flush()
 {
-	auto terms = this->app->connectedTerminals();
+	auto terms = d->app->connectedTerminals();
+	if(d->buffer && !terms.isEmpty())
+		this->pushBuffer(terms);
 	foreach(auto term, terms)
 		term->flush();
 }
@@ -40,10 +69,23 @@ qint64 GlobalTerminal::readData(char *data, qint64 maxlen)
 
 qint64 GlobalTerminal::writeData(const char *data, qint64 len)
 {
-	auto terms = this->app->connectedTerminals();
+	auto terms = d->app->connectedTerminals();
+	if(d->buffer) {
+		if(terms.isEmpty())
+			return d->buffer->write(data, len);
+		else
+			this->pushBuffer(terms);
+	}
+
 	foreach(auto term, terms)
 		term->write(data, len);
 	return len;
+}
+
+void GlobalTerminal::tryPushBuffer(QList<Terminal *> terms)
+{
+	if(d->buffer && !terms.isEmpty())
+		this->pushBuffer(terms);
 }
 
 bool GlobalTerminal::open(QIODevice::OpenMode mode)
@@ -52,3 +94,17 @@ bool GlobalTerminal::open(QIODevice::OpenMode mode)
 }
 
 void GlobalTerminal::close() {}
+
+void GlobalTerminal::pushBuffer(QList<Terminal *> terms)
+{
+	const auto &data = d->buffer->data();
+	if(!data.isEmpty()) {
+		foreach(auto term, terms)
+			term->write(data);
+	}
+	d->buffer->close();
+	d->buffer->deleteLater();
+	d->buffer = nullptr;
+	disconnect(d->app, &App::connectedTerminalsChanged,
+			   this, &GlobalTerminal::tryPushBuffer);
+}

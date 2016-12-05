@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	a.setStartupFunction([&](const QStringList &args){
 		QBackgroundProcess::App::activateMasterLogging();
 		//Uncomment the line below so send all debug output to all terminals instead of showing it in the master
-		//QBackgroundProcess::App::activateMasterDebugRedirect();//this can be used together with the logging, if both are activated, both will work
+		QBackgroundProcess::App::activateMasterDebugRedirect();//this can be used together with the logging, if both are activated, both will work
 
 		qDebug() << "I AM THE MASTER :D I was started with:"
 				 << args;
