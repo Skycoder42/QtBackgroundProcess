@@ -43,6 +43,7 @@ public:
 	QScopedPointer<QLockFile> masterLock;
 	QLocalServer *masterServer;
 	QList<Terminal*> activeTerminals;
+	std::function<void(QCommandLineParser&)> parserFunc;
 	std::function<int(QStringList)> startupFunc;
 	std::function<bool(Terminal*, int&)> shutdownFunc;
 
@@ -56,10 +57,13 @@ public:
 
 	void setInstanceId(const QString &id);
 
+	void setupDefaultParser(QCommandLineParser &parser, bool useShortOptions = true);
+
 public slots:
 	int initControlFlow();
 
 private slots:
+
 	int makeMaster(const QStringList &arguments);
 	int startMaster(const QStringList &arguments, bool hideWarning = false);
 	int testMasterRunning(const QStringList &arguments);

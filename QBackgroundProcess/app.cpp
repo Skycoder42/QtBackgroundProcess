@@ -1,5 +1,6 @@
 #include "app.h"
 #include "app_p.h"
+#include <iostream>
 #ifdef Q_OS_WIN
 #include <QDir>
 #include <QStandardPaths>
@@ -97,7 +98,22 @@ bool App::autoKillTerminals() const
 	return d->autoKill;
 }
 
-void App::setStartupFunction(const std::function<int(QStringList)> &function)
+QSharedPointer<QCommandLineParser> App::parseArguments(const QStringList &arguments)
+{
+	auto ptr = QSharedPointer<QCommandLineParser>::create();
+	this->setupParser(*ptr.data());
+	if(ptr->parse(arguments))
+		return ptr;
+	else
+		throw InvalidArgumentsException(ptr->errorText());
+}
+
+void App::setParserSetupFunction(const std::function<void (QCommandLineParser &)> &function)
+{
+	d->parserFunc = function;
+}
+
+void App::setStartupFunction(const std::function<int (QStringList)> &function)
 {
 	d->startupFunc = function;
 }
@@ -131,6 +147,11 @@ void App::setShutdownFunction(const std::function<bool(Terminal*, int&)> &functi
 int App::exec()
 {
 	d->running = true;
+
+	//process arguments
+	QCommandLineParser parser;
+	this->setupParser(parser);
+	parser.process(*this);
 
 	//generate the single id
 	this->createDefaultInstanceID(false);
@@ -197,6 +218,13 @@ void App::setAutoKillTerminals(bool autoKillTerminals, bool killCurrent)
 	}
 }
 
+void App::setupParser(QCommandLineParser &parser, bool useShortOptions)
+{
+	d->setupDefaultParser(parser, useShortOptions);
+	if(d->parserFunc)
+		d->parserFunc(parser);
+}
+
 int App::startupApp(const QStringList &arguments)
 {
 	if(d->startupFunc)
@@ -217,4 +245,8 @@ bool App::shutdownApp(Terminal *terminal, int &exitCode)
 
 NotAllowedInRunningStateException::NotAllowedInRunningStateException(const QString &reason) :
 	QtException(QStringLiteral("You are not allowed to perform the following action while the application is running: ") + reason)
+{}
+
+InvalidArgumentsException::InvalidArgumentsException(const QString &errorText) :
+	QtException(errorText)
 {}

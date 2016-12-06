@@ -106,6 +106,7 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	instanceId(),
 	masterLock(nullptr),
 	masterServer(nullptr),
+	parserFunc(),
 	startupFunc(),
 	shutdownFunc(),
 	master(nullptr),
@@ -126,6 +127,57 @@ void AppPrivate::setInstanceId(const QString &id)
 	auto lockPath = QDir::temp().absoluteFilePath(id + QStringLiteral(".lock"));
 	this->masterLock.reset(new QLockFile(lockPath));
 	this->masterLock->setStaleLockTime(0);
+}
+
+void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOptions)
+{
+	parser.addHelpOption();
+	if(!QCoreApplication::applicationVersion().isEmpty())
+		parser.addVersionOption();
+
+	QStringList DParams("detached");
+	QStringList lParams({"log", "loglevel"});
+	QStringList LParams("logpath");
+	if(useShortOptions) {
+		DParams.append("D");
+		lParams.append("l");
+		LParams.append("L");
+	}
+
+	parser.addPositionalArgument("<command>",
+								 "A default control command to control the background application. "
+								 "Possible options are:\n"
+								 " - start: starts the application\n"
+								 " - stop: stops the application\n"
+								 " - purge_master: purges local servers and lockfiles, in case the master process crashed. "
+								 "Pass <accept> as second parameter, if you want to skip the prompt",
+								 "[start|stop|purge_master [accept]]");
+
+	parser.addOption({
+						 DParams,
+						 "It set, the terminal will only pass it's arguments to the master, and automatically finish after"
+					 });
+	parser.addOption({
+						 lParams,
+						 "Set the desired log <level>. Possible values are:\n"
+						 " - 0: log nothing\n"
+						 " - 1: critical errors only\n"
+						 " - 2: like 1 plus warnings\n"
+						 " - 3: like 2 plus information messages (default for release)\n"
+						 " - 4: verbose - log everything (default for debug)",
+						 "level",
+					 #ifdef QT_NO_DEBUG
+						 "3"
+					 #else
+						 "4"
+					 #endif
+					 });
+	parser.addOption({
+						 LParams,
+						 "Overwrites the default log <path>. NOTE: If the path was set in the application itself, "
+						 "this parameter will have no effect!",
+						 "path"
+					 });
 }
 
 int AppPrivate::initControlFlow()

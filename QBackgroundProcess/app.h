@@ -2,6 +2,7 @@
 #define QBACKGROUNDPROCESS_APP_H
 
 #include "qbackgroundprocess_global.h"
+#include <QCommandLineParser>
 #include <QCoreApplication>
 #include <functional>
 #include "qtexception.h"
@@ -13,6 +14,11 @@ class Terminal;
 class QBACKGROUNDPROCESSSHARED_EXPORT NotAllowedInRunningStateException : public QtException {
 public:
 	NotAllowedInRunningStateException(const QString &reason);
+};
+
+class QBACKGROUNDPROCESSSHARED_EXPORT InvalidArgumentsException : public QtException {
+public:
+	InvalidArgumentsException(const QString &errorText);
 };
 
 class AppPrivate;
@@ -44,6 +50,9 @@ public:
 	bool autoDeleteTerminals() const;
 	bool autoKillTerminals() const;
 
+	QSharedPointer<QCommandLineParser> parseArguments(const QStringList &arguments);
+
+	void setParserSetupFunction(const std::function<void(QCommandLineParser &)> &function);
 	void setStartupFunction(const std::function<int(QStringList)> &function);
 	void setShutdownFunction(const std::function<bool(QStringList)> &function);
 	void setShutdownFunction(const std::function<bool(QStringList, int&)> &function);
@@ -69,6 +78,7 @@ signals:
 	void connectedTerminalsChanged(QList<Terminal*> connectedTerminals, QPrivateSignal);
 
 protected:
+	virtual void setupParser(QCommandLineParser &parser, bool useShortOptions = true);
 	virtual int startupApp(const QStringList &arguments);
 	virtual bool shutdownApp(Terminal *terminal, int &exitCode);
 
