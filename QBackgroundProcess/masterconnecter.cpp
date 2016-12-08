@@ -48,6 +48,8 @@ void MasterConnecter::connected()
 	this->socket->write(data);
 	this->socket->flush();
 
+	//TODO check for detached, and if yes, exit
+
 	//begin stdin reading
 	this->readThread->start();
 }

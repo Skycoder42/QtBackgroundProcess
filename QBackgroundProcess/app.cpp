@@ -1,10 +1,5 @@
 #include "app.h"
 #include "app_p.h"
-#include <iostream>
-#ifdef Q_OS_WIN
-#include <QDir>
-#include <QStandardPaths>
-#endif
 using namespace QBackgroundProcess;
 
 #ifdef d
@@ -12,70 +7,24 @@ using namespace QBackgroundProcess;
 #endif
 #define d this->d_ptr
 
-QString App::defaultLogPath()
-{
-#ifdef Q_OS_WIN
-	auto basePath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-	QDir(basePath).mkpath(".");
-	return QStringLiteral("%1/%2.log")
-			.arg(basePath)
-			.arg(QCoreApplication::applicationName());
-#else
-	//TODO check if root, else use user directory!
-	return QStringLiteral("/var/log/%1.log").arg(QCoreApplication::applicationName());
-#endif
-}
-
-QtMessageHandler App::activateTerminalDebugRedirect(bool format)
-{
-	if(format)
-		qSetMessagePattern(AppPrivate::terminalMessageFormat);
-
-	return qInstallMessageHandler(AppPrivate::termDebugMessage);
-}
-
-QtMessageHandler App::activateMasterDebugRedirect(bool format)
-{
-	auto self = AppPrivate::p_ptr();
-	if(self->debugTerm)
-		self->debugTerm->deleteLater();
-	self->debugTerm = new GlobalTerminal(qApp, self, true);
-
-	if(format)
-		qSetMessagePattern(AppPrivate::masterMessageFormat);
-
-	return qInstallMessageHandler(AppPrivate::masterDebugMessage);
-}
-
-QtMessageHandler App::activateMasterLogging(QString logFile, bool format)
-{
-	auto self = AppPrivate::p_ptr();
-	if(self->logFile) {
-		self->logFile->close();
-		self->logFile->deleteLater();
-	}
-	if(!logFile.isNull()) {
-		self->logFile = new QFile(logFile, self);
-		if(!self->logFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
-			self->logFile->deleteLater();
-	}
-
-	if(format)
-		qSetMessagePattern(AppPrivate::masterMessageFormat);
-
-	return qInstallMessageHandler(AppPrivate::masterDebugMessage);
-}
-
-App::App(int &argc, char **argv) :
-	QCoreApplication(argc, argv),
+App::App(int &argc, char **argv, int flags) :
+	QCoreApplication(argc, argv, flags),
 	d_ptr(new AppPrivate(this))
-{}
+{
+	qSetMessagePattern(AppPrivate::terminalMessageFormat);
+	qInstallMessageHandler(AppPrivate::qbackProcMessageHandler);
+}
 
 App::~App(){}
 
 QString App::instanceID() const
 {
 	return d->instanceId;
+}
+
+bool App::forwardMasterLog() const
+{
+	return d->masterLogging;
 }
 
 bool App::autoStartMaster() const
@@ -118,28 +67,28 @@ void App::setStartupFunction(const std::function<int (QStringList)> &function)
 	d->startupFunc = function;
 }
 
-void App::setShutdownFunction(const std::function<bool(QStringList)> &function)
+void App::setShutdownRequestFunction(const std::function<bool(QStringList)> &function)
 {
 	d->shutdownFunc = [function](Terminal *t, int&){
 		return function(t->arguments());
 	};
 }
 
-void App::setShutdownFunction(const std::function<bool(QStringList, int&)> &function)
+void App::setShutdownRequestFunction(const std::function<bool(QStringList, int&)> &function)
 {
 	d->shutdownFunc = [function](Terminal *t, int &r){
 		return function(t->arguments(), r);
 	};
 }
 
-void App::setShutdownFunction(const std::function<bool(Terminal*)> &function)
+void App::setShutdownRequestFunction(const std::function<bool(Terminal*)> &function)
 {
 	d->shutdownFunc = [function](Terminal *t, int&){
 		return function(t);
 	};
 }
 
-void App::setShutdownFunction(const std::function<bool(Terminal*, int&)> &function)
+void App::setShutdownRequestFunction(const std::function<bool(Terminal*, int&)> &function)
 {
 	d->shutdownFunc = function;
 }
@@ -152,6 +101,10 @@ int App::exec()
 	QCommandLineParser parser;
 	this->setupParser(parser);
 	parser.process(*this);
+
+	//update the log level
+	d->updateLoggingMode(parser.value("loglevel").toInt());
+	d->updateLoggingPath(parser.value("logpath"));
 
 	//generate the single id
 	this->createDefaultInstanceID(false);
@@ -186,6 +139,21 @@ void App::setInstanceID(QString instanceID, bool useAsSeed)
 		d->setInstanceId(AppPrivate::generateSingleId(instanceID));
 	else
 		d->setInstanceId(instanceID);
+}
+
+void App::setForwardMasterLog(bool forwardMasterLog)
+{
+	if(forwardMasterLog == d->masterLogging)
+		return;
+
+	d->masterLogging = forwardMasterLog;
+	emit forwardMasterLogChanged(forwardMasterLog);
+	if(d->masterLock->isLocked()) {//I am master
+		if(forwardMasterLog)
+			d->debugTerm = new GlobalTerminal(this, d, true);
+		else
+			d->debugTerm->deleteLater();
+	}
 }
 
 void App::setAutoStartMaster(bool autoStartMaster)
@@ -233,7 +201,7 @@ int App::startupApp(const QStringList &arguments)
 		return EXIT_SUCCESS;
 }
 
-bool App::shutdownApp(Terminal *terminal, int &exitCode)
+bool App::requestAppShutdown(Terminal *terminal, int &exitCode)
 {
 	if(d->shutdownFunc)
 		return d->shutdownFunc(terminal, exitCode);

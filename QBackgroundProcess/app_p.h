@@ -29,10 +29,10 @@ public:
 	static QString generateSingleId(const QString &seed = QString());
 	static AppPrivate *p_ptr();
 
-	static void termDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
-	static void masterDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+	static void qbackProcMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
 	bool running;
+	bool masterLogging;
 	bool autoStart;
 	bool ignoreExtraStart;
 	bool autoDelete;
@@ -58,6 +58,8 @@ public:
 	void setInstanceId(const QString &id);
 
 	void setupDefaultParser(QCommandLineParser &parser, bool useShortOptions = true);
+	void updateLoggingMode(int level);
+	void updateLoggingPath(const QString &path);
 
 public slots:
 	int initControlFlow();

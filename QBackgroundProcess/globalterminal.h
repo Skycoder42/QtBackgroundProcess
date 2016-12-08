@@ -29,7 +29,7 @@ protected:
 	qint64 writeData(const char *data, qint64 len) override;
 
 private slots:
-	void tryPushBuffer(QList<Terminal*> terms);
+	bool tryPushBuffer(QList<Terminal*> terms);
 
 private:
 	QScopedPointer<GlobalTerminalPrivate> d_ptr;
@@ -38,6 +38,7 @@ private:
 	void close() override;
 
 	void pushBuffer(QList<Terminal*> terms);
+	void discardBuffer();
 };
 
 }

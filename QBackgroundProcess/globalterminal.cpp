@@ -35,11 +35,8 @@ GlobalTerminal::GlobalTerminal(App *app, QObject *parent, bool enableBootBuffer)
 		d->buffer->open(QIODevice::WriteOnly);
 
 		QTimer::singleShot(10*1000, this, [this](){//wait up to 10 seconds for the first terminal to connect
-			if(d->buffer) {
-				d->buffer->close();
-				d->buffer->deleteLater();
-				d->buffer = nullptr;
-			}
+			if(d->buffer && !this->tryPushBuffer(d->app->connectedTerminals()))
+				this->discardBuffer();
 		});
 	}
 
@@ -92,10 +89,13 @@ qint64 GlobalTerminal::writeData(const char *data, qint64 len)
 	return len;
 }
 
-void GlobalTerminal::tryPushBuffer(QList<Terminal *> terms)
+bool GlobalTerminal::tryPushBuffer(QList<Terminal *> terms)
 {
-	if(d->buffer && !terms.isEmpty())
+	if(d->buffer && !terms.isEmpty()) {
 		this->pushBuffer(terms);
+		return true;
+	} else
+		return false;
 }
 
 bool GlobalTerminal::open(QIODevice::OpenMode mode)
@@ -112,6 +112,11 @@ void GlobalTerminal::pushBuffer(QList<Terminal *> terms)
 		foreach(auto term, terms)
 			term->write(data);
 	}
+	this->discardBuffer();
+}
+
+void GlobalTerminal::discardBuffer()
+{
 	d->buffer->close();
 	d->buffer->deleteLater();
 	d->buffer = nullptr;

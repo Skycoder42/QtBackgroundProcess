@@ -6,6 +6,8 @@
 #include <iostream>
 #ifdef Q_OS_WIN
 #include <qt_windows.h>
+#include <QDir>
+#include <QStandardPaths>
 #else
 #include <unistd.h>
 #include <sys/types.h>
@@ -63,16 +65,7 @@ AppPrivate *AppPrivate::p_ptr()
 	return qApp->d_ptr;
 }
 
-void AppPrivate::termDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg)
-{
-	std::cerr << qFormatLogMessage(type, context, msg).toStdString();
-	std::cerr.flush();
-
-	if(type == QtMsgType::QtFatalMsg)
-		qt_assert_x(context.function, qUtf8Printable(msg), context.file, context.line);
-}
-
-void AppPrivate::masterDebugMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void AppPrivate::qbackProcMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
 	auto self = p_ptr();
 	auto message = qFormatLogMessage(type, context, msg).toUtf8();
@@ -90,15 +83,19 @@ void AppPrivate::masterDebugMessage(QtMsgType type, const QMessageLogContext &co
 		any = true;
 	}
 
-	if(!any)
-		termDebugMessage(type, context, msg);
-	else if(type == QtMsgType::QtFatalMsg)
+	if(!any) {
+		std::cerr << qFormatLogMessage(type, context, msg).toStdString();
+		std::cerr.flush();
+	}
+
+	if(type == QtMsgType::QtFatalMsg)
 		qt_assert_x(context.function, qUtf8Printable(msg), context.file, context.line);
 }
 
 AppPrivate::AppPrivate(App *q_ptr) :
 	QObject(q_ptr),
 	running(false),
+	masterLogging(false),
 	autoStart(false),
 	ignoreExtraStart(false),
 	autoDelete(false),
@@ -139,9 +136,9 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 	QStringList lParams({"log", "loglevel"});
 	QStringList LParams("logpath");
 	if(useShortOptions) {
-		DParams.append("D");
-		lParams.append("l");
-		LParams.append("L");
+		DParams.prepend("D");
+		lParams.prepend("l");
+		LParams.prepend("L");
 	}
 
 	parser.addPositionalArgument("<command>",
@@ -163,21 +160,69 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 						 " - 0: log nothing\n"
 						 " - 1: critical errors only\n"
 						 " - 2: like 1 plus warnings\n"
-						 " - 3: like 2 plus information messages (default for release)\n"
-						 " - 4: verbose - log everything (default for debug)",
-						 "level",
 					 #ifdef QT_NO_DEBUG
+						 " - 3: like 2 plus information messages (default)\n"
+						 " - 4: verbose - log everything",
+						 "level",
 						 "3"
 					 #else
+						 " - 3: like 2 plus information messages\n"
+						 " - 4: verbose - log everything (default)",
+						 "level",
 						 "4"
 					 #endif
 					 });
+
+#ifdef Q_OS_WIN
+	auto basePath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+	QDir(basePath).mkpath(".");
+	auto defaultPath = QStringLiteral("%1/%2.log")
+		.arg(basePath)
+		.arg(QCoreApplication::applicationName());
+#else
+	//TODO check if writable, else use user directory!
+	auto defaultPath = QStringLiteral("/var/log/%1.log").arg(QCoreApplication::applicationName());
+#endif
+
 	parser.addOption({
 						 LParams,
-						 "Overwrites the default log <path>. NOTE: If the path was set in the application itself, "
-						 "this parameter will have no effect!",
-						 "path"
+						 QStringLiteral("Overwrites the default log <path>. The default path is platform and application specific. "
+						 "For this instance, it defaults to \"%1\". NOTE: The application can override the value internally.").arg(defaultPath),
+						 "path",
+						 defaultPath
 					 });
+}
+
+void AppPrivate::updateLoggingMode(int level)
+{
+	QString logStr;
+	switch (level) {
+	case 0:
+		logStr.prepend("\n*.critical=false");
+	case 1:
+		logStr.prepend("\n*.warning=false");
+	case 2:
+		logStr.prepend("\n*.info=false");
+	case 3:
+		logStr.prepend("*.debug=false");
+	default:
+		break;
+	}
+	if(!logStr.isNull())
+		QLoggingCategory::setFilterRules(logStr);
+}
+
+void AppPrivate::updateLoggingPath(const QString &path)
+{
+	if(this->logFile) {
+		this->logFile->close();
+		this->logFile->deleteLater();
+	}
+	if(!path.isNull()) {
+		this->logFile = new QFile(path, this);
+		if(!this->logFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
+			this->logFile->deleteLater();
+	}
 }
 
 int AppPrivate::initControlFlow()
@@ -223,6 +268,8 @@ int AppPrivate::makeMaster(const QStringList &arguments)
 					<< qUtf8Printable(this->masterLock->error());
 		return EXIT_FAILURE;
 	} else {
+		if(this->masterLogging)
+			this->debugTerm = new GlobalTerminal(qApp, this, true);
 		auto res = this->q_ptr->startupApp(arguments);
 		if(res != EXIT_SUCCESS) {
 			//cleanup
@@ -371,7 +418,7 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 void AppPrivate::stopMaster(Terminal *term)
 {
 	int eCode = EXIT_SUCCESS;
-	if(this->q_ptr->shutdownApp(term, eCode)) {
+	if(this->q_ptr->requestAppShutdown(term, eCode)) {
 		foreach(auto termin, this->activeTerminals)
 			termin->flush();
 		QMetaObject::invokeMethod(this, "doExit", Qt::QueuedConnection,
