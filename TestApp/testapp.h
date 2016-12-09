@@ -18,9 +18,10 @@ protected:
 
 private slots:
 	void handleCommand(const QStringList &arguments, bool starter);
+	void addTerminal(QBackgroundProcess::Terminal *terminal);
 
 private:
-	bool doEcho;
+	QBackgroundProcess::GlobalTerminal *statusTerm;
 
 	void doCommand(const QStringList &args);
 };
