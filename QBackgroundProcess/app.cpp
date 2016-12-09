@@ -106,12 +106,12 @@ int App::exec()
 	parser.process(*this);
 
 	//update the log level
-	d->updateLoggingMode(parser.value("loglevel").toInt());
+	d->updateLoggingMode(parser.value("loglevel").toInt());//TODO dynamic update!
 
 	//generate the single id
 	this->createDefaultInstanceID(false);
 
-	auto res = d->initControlFlow(parser.value("logpath"));
+	auto res = d->initControlFlow(parser.value("logpath"));//TODO dynamic update!
 	if(res == -1)//special case
 		return EXIT_SUCCESS;
 	else if(res != EXIT_SUCCESS)
