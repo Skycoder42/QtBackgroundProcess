@@ -47,10 +47,13 @@ bool App::autoKillTerminals() const
 	return d->autoKill;
 }
 
-QSharedPointer<QCommandLineParser> App::parseArguments(const QStringList &arguments)
+QSharedPointer<QCommandLineParser> App::parseArguments(QStringList arguments)
 {
 	auto ptr = QSharedPointer<QCommandLineParser>::create();
 	this->setupParser(*ptr.data());
+	//modify args to include app name
+	if(!arguments.startsWith(applicationFilePath()))
+		arguments.prepend(applicationFilePath());
 	if(ptr->parse(arguments))
 		return ptr;
 	else
@@ -104,12 +107,11 @@ int App::exec()
 
 	//update the log level
 	d->updateLoggingMode(parser.value("loglevel").toInt());
-	d->updateLoggingPath(parser.value("logpath"));
 
 	//generate the single id
 	this->createDefaultInstanceID(false);
 
-	auto res = d->initControlFlow();
+	auto res = d->initControlFlow(parser.value("logpath"));
 	if(res == -1)//special case
 		return EXIT_SUCCESS;
 	else if(res != EXIT_SUCCESS)
@@ -151,8 +153,10 @@ void App::setForwardMasterLog(bool forwardMasterLog)
 	if(d->masterLock->isLocked()) {//I am master
 		if(forwardMasterLog)
 			d->debugTerm = new GlobalTerminal(this, d, true);
-		else
+		else {
 			d->debugTerm->deleteLater();
+			d->debugTerm.clear();
+		}
 	}
 }
 

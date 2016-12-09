@@ -15,6 +15,14 @@ protected:
 	int startupApp(const QStringList &arguments) override;
 	bool requestAppShutdown(QBackgroundProcess::Terminal *terminal, int &exitCode) override;
 	void setupParser(QCommandLineParser &parser, bool useShortOptions) override;
+
+private slots:
+	void handleCommand(const QStringList &arguments, bool starter);
+
+private:
+	bool doEcho;
+
+	void doCommand(const QStringList &args);
 };
 
 #endif // TESTAPP_H

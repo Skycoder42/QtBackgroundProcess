@@ -21,3 +21,6 @@ DEPENDPATH += $$PWD/../QBackgroundProcess
 
 HEADERS += \
     testapp.h
+
+DISTFILES += \
+    testing.md

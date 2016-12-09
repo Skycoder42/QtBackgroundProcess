@@ -46,7 +46,7 @@ public:
 	bool autoDeleteTerminals() const;
 	bool autoKillTerminals() const;
 
-	QSharedPointer<QCommandLineParser> parseArguments(const QStringList &arguments);
+	QSharedPointer<QCommandLineParser> parseArguments(QStringList arguments);
 
 	void setParserSetupFunction(const std::function<void(QCommandLineParser &)> &function);
 	void setStartupFunction(const std::function<int(QStringList)> &function);
@@ -70,7 +70,7 @@ public slots:
 
 signals:
 	void newTerminalConnected(QBackgroundProcess::Terminal *terminal, QPrivateSignal);
-	void commandReceived(const QStringList &arguments, QPrivateSignal);
+	void commandReceived(const QStringList &arguments, bool isStarter, QPrivateSignal);
 
 	void forwardMasterLogChanged(bool forwardMasterLog);
 	void connectedTerminalsChanged(QList<Terminal*> connectedTerminals, QPrivateSignal);

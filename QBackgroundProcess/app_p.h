@@ -62,12 +62,12 @@ public:
 	void updateLoggingPath(const QString &path);
 
 public slots:
-	int initControlFlow();
+	int initControlFlow(QString logPath);
 
 private slots:
 
-	int makeMaster(const QStringList &arguments);
-	int startMaster(const QStringList &arguments, bool hideWarning = false);
+	int makeMaster(const QStringList &arguments, const QString &logPath);
+	int startMaster(const QStringList &arguments, bool isAutoStart = false);
 	int testMasterRunning(const QStringList &arguments);
 	int purgeMaster(const QStringList &arguments);
 

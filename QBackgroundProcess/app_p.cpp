@@ -142,17 +142,17 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 	}
 
 	parser.addPositionalArgument("<command>",
-								 "A default control command to control the background application. "
+								 "A control command to control the background application. "
 								 "Possible options are:\n"
 								 " - start: starts the application\n"
 								 " - stop: stops the application\n"
 								 " - purge_master: purges local servers and lockfiles, in case the master process crashed. "
-								 "Pass <accept> as second parameter, if you want to skip the prompt",
+								 "Pass <accept> as second parameter, if you want to skip the prompt.",
 								 "[start|stop|purge_master [accept]]");
 
 	parser.addOption({
 						 DParams,
-						 "It set, the terminal will only pass it's arguments to the master, and automatically finish after"
+						 "It set, the terminal will only pass it's arguments to the master, and automatically finish after."
 					 });
 	parser.addOption({
 						 lParams,
@@ -217,15 +217,18 @@ void AppPrivate::updateLoggingPath(const QString &path)
 	if(this->logFile) {
 		this->logFile->close();
 		this->logFile->deleteLater();
+		this->logFile.clear();
 	}
-	if(!path.isNull()) {
+	if(!path.isEmpty()) {
 		this->logFile = new QFile(path, this);
-		if(!this->logFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
+		if(!this->logFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) {
 			this->logFile->deleteLater();
+			this->logFile.clear();
+		}
 	}
 }
 
-int AppPrivate::initControlFlow()
+int AppPrivate::initControlFlow(QString logPath)
 {
 	//start/make master
 	auto args = QCoreApplication::arguments();
@@ -233,7 +236,7 @@ int AppPrivate::initControlFlow()
 	if(args.size() > 0) {
 		if(args[0] == masterArgument) {
 			args.removeFirst();
-			return this->makeMaster(args);
+			return this->makeMaster(args, logPath);
 		} else if(args[0] == purgeArgument) {
 			args.removeFirst();
 			return this->purgeMaster(args);
@@ -248,7 +251,7 @@ int AppPrivate::initControlFlow()
 		return this->testMasterRunning(args);
 }
 
-int AppPrivate::makeMaster(const QStringList &arguments)
+int AppPrivate::makeMaster(const QStringList &arguments, const QString &logPath)
 {
 	//create local server --> do first to make shure clients only see a "valid" master lock if the master started successfully
 	this->masterServer = new QLocalServer(this);
@@ -268,26 +271,33 @@ int AppPrivate::makeMaster(const QStringList &arguments)
 					<< qUtf8Printable(this->masterLock->error());
 		return EXIT_FAILURE;
 	} else {
+		qSetMessagePattern(AppPrivate::masterMessageFormat);
 		if(this->masterLogging)
 			this->debugTerm = new GlobalTerminal(qApp, this, true);
+		updateLoggingPath(logPath);
+
 		auto res = this->q_ptr->startupApp(arguments);
 		if(res != EXIT_SUCCESS) {
 			//cleanup
 			this->masterServer->close();
 			this->masterLock->unlock();
 		}
+
 		return res;
 	}
 }
 
-int AppPrivate::startMaster(const QStringList &arguments, bool hideWarning)
+int AppPrivate::startMaster(const QStringList &arguments, bool isAutoStart)
 {
 	//check if master already lives
 	if(this->masterLock->tryLock()) {//no master alive
 		auto ok = false;
 
 		auto args = arguments;
-		args.replace(0, masterArgument);
+		if(isAutoStart)
+			args.prepend(masterArgument);
+		else
+			args.replace(0, masterArgument);
 		if(QProcess::startDetached(QCoreApplication::applicationFilePath(), args)) {//start MASTER with additional start params
 			//wait for the master to start
 			this->masterLock->unlock();
@@ -314,7 +324,7 @@ int AppPrivate::startMaster(const QStringList &arguments, bool hideWarning)
 			return EXIT_FAILURE;
 		}
 	} else {//master is running --> ok
-		if(this->ignoreExtraStart) {
+		if(!isAutoStart && this->ignoreExtraStart) {// ignore only on normal starts, not on auto start
 			qCWarning(loggingCategory) << "Start commands ignored because master is already running!\n"
 						  "The terminal will connect with an empty argument list!";
 			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
@@ -322,7 +332,7 @@ int AppPrivate::startMaster(const QStringList &arguments, bool hideWarning)
 									  Q_ARG(bool, false));
 			return EXIT_SUCCESS;
 		} else {
-			if(!hideWarning)
+			if(!isAutoStart)
 				qCWarning(loggingCategory) << "Master is already running. Start arguments will be passed to it as is";
 			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
 									  Q_ARG(QStringList, arguments),
@@ -363,12 +373,25 @@ int AppPrivate::purgeMaster(const QStringList &arguments)
 
 	auto res = 0;
 
-	if(!this->masterLock->isLocked() || this->masterLock->removeStaleLockFile())
-		std::cout << "Master lockfile successfully removed" << std::endl;
-	else {
-		std::cout << "Failed to remove master lockfile" << std::endl;
-		res |= 0x02;
-	}
+	qint64 pid;
+	QString hostname;
+	QString appname;
+	if(this->masterLock->getLockInfo(&pid, &hostname, &appname)) {//TODO check QFile::exists...
+		if(this->masterLock->removeStaleLockFile())
+			std::cout << "Master lockfile successfully removed. It was locked by:";
+		else {
+			std::cout << "Failed to remove master lockfile. Lock data is:";
+			res |= 0x02;
+		}
+		std::cout << "\n - PID: "
+				  << pid
+				  << "\n - Hostname: "
+				  << hostname.toStdString()
+				  << "\n - Appname: "
+				  << appname.toStdString()
+				  << std::endl;
+	} else
+		std::cout << "No lock file detected" << std::endl;
 
 	if(QLocalServer::removeServer(this->instanceId))
 		std::cout << "Master server successfully removed" << std::endl;
@@ -400,7 +423,7 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 		});
 		this->activeTerminals.append(rTerm);
 		emit this->q_ptr->connectedTerminalsChanged(this->activeTerminals, App::QPrivateSignal());
-		emit this->q_ptr->commandReceived(rTerm->arguments(), App::QPrivateSignal());
+		emit this->q_ptr->commandReceived(rTerm->arguments(), rTerm->isStarter(), App::QPrivateSignal());
 
 		//test stop command
 		if(!rTerm->arguments().isEmpty() && rTerm->arguments().first() == QStringLiteral("stop"))
