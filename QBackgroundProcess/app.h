@@ -46,10 +46,8 @@ public:
 	bool autoDeleteTerminals() const;
 	bool autoKillTerminals() const;
 
-	QSharedPointer<QCommandLineParser> parseArguments(QStringList arguments);
-
 	void setParserSetupFunction(const std::function<void(QCommandLineParser &)> &function);
-	void setStartupFunction(const std::function<int(QStringList)> &function);
+	void setStartupFunction(const std::function<int (const QCommandLineParser &)> &function);
 	void setShutdownRequestFunction(const std::function<bool(QStringList)> &function);
 	void setShutdownRequestFunction(const std::function<bool(QStringList, int&)> &function);
 	void setShutdownRequestFunction(const std::function<bool(Terminal*)> &function);
@@ -77,7 +75,7 @@ signals:
 
 protected:
 	virtual void setupParser(QCommandLineParser &parser, bool useShortOptions = true);
-	virtual int startupApp(const QStringList &arguments);
+	virtual int startupApp(const QCommandLineParser &parser);
 	virtual bool requestAppShutdown(Terminal *terminal, int &exitCode);
 
 private:

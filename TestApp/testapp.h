@@ -10,9 +10,11 @@ class TestApp : public QBackgroundProcess::App
 public:
 	explicit TestApp(int &argc, char **argv);
 
+	void parseTerminalOptions();
+
 	// App interface
 protected:
-	int startupApp(const QStringList &arguments) override;
+	int startupApp(const QCommandLineParser &parser) override;
 	bool requestAppShutdown(QBackgroundProcess::Terminal *terminal, int &exitCode) override;
 	void setupParser(QCommandLineParser &parser, bool useShortOptions) override;
 
@@ -23,7 +25,7 @@ private slots:
 private:
 	QBackgroundProcess::GlobalTerminal *statusTerm;
 
-	void doCommand(const QStringList &args);
+	void doCommand(const QCommandLineParser &parser);
 };
 
 #endif // TESTAPP_H

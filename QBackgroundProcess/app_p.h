@@ -44,7 +44,7 @@ public:
 	QLocalServer *masterServer;
 	QList<Terminal*> activeTerminals;
 	std::function<void(QCommandLineParser&)> parserFunc;
-	std::function<int(QStringList)> startupFunc;
+	std::function<int(const QCommandLineParser &)> startupFunc;
 	std::function<bool(Terminal*, int&)> shutdownFunc;
 
 	MasterConnecter *master;
@@ -62,14 +62,14 @@ public:
 	void updateLoggingPath(const QString &path);
 
 public slots:
-	int initControlFlow(QString logPath);
+	int initControlFlow(const QCommandLineParser &parser);
 
 private slots:
 
-	int makeMaster(const QStringList &arguments, const QString &logPath);
-	int startMaster(const QStringList &arguments, bool isAutoStart = false);
-	int testMasterRunning(const QStringList &arguments);
-	int purgeMaster(const QStringList &arguments);
+	int makeMaster(const QCommandLineParser &parser);
+	int startMaster(bool isAutoStart = false);
+	int testMasterRunning();
+	int purgeMaster(const QCommandLineParser &parser);
 
 	void newTerminalConnected();
 	void terminalLoaded(TerminalPrivate *terminal, bool success);

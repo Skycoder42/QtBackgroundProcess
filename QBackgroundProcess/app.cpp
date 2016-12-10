@@ -47,25 +47,12 @@ bool App::autoKillTerminals() const
 	return d->autoKill;
 }
 
-QSharedPointer<QCommandLineParser> App::parseArguments(QStringList arguments)
-{
-	auto ptr = QSharedPointer<QCommandLineParser>::create();
-	this->setupParser(*ptr.data());
-	//modify args to include app name
-	if(!arguments.startsWith(applicationFilePath()))
-		arguments.prepend(applicationFilePath());
-	if(ptr->parse(arguments))
-		return ptr;
-	else
-		throw InvalidArgumentsException(ptr->errorText());
-}
-
 void App::setParserSetupFunction(const std::function<void (QCommandLineParser &)> &function)
 {
 	d->parserFunc = function;
 }
 
-void App::setStartupFunction(const std::function<int (QStringList)> &function)
+void App::setStartupFunction(const std::function<int (const QCommandLineParser &)> &function)
 {
 	d->startupFunc = function;
 }
@@ -105,13 +92,13 @@ int App::exec()
 	this->setupParser(parser);
 	parser.process(*this);
 
-	//update the log level
-	d->updateLoggingMode(parser.value("loglevel").toInt());//TODO dynamic update!
+	//update terminal logging
+	d->updateLoggingMode(parser.value("terminallog").toInt());
 
 	//generate the single id
 	this->createDefaultInstanceID(false);
 
-	auto res = d->initControlFlow(parser.value("logpath"));//TODO dynamic update!
+	auto res = d->initControlFlow(parser);
 	if(res == -1)//special case
 		return EXIT_SUCCESS;
 	else if(res != EXIT_SUCCESS)
@@ -197,10 +184,10 @@ void App::setupParser(QCommandLineParser &parser, bool useShortOptions)
 		d->parserFunc(parser);
 }
 
-int App::startupApp(const QStringList &arguments)
+int App::startupApp(const QCommandLineParser &parser)
 {
 	if(d->startupFunc)
-		return d->startupFunc(arguments);
+		return d->startupFunc(parser);
 	else
 		return EXIT_SUCCESS;
 }

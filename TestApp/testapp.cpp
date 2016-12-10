@@ -8,30 +8,37 @@ TestApp::TestApp(int &argc, char **argv) :
 	statusTerm(nullptr)
 {}
 
-int TestApp::startupApp(const QStringList &arguments)
+void TestApp::parseTerminalOptions()
+{
+	QCommandLineParser parser;
+	this->setupParser(parser, true);
+	parser.process(*this);
+	this->setAutoStartMaster(parser.isSet("a"));
+	this->setIgnoreMultiStarts(parser.isSet("i"));
+}
+
+int TestApp::startupApp(const QCommandLineParser &parser)
 {
 	setAutoDeleteTerminals(true);
-	doCommand(arguments);
-	qDebug() << "App Master Started with arguments:" << arguments;
+	doCommand(parser);
+	qDebug() << "App Master Started with arguments:"
+			 << parser.positionalArguments()
+			 << "and options:"
+			 << parser.optionNames();
 
 	connect(this, &TestApp::commandReceived,
 			this, &TestApp::handleCommand);
 
-	try {
-		auto parser = this->parseArguments(arguments);
-		if(parser->isSet("m")) {
-			if(parser->value("m") == "echo") {
-				connect(this, &TestApp::newTerminalConnected,
-						this, &TestApp::addTerminal);
-				qDebug() << "Master started in echo mode!";
-			} else if(parser->value("m") == "status"){
-				statusTerm = new GlobalTerminal(this, this);
-				qDebug() << "Master started in status mode!";
-			} else
-				qWarning() << "Unknown mode! Will be ignored";
-		}
-	} catch(InvalidArgumentsException e) {
-		qCritical() << e.qWhat();
+	if(parser.isSet("m")) {
+		if(parser.value("m") == "echo") {
+			connect(this, &TestApp::newTerminalConnected,
+					this, &TestApp::addTerminal);
+			qDebug() << "Master started in echo mode!";
+		} else if(parser.value("m") == "status"){
+			statusTerm = new GlobalTerminal(this, this);
+			qDebug() << "Master started in status mode!";
+		} else
+			qWarning() << "Unknown mode! Will be ignored";
 	}
 
 	return EXIT_SUCCESS;
@@ -76,7 +83,7 @@ void TestApp::handleCommand(const QStringList &arguments, bool starter)
 	if(starter)
 		qDebug() << "skipping starter args:" << arguments;
 	else {
-		doCommand(arguments);
+		//TODO doCommand(arguments);
 		qDebug() << "received new command:" << arguments;
 	}
 
@@ -92,15 +99,10 @@ void TestApp::addTerminal(Terminal *terminal)
 	});
 }
 
-void TestApp::doCommand(const QStringList &args)
+void TestApp::doCommand(const QCommandLineParser &parser)
 {
-	try {
-		auto parser = this->parseArguments(args);
-		if(parser->isSet("f"))
-			this->setForwardMasterLog(parser->value("f").toInt());
-	} catch(InvalidArgumentsException e) {
-		qCritical() << e.qWhat();
-	}
+	if(parser.isSet("f"))
+		this->setForwardMasterLog(parser.value("f").toInt());
 }
 
 int main(int argc, char *argv[])
@@ -108,14 +110,6 @@ int main(int argc, char *argv[])
 	TestApp a(argc, argv);
 	TestApp::setApplicationVersion("4.2.0");
 
-	//handle those here, because the apply to the terminals, not the master
-	try {
-		auto parser = a.parseArguments(a.arguments());
-		a.setAutoStartMaster(parser->isSet("a"));
-		a.setIgnoreMultiStarts(parser->isSet("i"));
-	} catch(InvalidArgumentsException e) {
-		qCritical() << e.qWhat();
-	}
-
+	a.parseTerminalOptions();
 	return a.exec();
 }
