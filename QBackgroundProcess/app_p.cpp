@@ -187,14 +187,15 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 	parser.addOption({
 						 LParams,
 						 QStringLiteral("Overwrites the default log <path>. The default path is platform and application specific. "
-						 "For this instance, it defaults to \"%1\". NOTE: The application can override the value internally.").arg(defaultPath),
+						 "For this instance, it defaults to \"%1\". NOTE: The application can override the value internally. "
+						 "Pass an empty string (--logpath \"\") to disable logging to a file.").arg(defaultPath),
 						 "path",
 						 defaultPath
 					 });
 	parser.addOption({
 						 "terminallog",
-						 "Sets the log <level> for terminal only messages. This does not include messages forwarded from the master."
-						 "Log levels are the same as for the <loglevel> option",
+						 "Sets the log <level> for terminal only messages. This does not include messages forwarded from the master. "
+						 "Log levels are the same as for the <loglevel> option.",
 						 "level",
 					 #ifdef QT_NO_DEBUG
 						 "3"
@@ -205,7 +206,7 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 
 	parser.addOption({
 						 "accept",
-						 "purge_master only: skips the prompt and purges automatically"
+						 "purge_master only: skips the prompt and purges automatically."
 					 });
 }
 
@@ -221,11 +222,12 @@ void AppPrivate::updateLoggingMode(int level)
 		logStr.prepend("\n*.info=false");
 	case 3:
 		logStr.prepend("*.debug=false");
-	default:
+	case 4:
 		break;
+	default:
+		return;
 	}
-	if(!logStr.isNull())
-		QLoggingCategory::setFilterRules(logStr);
+	QLoggingCategory::setFilterRules(logStr);
 }
 
 void AppPrivate::updateLoggingPath(const QString &path)
@@ -288,7 +290,7 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 		qSetMessagePattern(AppPrivate::masterMessageFormat);
 		if(this->masterLogging)
 			this->debugTerm = new GlobalTerminal(qApp, this, true);
-		updateLoggingMode(parser.value("loglevel").toInt());//TODO dyn update
+		updateLoggingMode(parser.value("loglevel").toInt());
 		updateLoggingPath(parser.value("logpath"));
 
 		auto res = this->q_ptr->startupApp(parser);
@@ -341,8 +343,8 @@ int AppPrivate::startMaster(bool isAutoStart)
 		}
 	} else {//master is running --> ok
 		if(!isAutoStart && this->ignoreExtraStart) {// ignore only on normal starts, not on auto start
-			qCWarning(loggingCategory) << "Start commands ignored because master is already running!\n"
-						  "The terminal will connect with an empty argument list!";
+			qCWarning(loggingCategory) << "Start commands ignored because master is already running!"
+									   << "The terminal will connect with an empty argument list!";
 			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
 									  Q_ARG(QStringList, QStringList()),
 									  Q_ARG(bool, false));
@@ -442,6 +444,12 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 			terminal->deleteLater();
 			return;
 		}
+
+		//handle own arguments (logging)
+		if(terminal->parser->isSet("loglevel"))
+			updateLoggingMode(terminal->parser->value("loglevel").toInt());
+		if(terminal->parser->isSet("logpath"))
+			updateLoggingPath(terminal->parser->value("logpath"));
 
 		//add terminal to terminal list
 		auto rTerm = new Terminal(terminal, this);
