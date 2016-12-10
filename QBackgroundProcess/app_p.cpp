@@ -468,7 +468,6 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 		if(!args.isEmpty() && args.first() == QStringLiteral("stop"))
 			this->stopMaster(rTerm);
 
-		//TODO check for detached, and if yes, exit
 		if(this->autoKill || rTerm->parser()->isSet("detached")) {
 			rTerm->setAutoDelete(true);
 			rTerm->disconnectTerminal();

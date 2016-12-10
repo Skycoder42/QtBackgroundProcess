@@ -65,7 +65,6 @@ public slots:
 	int initControlFlow(const QCommandLineParser &parser);
 
 private slots:
-
 	int makeMaster(const QCommandLineParser &parser);
 	int startMaster(bool isAutoStart = false);
 	int testMasterRunning();
