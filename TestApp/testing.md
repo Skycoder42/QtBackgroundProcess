@@ -29,12 +29,12 @@ Do the following commands and compare with the output to validate:
 
 #### Log File
 ```
-[2016-12-09T20:06:33 Debug]    App Master Started with arguments: ("Test1")
-[2016-12-09T20:06:33 Debug]    skipping starter args: ("start", "Test1")
-[2016-12-09T20:07:03 Debug]    received new command: ("Test2")
-[2016-12-09T20:07:12 Debug]    received new command: ("start", "Test", "3")
-[2016-12-09T20:07:21 Debug]    received new command: ("stop", "Test", "4")
-[2016-12-09T20:07:21 Debug]    stop requested with ("stop", "Test", "4")
+[2016-12-10T15:05:43 Debug]    App Master Started with arguments: ("__qbckgrndprcss$start#master~", "Test1") and options: ()
+[2016-12-10T15:05:43 Debug]    skipping starter args: ("start", "Test1") and options: ()
+[2016-12-10T15:05:49 Debug]    received new command: ("Test2") and options: ()
+[2016-12-10T15:05:56 Debug]    received new command: ("start", "Test", "3") and options: ()
+[2016-12-10T15:06:01 Debug]    received new command: ("stop", "Test", "4") and options: ()
+[2016-12-10T15:06:01 Debug]    stop requested with ("stop", "Test", "4") and options: ()
 ```
 
 ## Commands Test
@@ -59,79 +59,77 @@ Do the following commands and compare with the output to validate:
 #### Terminal 2
 ##### After Command
 ```
-[2016-12-09T20:27:05 Debug]    App Master Started with arguments: ("-a", "-f", "1", "-i", "Test2")
-[2016-12-09T20:27:05 Debug]    skipping starter args: ("-a", "-f", "1", "-i", "Test2")
+[2016-12-10T15:07:26 Debug]    App Master Started with arguments: ("__qbckgrndprcss$start#master~", "Test2") and options: ("a", "f", "i")
+[2016-12-10T15:07:26 Debug]    skipping starter args: ("Test2") and options: ("a", "f", "i")
 ```
 
 ##### Completely
 ```
-[2016-12-09T20:27:05 Debug]    App Master Started with arguments: ("-a", "-f", "1", "-i", "Test2")
-[2016-12-09T20:27:05 Debug]    skipping starter args: ("-a", "-f", "1", "-i", "Test2")
-[2016-12-09T20:27:16 Debug]    received new command: ()
-[2016-12-09T20:27:28 Debug]    received new command: ("start", "Test", "4")
-[2016-12-09T20:27:38 Debug]    received new command: ("-a", "-i", "Test5")
-[2016-12-09T20:27:48 Debug]    received new command: ("-i", "Test6")
-[2016-12-09T20:28:20 Debug]    received new command: ("stop", "-f", "1", "Test9")
+[2016-12-10T15:07:26 Debug]    App Master Started with arguments: ("__qbckgrndprcss$start#master~", "Test2") and options: ("a", "f", "i")
+[2016-12-10T15:07:26 Debug]    skipping starter args: ("Test2") and options: ("a", "f", "i")
+[2016-12-10T15:07:56 Debug]    received new command: () and options: ()
+[2016-12-10T15:08:04 Debug]    received new command: ("start", "Test", "4") and options: ()
+[2016-12-10T15:08:10 Debug]    received new command: ("Test5") and options: ("a", "i")
+[2016-12-10T15:08:17 Debug]    received new command: ("Test6") and options: ("i")
+[2016-12-10T15:08:38 Debug]    received new command: ("stop", "Test") and options: ("f")
 ```
 
 #### Terminal 3
 ##### After Command
 ```
 [Warning]  QBackgroundProcess: Start commands ignored because master is already running! The terminal will connect with an empty argument list!
-[2016-12-09T20:27:16 Debug]    received new command: ()
+[2016-12-10T15:07:56 Debug]    received new command: () and options: ()
 ```
 
 ##### Completely
 ```
 [Warning]  QBackgroundProcess: Start commands ignored because master is already running! The terminal will connect with an empty argument list!
-[2016-12-09T20:27:16 Debug]    received new command: ()
-[2016-12-09T20:27:28 Debug]    received new command: ("start", "Test", "4")
-[2016-12-09T20:27:38 Debug]    received new command: ("-a", "-i", "Test5")
-[2016-12-09T20:27:48 Debug]    received new command: ("-i", "Test6")
-[2016-12-09T20:28:20 Debug]    received new command: ("stop", "-f", "1", "Test9")
+[2016-12-10T15:07:56 Debug]    received new command: () and options: ()
+[2016-12-10T15:08:04 Debug]    received new command: ("start", "Test", "4") and options: ()
+[2016-12-10T15:08:10 Debug]    received new command: ("Test5") and options: ("a", "i")
+[2016-12-10T15:08:17 Debug]    received new command: ("Test6") and options: ("i")
+[2016-12-10T15:08:38 Debug]    received new command: ("stop", "Test") and options: ("f")
 ```
 
 #### Terminal 4
 ##### After Command
 ```
 [Warning]  QBackgroundProcess: Master is already running. Start arguments will be passed to it as is
-[2016-12-09T20:27:28 Debug]    received new command: ("start", "Test", "4")
+[2016-12-10T15:08:04 Debug]    received new command: ("start", "Test", "4") and options: ()
 ```
 
 ##### Completely
 ```
 [Warning]  QBackgroundProcess: Master is already running. Start arguments will be passed to it as is
-[2016-12-09T20:27:28 Debug]    received new command: ("start", "Test", "4")
-[2016-12-09T20:27:38 Debug]    received new command: ("-a", "-i", "Test5")
-[2016-12-09T20:27:48 Debug]    received new command: ("-i", "Test6")
-[2016-12-09T20:28:20 Debug]    received new command: ("stop", "-f", "1", "Test9")
-[2016-12-09T20:28:20 Debug]    stop requested with ("stop", "-f", "1", "Test9")
+[2016-12-10T15:08:04 Debug]    received new command: ("start", "Test", "4") and options: ()
+[2016-12-10T15:08:10 Debug]    received new command: ("Test5") and options: ("a", "i")
+[2016-12-10T15:08:17 Debug]    received new command: ("Test6") and options: ("i")
+[2016-12-10T15:08:38 Debug]    received new command: ("stop", "Test") and options: ("f")
 ```
 
 #### Terminal 5
 ##### After Command
 ```
-[2016-12-09T20:27:38 Debug]    received new command: ("-a", "-i", "Test5")
+[2016-12-10T15:08:10 Debug]    received new command: ("Test5") and options: ("a", "i")
 ```
 
 ##### Completely
 ```
-[2016-12-09T20:27:38 Debug]    received new command: ("-a", "-i", "Test5")
-[2016-12-09T20:27:48 Debug]    received new command: ("-i", "Test6")
-[2016-12-09T20:28:20 Debug]    received new command: ("stop", "-f", "1", "Test9")
+[2016-12-10T15:08:10 Debug]    received new command: ("Test5") and options: ("a", "i")
+[2016-12-10T15:08:17 Debug]    received new command: ("Test6") and options: ("i")
+[2016-12-10T15:08:38 Debug]    received new command: ("stop", "Test") and options: ("f")
 ```
 
 #### Terminal 6
 ##### After Command
 ```
-[2016-12-09T20:27:48 Debug]    received new command: ("-i", "Test6")
+[2016-12-10T15:08:17 Debug]    received new command: ("Test6") and options: ("i")
 ```
 
 ##### Completely
 ```
-[2016-12-09T20:27:48 Debug]    received new command: ("-i", "Test6")
-[2016-12-09T20:28:20 Debug]    received new command: ("stop", "-f", "1", "Test9")
-[2016-12-09T20:28:20 Debug]    stop requested with ("stop", "-f", "1", "Test9")
+[2016-12-10T15:08:17 Debug]    received new command: ("Test6") and options: ("i")
+[2016-12-10T15:08:38 Debug]    received new command: ("stop", "Test") and options: ("f")
 ```
 
 #### Terminal 7
@@ -141,8 +139,7 @@ Do the following commands and compare with the output to validate:
 
 ##### Completely
 ```
-[2016-12-09T20:28:20 Debug]    received new command: ("stop", "-f", "1", "Test9")
-[2016-12-09T20:28:20 Debug]    stop requested with ("stop", "-f", "1", "Test9")
+[2016-12-10T15:08:38 Debug]    received new command: ("stop", "Test") and options: ("f")
 ```
 
 #### Terminal 8
@@ -152,27 +149,24 @@ Do the following commands and compare with the output to validate:
 
 ##### Completely
 ```
-[2016-12-09T20:28:20 Debug]    received new command: ("stop", "-f", "1", "Test9")
-[2016-12-09T20:28:20 Debug]    stop requested with ("stop", "-f", "1", "Test9")
+[2016-12-10T15:08:38 Debug]    received new command: ("stop", "Test") and options: ("f")
 ```
 
 #### Terminal 9
 ```
-[2016-12-09T20:28:20 Debug]    received new command: ("stop", "-f", "1", "Test9")
-[2016-12-09T20:28:20 Debug]    stop requested with ("stop", "-f", "1", "Test9")
+[2016-12-10T15:08:38 Debug]    received new command: ("stop", "Test") and options: ("f")
 ```
 
 #### Log File
 ```
-[2016-12-09T20:27:05 Debug]    App Master Started with arguments: ("-a", "-f", "1", "-i", "Test2")
-[2016-12-09T20:27:05 Debug]    skipping starter args: ("-a", "-f", "1", "-i", "Test2")
-[2016-12-09T20:27:16 Debug]    received new command: ()
-[2016-12-09T20:27:28 Debug]    received new command: ("start", "Test", "4")
-[2016-12-09T20:27:38 Debug]    received new command: ("-a", "-i", "Test5")
-[2016-12-09T20:27:48 Debug]    received new command: ("-i", "Test6")
-[2016-12-09T20:28:02 Debug]    received new command: ("-f", "0", "Test", "7")
-[2016-12-09T20:28:12 Debug]    received new command: ("Test", "8")
-[2016-12-09T20:28:20 Debug]    received new command: ("stop", "-f", "1", "Test9")
-[2016-12-09T20:28:20 Debug]    stop requested with ("stop", "-f", "1", "Test9")
-
+[2016-12-10T15:07:26 Debug]    App Master Started with arguments: ("__qbckgrndprcss$start#master~", "Test2") and options: ("a", "f", "i")
+[2016-12-10T15:07:26 Debug]    skipping starter args: ("Test2") and options: ("a", "f", "i")
+[2016-12-10T15:07:56 Debug]    received new command: () and options: ()
+[2016-12-10T15:08:04 Debug]    received new command: ("start", "Test", "4") and options: ()
+[2016-12-10T15:08:10 Debug]    received new command: ("Test5") and options: ("a", "i")
+[2016-12-10T15:08:17 Debug]    received new command: ("Test6") and options: ("i")
+[2016-12-10T15:08:24 Debug]    received new command: ("Test", "7") and options: ("f")
+[2016-12-10T15:08:31 Debug]    received new command: ("Test", "8") and options: ()
+[2016-12-10T15:08:38 Debug]    received new command: ("stop", "Test") and options: ("f")
+[2016-12-10T15:08:38 Debug]    stop requested with ("stop", "Test") and options: ("f")
 ```

@@ -44,9 +44,12 @@ int TestApp::startupApp(const QCommandLineParser &parser)
 	return EXIT_SUCCESS;
 }
 
-bool TestApp::requestAppShutdown(Terminal *terminal, int &exitCode)
+bool TestApp::requestAppShutdown(Terminal *terminal, int &)
 {
-	qDebug() << "stop requested with" << terminal->arguments();
+	qDebug() << "stop requested with"
+			 << terminal->parser()->positionalArguments()
+			 << "and options:"
+			 << terminal->parser()->optionNames();
 	return true;
 }
 
@@ -78,17 +81,23 @@ void TestApp::setupParser(QCommandLineParser &parser, bool useShortOptions)
 					 });
 }
 
-void TestApp::handleCommand(const QStringList &arguments, bool starter)
+void TestApp::handleCommand(QSharedPointer<QCommandLineParser> parser, bool starter)
 {
-	if(starter)
-		qDebug() << "skipping starter args:" << arguments;
-	else {
-		//TODO doCommand(arguments);
-		qDebug() << "received new command:" << arguments;
+	if(starter) {
+		qDebug() << "skipping starter args:"
+				 << parser->positionalArguments()
+				 << "and options:"
+				 << parser->optionNames();
+	} else {
+		doCommand(*parser.data());
+		qDebug() << "received new command:"
+				 << parser->positionalArguments()
+				 << "and options:"
+				 << parser->optionNames();
 	}
 
 	if(statusTerm)
-		statusTerm->write("[" + arguments.join(", ").toUtf8() + "]\n");
+		statusTerm->write("[" + parser->positionalArguments().join(", ").toUtf8() + "]\n");
 }
 
 void TestApp::addTerminal(Terminal *terminal)

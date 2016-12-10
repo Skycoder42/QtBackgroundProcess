@@ -1,6 +1,6 @@
+#include "app_p.h"
 #include "terminal.h"
 #include "terminal_p.h"
-#include <QJsonArray>
 using namespace QBackgroundProcess;
 
 #ifdef d
@@ -42,13 +42,9 @@ bool Terminal::isStarter() const
 	return d->status[QStringLiteral("isStarter")].toBool();
 }
 
-QStringList Terminal::arguments() const
+QSharedPointer<QCommandLineParser> Terminal::parser() const
 {
-	auto array = d->status[QStringLiteral("arguments")].toArray();
-	QStringList lst;
-	foreach(auto value, array)
-		lst.append(value.toString());
-	return lst;
+	return d->parser;
 }
 
 bool Terminal::isSequential() const

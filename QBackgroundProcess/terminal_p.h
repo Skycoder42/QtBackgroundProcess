@@ -18,8 +18,10 @@ public:
 
 	QLocalSocket *socket;
 	QJsonObject status;
+	QSharedPointer<QCommandLineParser> parser;
 	bool autoDelete;
 
+	bool loadParser();
 	void beginSoftDisconnect();
 
 signals:

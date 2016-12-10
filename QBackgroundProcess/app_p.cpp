@@ -432,7 +432,18 @@ void AppPrivate::newTerminalConnected()
 
 void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 {
-	if(success) {		
+	if(success) {
+		//create terminal parser and validate it
+		terminal->parser.reset(new QCommandLineParser());
+		qApp->setupParser(*terminal->parser.data());
+		if(!terminal->loadParser()) {
+			qCWarning(loggingCategory) << "Terminal with invalid commands discarded. Error:"
+									   << terminal->parser->errorText();
+			terminal->deleteLater();
+			return;
+		}
+
+		//add terminal to terminal list
 		auto rTerm = new Terminal(terminal, this);
 		rTerm->setAutoDelete(this->autoDelete);
 		connect(rTerm, &Terminal::destroyed, this, [=](){
@@ -441,14 +452,16 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 		});
 		this->activeTerminals.append(rTerm);
 		emit this->q_ptr->connectedTerminalsChanged(this->activeTerminals, App::QPrivateSignal());
-		emit this->q_ptr->commandReceived(rTerm->arguments(), rTerm->isStarter(), App::QPrivateSignal());
+		//emit the command
+		emit this->q_ptr->commandReceived(rTerm->parser(), rTerm->isStarter(), App::QPrivateSignal());
 
-		//test stop command
-		if(!rTerm->arguments().isEmpty() && rTerm->arguments().first() == QStringLiteral("stop"))
+		//test if stop command
+		auto args = rTerm->parser()->positionalArguments();
+		if(!args.isEmpty() && args.first() == QStringLiteral("stop"))
 			this->stopMaster(rTerm);
 
 		//TODO check for detached, and if yes, exit
-		if(this->autoKill) {
+		if(this->autoKill || rTerm->parser()->isSet("detached")) {
 			rTerm->setAutoDelete(true);
 			rTerm->disconnectTerminal();
 		} else

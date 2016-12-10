@@ -48,8 +48,8 @@ public:
 
 	void setParserSetupFunction(const std::function<void(QCommandLineParser &)> &function);
 	void setStartupFunction(const std::function<int (const QCommandLineParser &)> &function);
-	void setShutdownRequestFunction(const std::function<bool(QStringList)> &function);
-	void setShutdownRequestFunction(const std::function<bool(QStringList, int&)> &function);
+	void setShutdownRequestFunction(const std::function<bool(const QCommandLineParser &)> &function);
+	void setShutdownRequestFunction(const std::function<bool(const QCommandLineParser &, int&)> &function);
 	void setShutdownRequestFunction(const std::function<bool(Terminal*)> &function);
 	void setShutdownRequestFunction(const std::function<bool(Terminal*, int&)> &function);
 
@@ -68,7 +68,7 @@ public slots:
 
 signals:
 	void newTerminalConnected(QBackgroundProcess::Terminal *terminal, QPrivateSignal);
-	void commandReceived(const QStringList &arguments, bool isStarter, QPrivateSignal);
+	void commandReceived(QSharedPointer<QCommandLineParser> parser, bool isStarter, QPrivateSignal);
 
 	void forwardMasterLogChanged(bool forwardMasterLog);
 	void connectedTerminalsChanged(QList<Terminal*> connectedTerminals, QPrivateSignal);

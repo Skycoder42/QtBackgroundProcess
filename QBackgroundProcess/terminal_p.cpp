@@ -2,6 +2,7 @@
 #include "app_p.h"
 #include <QtEndian>
 #include <QJsonDocument>
+#include <QJsonArray>
 #include <QTimer>
 using namespace QBackgroundProcess;
 
@@ -10,6 +11,7 @@ TerminalPrivate::TerminalPrivate(QLocalSocket *socket, QObject *parent) :
 	socket(socket),
 	status(),
 	autoDelete(false),
+	parser(),
 	isLoading(true),
 	disconnecting(false)
 {
@@ -23,6 +25,15 @@ TerminalPrivate::TerminalPrivate(QLocalSocket *socket, QObject *parent) :
 			this, &TerminalPrivate::readyRead);
 	connect(socket, &QLocalSocket::bytesWritten,
 			this, &TerminalPrivate::writeReady);
+}
+
+bool TerminalPrivate::loadParser()
+{
+	auto array = this->status[QStringLiteral("arguments")].toArray();
+	QStringList lst(QCoreApplication::applicationFilePath());
+	foreach(auto value, array)
+		lst.append(value.toString());
+	return parser->parse(lst);
 }
 
 void TerminalPrivate::beginSoftDisconnect()

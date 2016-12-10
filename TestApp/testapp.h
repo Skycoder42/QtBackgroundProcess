@@ -15,11 +15,11 @@ public:
 	// App interface
 protected:
 	int startupApp(const QCommandLineParser &parser) override;
-	bool requestAppShutdown(QBackgroundProcess::Terminal *terminal, int &exitCode) override;
+	bool requestAppShutdown(QBackgroundProcess::Terminal *terminal, int &) override;
 	void setupParser(QCommandLineParser &parser, bool useShortOptions) override;
 
 private slots:
-	void handleCommand(const QStringList &arguments, bool starter);
+	void handleCommand(QSharedPointer<QCommandLineParser> parser, bool starter);
 	void addTerminal(QBackgroundProcess::Terminal *terminal);
 
 private:

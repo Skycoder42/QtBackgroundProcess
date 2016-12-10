@@ -57,17 +57,17 @@ void App::setStartupFunction(const std::function<int (const QCommandLineParser &
 	d->startupFunc = function;
 }
 
-void App::setShutdownRequestFunction(const std::function<bool(QStringList)> &function)
+void App::setShutdownRequestFunction(const std::function<bool(const QCommandLineParser &)> &function)
 {
 	d->shutdownFunc = [function](Terminal *t, int&){
-		return function(t->arguments());
+		return function(*t->parser().data());
 	};
 }
 
-void App::setShutdownRequestFunction(const std::function<bool(QStringList, int&)> &function)
+void App::setShutdownRequestFunction(const std::function<bool(const QCommandLineParser &, int&)> &function)
 {
 	d->shutdownFunc = [function](Terminal *t, int &r){
-		return function(t->arguments(), r);
+		return function(*t->parser().data(), r);
 	};
 }
 
