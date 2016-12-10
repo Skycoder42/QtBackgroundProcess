@@ -290,8 +290,8 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 		qSetMessagePattern(AppPrivate::masterMessageFormat);
 		if(this->masterLogging)
 			this->debugTerm = new GlobalTerminal(qApp, this, true);
-		updateLoggingMode(parser.value("loglevel").toInt());
-		updateLoggingPath(parser.value("logpath"));
+		this->updateLoggingMode(parser.value("loglevel").toInt());
+		this->updateLoggingPath(parser.value("logpath"));
 
 		auto res = this->q_ptr->startupApp(parser);
 		if(res != EXIT_SUCCESS) {
@@ -447,9 +447,9 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 
 		//handle own arguments (logging)
 		if(terminal->parser->isSet("loglevel"))
-			updateLoggingMode(terminal->parser->value("loglevel").toInt());
+			this->updateLoggingMode(terminal->parser->value("loglevel").toInt());
 		if(terminal->parser->isSet("logpath"))
-			updateLoggingPath(terminal->parser->value("logpath"));
+			this->updateLoggingPath(terminal->parser->value("logpath"));
 
 		//add terminal to terminal list
 		auto rTerm = new Terminal(terminal, this);
