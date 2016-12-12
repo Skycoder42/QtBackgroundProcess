@@ -3,7 +3,7 @@
 
 #include <QTimer>
 
-namespace QBackgroundProcess {
+namespace QtBackgroundProcess {
 
 class GlobalTerminalPrivate {
 public:
@@ -18,7 +18,7 @@ public:
 
 }
 
-using namespace QBackgroundProcess;
+using namespace QtBackgroundProcess;
 
 #ifdef d
 #undef d

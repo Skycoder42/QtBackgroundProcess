@@ -1,5 +1,5 @@
-#ifndef QBACKGROUNDPROCESS_APPPRIVATE_H
-#define QBACKGROUNDPROCESS_APPPRIVATE_H
+#ifndef QtBACKGROUNDPROCESS_APPPRIVATE_H
+#define QtBACKGROUNDPROCESS_APPPRIVATE_H
 
 #include "app.h"
 #include <QLockFile>
@@ -12,7 +12,7 @@
 #include "terminal_p.h"
 #include "globalterminal.h"
 
-namespace QBackgroundProcess {
+namespace QtBackgroundProcess {
 
 class AppPrivate : public QObject
 {
@@ -85,4 +85,4 @@ Q_DECLARE_LOGGING_CATEGORY(loggingCategory)
 
 }
 
-#endif // QBACKGROUNDPROCESS_APPPRIVATE_H
+#endif // QtBACKGROUNDPROCESS_APPPRIVATE_H

@@ -12,12 +12,12 @@ TEMPLATE = app
 SOURCES += main.cpp \
     testapp.cpp
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../QBackgroundProcess/release/ -lQBackgroundProcess
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../QBackgroundProcess/debug/ -lQBackgroundProcess
-else:unix: LIBS += -L$$OUT_PWD/../QBackgroundProcess/ -lQBackgroundProcess
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../QtBackgroundProcess/release/ -lQtBackgroundProcess
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../QtBackgroundProcess/debug/ -lQtBackgroundProcess
+else:unix: LIBS += -L$$OUT_PWD/../QtBackgroundProcess/ -lQtBackgroundProcess
 
-INCLUDEPATH += $$PWD/../QBackgroundProcess
-DEPENDPATH += $$PWD/../QBackgroundProcess
+INCLUDEPATH += $$PWD/../QtBackgroundProcess
+DEPENDPATH += $$PWD/../QtBackgroundProcess
 
 HEADERS += \
     testapp.h

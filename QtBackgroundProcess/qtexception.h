@@ -1,14 +1,14 @@
 #ifndef QTEXCEPTION_H
 #define QTEXCEPTION_H
 
-#include "qbackgroundprocess_global.h"
+#include "qtbackgroundprocess_global.h"
 #include <exception>
 #include <QString>
 
-namespace QBackgroundProcess {
+namespace QtBackgroundProcess {
 
 //! A basic exception type for Qt Exceptions
-class QBACKGROUNDPROCESSSHARED_EXPORT QtException : public std::exception
+class QTBACKGROUNDPROCESSSHARED_EXPORT QtException : public std::exception
 {
 public:
 	//! Creates a new QtException from an error messsage and an error code

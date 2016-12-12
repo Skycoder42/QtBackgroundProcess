@@ -6,7 +6,7 @@
 #include <QtEndian>
 #include <QFile>
 #include <iostream>
-using namespace QBackgroundProcess;
+using namespace QtBackgroundProcess;
 
 MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &arguments, bool isStarter, QObject *parent) :
 	QObject(parent),

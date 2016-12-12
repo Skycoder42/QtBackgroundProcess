@@ -1,7 +1,7 @@
 #include "testapp.h"
 
 #include <QDebug>
-using namespace QBackgroundProcess;
+using namespace QtBackgroundProcess;
 
 TestApp::TestApp(int &argc, char **argv) :
 	App(argc, argv),

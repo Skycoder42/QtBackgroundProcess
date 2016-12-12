@@ -7,7 +7,7 @@
 #include <QJsonObject>
 #include <QBuffer>
 
-namespace QBackgroundProcess {
+namespace QtBackgroundProcess {
 
 class TerminalPrivate : public QObject
 {

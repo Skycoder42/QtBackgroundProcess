@@ -1,7 +1,7 @@
 #include "app_p.h"
 #include "terminal.h"
 #include "terminal_p.h"
-using namespace QBackgroundProcess;
+using namespace QtBackgroundProcess;
 
 #ifdef d
 #undef d

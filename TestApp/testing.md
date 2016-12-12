@@ -20,7 +20,7 @@ Do the following commands and compare with the output to validate:
 
 #### Terminal 3
 ```
-[Warning]  QBackgroundProcess: Master is already running. Start arguments will be passed to it as is
+[Warning]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is
 ```
 
 #### Terminal 4
@@ -53,7 +53,7 @@ Do the following commands and compare with the output to validate:
 ### Outputs
 #### Terminal 1
 ```
-[Critical] QBackgroundProcess: Master process is not running! Please launch it by using: ".../TestApp.exe start"
+[Critical] QtBackgroundProcess: Master process is not running! Please launch it by using: ".../TestApp.exe start"
 ```
 
 #### Terminal 2
@@ -77,13 +77,13 @@ Do the following commands and compare with the output to validate:
 #### Terminal 3
 ##### After Command
 ```
-[Warning]  QBackgroundProcess: Start commands ignored because master is already running! The terminal will connect with an empty argument list!
+[Warning]  QtBackgroundProcess: Start commands ignored because master is already running! The terminal will connect with an empty argument list!
 [2016-12-10T15:07:56 Debug]    received new command: () and options: ()
 ```
 
 ##### Completely
 ```
-[Warning]  QBackgroundProcess: Start commands ignored because master is already running! The terminal will connect with an empty argument list!
+[Warning]  QtBackgroundProcess: Start commands ignored because master is already running! The terminal will connect with an empty argument list!
 [2016-12-10T15:07:56 Debug]    received new command: () and options: ()
 [2016-12-10T15:08:04 Debug]    received new command: ("start", "Test", "4") and options: ()
 [2016-12-10T15:08:10 Debug]    received new command: ("Test5") and options: ("a", "i")
@@ -94,13 +94,13 @@ Do the following commands and compare with the output to validate:
 #### Terminal 4
 ##### After Command
 ```
-[Warning]  QBackgroundProcess: Master is already running. Start arguments will be passed to it as is
+[Warning]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is
 [2016-12-10T15:08:04 Debug]    received new command: ("start", "Test", "4") and options: ()
 ```
 
 ##### Completely
 ```
-[Warning]  QBackgroundProcess: Master is already running. Start arguments will be passed to it as is
+[Warning]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is
 [2016-12-10T15:08:04 Debug]    received new command: ("start", "Test", "4") and options: ()
 [2016-12-10T15:08:10 Debug]    received new command: ("Test5") and options: ("a", "i")
 [2016-12-10T15:08:17 Debug]    received new command: ("Test6") and options: ("i")

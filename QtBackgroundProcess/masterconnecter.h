@@ -5,7 +5,7 @@
 #include <QLocalSocket>
 #include <QThread>
 
-namespace QBackgroundProcess {
+namespace QtBackgroundProcess {
 
 class MasterConnecter : public QObject
 {

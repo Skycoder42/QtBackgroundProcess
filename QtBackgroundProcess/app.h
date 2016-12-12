@@ -1,28 +1,28 @@
-#ifndef QBACKGROUNDPROCESS_APP_H
-#define QBACKGROUNDPROCESS_APP_H
+#ifndef QtBACKGROUNDPROCESS_APP_H
+#define QtBACKGROUNDPROCESS_APP_H
 
-#include "qbackgroundprocess_global.h"
+#include "qtbackgroundprocess_global.h"
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <functional>
 #include "qtexception.h"
 
-namespace QBackgroundProcess {
+namespace QtBackgroundProcess {
 
 class Terminal;
 
-class QBACKGROUNDPROCESSSHARED_EXPORT NotAllowedInRunningStateException : public QtException {
+class QTBACKGROUNDPROCESSSHARED_EXPORT NotAllowedInRunningStateException : public QtException {
 public:
 	NotAllowedInRunningStateException(const QString &reason);
 };
 
-class QBACKGROUNDPROCESSSHARED_EXPORT InvalidArgumentsException : public QtException {
+class QTBACKGROUNDPROCESSSHARED_EXPORT InvalidArgumentsException : public QtException {
 public:
 	InvalidArgumentsException(const QString &errorText);
 };
 
 class AppPrivate;
-class QBACKGROUNDPROCESSSHARED_EXPORT App : public QCoreApplication
+class QTBACKGROUNDPROCESSSHARED_EXPORT App : public QCoreApplication
 {
 	Q_OBJECT
 	friend class AppPrivate;
@@ -67,7 +67,7 @@ public slots:
 	void setAutoKillTerminals(bool autoKillTerminals, bool killCurrent = false);
 
 signals:
-	void newTerminalConnected(QBackgroundProcess::Terminal *terminal, QPrivateSignal);
+	void newTerminalConnected(QtBackgroundProcess::Terminal *terminal, QPrivateSignal);
 	void commandReceived(QSharedPointer<QCommandLineParser> parser, bool isStarter, QPrivateSignal);
 
 	void forwardMasterLogChanged(bool forwardMasterLog);
@@ -86,6 +86,6 @@ private:
 }
 
 #undef qApp
-#define qApp static_cast<QBackgroundProcess::App*>(QCoreApplication::instance())
+#define qApp static_cast<QtBackgroundProcess::App*>(QCoreApplication::instance())
 
-#endif // QBACKGROUNDPROCESS_APP_H
+#endif // QtBACKGROUNDPROCESS_APP_H

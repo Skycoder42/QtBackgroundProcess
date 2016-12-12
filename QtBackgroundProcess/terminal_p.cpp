@@ -4,7 +4,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QTimer>
-using namespace QBackgroundProcess;
+using namespace QtBackgroundProcess;
 
 TerminalPrivate::TerminalPrivate(QLocalSocket *socket, QObject *parent) :
 	QObject(parent),

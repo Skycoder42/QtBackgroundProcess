@@ -3,14 +3,14 @@
 
 #include <QIODevice>
 #include <QPointer>
-#include "qbackgroundprocess_global.h"
+#include "qtbackgroundprocess_global.h"
 
-namespace QBackgroundProcess {
+namespace QtBackgroundProcess {
 
 class App;
 class Terminal;
 class GlobalTerminalPrivate;
-class QBACKGROUNDPROCESSSHARED_EXPORT GlobalTerminal : public QIODevice
+class QTBACKGROUNDPROCESSSHARED_EXPORT GlobalTerminal : public QIODevice
 {
 	Q_OBJECT
 

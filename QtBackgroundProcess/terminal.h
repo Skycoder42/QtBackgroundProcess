@@ -5,12 +5,12 @@
 #include <QIODevice>
 #include <QSharedPointer>
 class QLocalSocket;
-#include "qbackgroundprocess_global.h"
+#include "qtbackgroundprocess_global.h"
 
-namespace QBackgroundProcess {
+namespace QtBackgroundProcess {
 
 class TerminalPrivate;
-class QBACKGROUNDPROCESSSHARED_EXPORT Terminal : public QIODevice
+class QTBACKGROUNDPROCESSSHARED_EXPORT Terminal : public QIODevice
 {
 	Q_OBJECT
 

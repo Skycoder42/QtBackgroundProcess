@@ -8,19 +8,19 @@ TEMPLATE = lib
 QT       += network
 QT       -= gui
 
-TARGET = QBackgroundProcess
+TARGET = QtBackgroundProcess
 VERSION = 1.1.0
 
 win32 {
 	QMAKE_TARGET_COMPANY = "Skycoder42"
-	QMAKE_TARGET_PRODUCT = "QBackgroundProcess"
+	QMAKE_TARGET_PRODUCT = "QtBackgroundProcess"
 	QMAKE_TARGET_DESCRIPTION = $$QMAKE_TARGET_PRODUCT
 	QMAKE_TARGET_COPYRIGHT = "Felix Barz"
 
 	CONFIG += skip_target_version_ext
 } else:mac {
 	QMAKE_TARGET_BUNDLE_PREFIX = "com.Skycoder42."
-	QMAKE_FRAMEWORK_BUNDLE_NAME = "QBackgroundProcess"
+	QMAKE_FRAMEWORK_BUNDLE_NAME = "QtBackgroundProcess"
 
 	CONFIG += lib_bundle
 	QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/
@@ -31,7 +31,7 @@ win32 {
 	QMAKE_LFLAGS += '-Wl,-rpath,\'\$$ORIGIN/lib\''
 }
 
-DEFINES += QBACKGROUNDPROCESS_LIBRARY
+DEFINES += QTBACKGROUNDPROCESS_LIBRARY
 
 SOURCES += \
     qtexception.cpp \
@@ -42,8 +42,8 @@ SOURCES += \
     masterconnecter.cpp \
     globalterminal.cpp
 
-HEADERS += QBackgroundProcess\
-	qbackgroundprocess_global.h \
+HEADERS += QtBackgroundProcess \
+	qtbackgroundprocess_global.h \
     qtexception.h \
     app.h \
 	app_p.h \

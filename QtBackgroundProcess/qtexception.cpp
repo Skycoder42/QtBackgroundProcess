@@ -1,5 +1,5 @@
 #include "qtexception.h"
-using namespace QBackgroundProcess;
+using namespace QtBackgroundProcess;
 
 QtException::QtException(const QString &what, int code) :
 	std::exception(),

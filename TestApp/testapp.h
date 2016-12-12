@@ -1,9 +1,9 @@
 #ifndef TESTAPP_H
 #define TESTAPP_H
 
-#include <QBackgroundProcess>
+#include <QtBackgroundProcess>
 
-class TestApp : public QBackgroundProcess::App
+class TestApp : public QtBackgroundProcess::App
 {
 	Q_OBJECT
 
@@ -15,15 +15,15 @@ public:
 	// App interface
 protected:
 	int startupApp(const QCommandLineParser &parser) override;
-	bool requestAppShutdown(QBackgroundProcess::Terminal *terminal, int &) override;
+	bool requestAppShutdown(QtBackgroundProcess::Terminal *terminal, int &) override;
 	void setupParser(QCommandLineParser &parser, bool useShortOptions) override;
 
 private slots:
 	void handleCommand(QSharedPointer<QCommandLineParser> parser, bool starter);
-	void addTerminal(QBackgroundProcess::Terminal *terminal);
+	void addTerminal(QtBackgroundProcess::Terminal *terminal);
 
 private:
-	QBackgroundProcess::GlobalTerminal *statusTerm;
+	QtBackgroundProcess::GlobalTerminal *statusTerm;
 
 	void doCommand(const QCommandLineParser &parser);
 };

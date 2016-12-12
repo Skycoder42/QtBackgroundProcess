@@ -12,10 +12,10 @@
 #include <unistd.h>
 #include <sys/types.h>
 #endif
-using namespace QBackgroundProcess;
+using namespace QtBackgroundProcess;
 
 //logging category
-Q_LOGGING_CATEGORY(QBackgroundProcess::loggingCategory, "QBackgroundProcess")
+Q_LOGGING_CATEGORY(QtBackgroundProcess::loggingCategory, "QtBackgroundProcess")
 
 const QString AppPrivate::masterArgument(QStringLiteral("__qbckgrndprcss$start#master~"));
 const QString AppPrivate::purgeArgument(QStringLiteral("purge_master"));
