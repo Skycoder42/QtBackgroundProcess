@@ -119,6 +119,11 @@ QList<Terminal *> App::connectedTerminals() const
 	return d->activeTerminals;
 }
 
+QCtrlSignalHandler *App::signalHandler() const
+{
+	return QCtrlSignalHandler::instance();
+}
+
 void App::createDefaultInstanceID(bool overwrite)
 {
 	if(overwrite || d->instanceId.isNull())

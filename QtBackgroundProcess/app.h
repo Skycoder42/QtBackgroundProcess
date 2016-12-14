@@ -7,6 +7,7 @@
 #include <functional>
 #include "qtexception.h"
 
+class QCtrlSignalHandler;
 namespace QtBackgroundProcess {
 
 class Terminal;
@@ -56,6 +57,8 @@ public:
 	int exec();
 
 	QList<Terminal*> connectedTerminals() const;
+
+	QCtrlSignalHandler *signalHandler() const;
 
 public slots:
 	void createDefaultInstanceID(bool overwrite = true);
