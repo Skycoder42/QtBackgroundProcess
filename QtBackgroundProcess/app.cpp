@@ -1,5 +1,8 @@
 #include "app.h"
 #include "app_p.h"
+
+#include <QCtrlSignals>
+
 using namespace QtBackgroundProcess;
 
 #ifdef d
@@ -13,6 +16,9 @@ App::App(int &argc, char **argv, int flags) :
 {
 	qSetMessagePattern(AppPrivate::terminalMessageFormat);
 	qInstallMessageHandler(AppPrivate::qbackProcMessageHandler);
+
+	QCtrlSignalHandler::instance()->setAutoShutActive(true);
+	QCtrlSignalHandler::instance()->setEnabled(true);
 }
 
 App::~App(){}

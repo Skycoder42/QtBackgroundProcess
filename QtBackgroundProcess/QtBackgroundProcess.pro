@@ -31,6 +31,8 @@ win32 {
 	QMAKE_LFLAGS += '-Wl,-rpath,\'\$$ORIGIN/lib\''
 }
 
+include(../QCtrlSignals/qctrlsignals.pri)
+
 DEFINES += QTBACKGROUNDPROCESS_LIBRARY
 
 SOURCES += \
