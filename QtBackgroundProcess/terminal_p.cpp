@@ -10,8 +10,8 @@ TerminalPrivate::TerminalPrivate(QLocalSocket *socket, QObject *parent) :
 	QObject(parent),
 	socket(socket),
 	status(),
-	autoDelete(false),
 	parser(),
+	autoDelete(false),
 	isLoading(true),
 	disconnecting(false)
 {
