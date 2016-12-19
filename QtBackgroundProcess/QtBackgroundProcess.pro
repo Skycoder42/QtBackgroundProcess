@@ -9,7 +9,7 @@ QT       += network
 QT       -= gui
 
 TARGET = QtBackgroundProcess
-VERSION = 1.1.0
+VERSION = 1.2.0
 
 win32 {
 	QMAKE_TARGET_COMPANY = "Skycoder42"
