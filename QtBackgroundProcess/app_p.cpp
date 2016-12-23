@@ -17,6 +17,8 @@ using namespace QtBackgroundProcess;
 //logging category
 Q_LOGGING_CATEGORY(QtBackgroundProcess::loggingCategory, "QtBackgroundProcess")
 
+bool AppPrivate::p_valid = false;
+
 const QString AppPrivate::masterArgument(QStringLiteral("__qbckgrndprcss$start#master~"));
 const QString AppPrivate::purgeArgument(QStringLiteral("purge_master"));
 const QString AppPrivate::startArgument(QStringLiteral("start"));
@@ -67,20 +69,23 @@ AppPrivate *AppPrivate::p_ptr()
 
 void AppPrivate::qbackProcMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-	auto self = p_ptr();
 	auto message = qFormatLogMessage(type, context, msg).toUtf8();
 	auto any = false;
 
-	if(self->debugTerm) {
-		self->debugTerm->write(message);
-		self->debugTerm->flush();
-		any = true;
-	}
+	if(p_valid) {
+		auto self = p_ptr();//BUG crashes here, in destructor
 
-	if(self->logFile) {
-		self->logFile->write(message);
-		self->logFile->flush();
-		any = true;
+		if(self->debugTerm) {
+			self->debugTerm->write(message);
+			self->debugTerm->flush();
+			any = true;
+		}
+
+		if(self->logFile && self->logFile->isWritable()) {
+			self->logFile->write(message);
+			self->logFile->flush();
+			any = true;
+		}
 	}
 
 	if(!any) {
@@ -111,12 +116,6 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	logFile(nullptr),
 	q_ptr(q_ptr)
 {}
-
-AppPrivate::~AppPrivate()
-{
-	if(logFile)
-		logFile->close();
-}
 
 void AppPrivate::setInstanceId(const QString &id)
 {

@@ -30,8 +30,10 @@ MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &a
 MasterConnecter::~MasterConnecter()
 {
 	this->readThread->requestInterruption();
-	if(!this->readThread->wait(500))
+	if(!this->readThread->wait(500)) {
 		this->readThread->terminate();
+		this->readThread->wait(100);//additional wait, to complete termination
+	}
 }
 
 void MasterConnecter::connected()

@@ -31,6 +31,8 @@ public:
 
 	static void qbackProcMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
+	static bool p_valid;
+
 	bool running;
 	bool masterLogging;
 	bool autoStart;
@@ -53,7 +55,6 @@ public:
 	QPointer<QFile> logFile;
 
 	AppPrivate(App *q_ptr);
-	~AppPrivate();
 
 	void setInstanceId(const QString &id);
 

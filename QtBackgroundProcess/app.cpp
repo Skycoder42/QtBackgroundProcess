@@ -14,6 +14,8 @@ App::App(int &argc, char **argv, int flags) :
 	QCoreApplication(argc, argv, flags),
 	d_ptr(new AppPrivate(this))
 {
+	AppPrivate::p_valid = true;
+
 	qSetMessagePattern(AppPrivate::terminalMessageFormat);
 	qInstallMessageHandler(AppPrivate::qbackProcMessageHandler);
 
@@ -21,7 +23,12 @@ App::App(int &argc, char **argv, int flags) :
 	QCtrlSignalHandler::instance()->setEnabled(true);
 }
 
-App::~App(){}
+App::~App()
+{
+	if(d->logFile)
+		d->logFile->close();
+	AppPrivate::p_valid = false;
+}
 
 QString App::instanceID() const
 {
