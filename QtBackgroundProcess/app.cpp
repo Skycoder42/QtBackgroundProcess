@@ -20,7 +20,6 @@ App::App(int &argc, char **argv, int flags) :
 	qInstallMessageHandler(AppPrivate::qbackProcMessageHandler);
 
 	QCtrlSignalHandler::instance()->setAutoShutActive(true);
-	QCtrlSignalHandler::instance()->setEnabled(true);
 }
 
 App::~App()
