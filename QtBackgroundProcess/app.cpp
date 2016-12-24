@@ -19,7 +19,7 @@ App::App(int &argc, char **argv, int flags) :
 	qSetMessagePattern(AppPrivate::terminalMessageFormat);
 	qInstallMessageHandler(AppPrivate::qbackProcMessageHandler);
 
-	QCtrlSignalHandler::instance()->setAutoShutActive(true);
+	QCtrlSignalHandler::instance()->setAutoQuitActive(true);
 }
 
 App::~App()
