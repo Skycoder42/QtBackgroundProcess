@@ -73,7 +73,7 @@ void AppPrivate::qbackProcMessageHandler(QtMsgType type, const QMessageLogContex
 	auto any = false;
 
 	if(p_valid) {
-		auto self = p_ptr();//BUG crashes here, in destructor
+		auto self = p_ptr();
 
 		if(self->debugTerm) {
 			self->debugTerm->write(message);
@@ -172,16 +172,19 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 					 #endif
 					 });
 
-#ifdef Q_OS_WIN
-	auto basePath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-	QDir(basePath).mkpath(".");
-	auto defaultPath = QStringLiteral("%1/%2.log")
-		.arg(basePath)
-		.arg(QCoreApplication::applicationName());
-#else
-	//TODO check if writable, else use user directory!
-	auto defaultPath = QStringLiteral("/var/log/%1.log").arg(QCoreApplication::applicationName());
+	QString defaultPath;
+#ifdef Q_OS_UNIX
+	if(QFileInfo("/var/log").isWritable())
+		defaultPath = QStringLiteral("/var/log/%1.log").arg(QCoreApplication::applicationName());
+	else
 #endif
+	{
+		auto basePath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+		QDir(basePath).mkpath(".");
+		defaultPath = QStringLiteral("%1/%2.log")
+			.arg(basePath)
+			.arg(QCoreApplication::applicationName());
+	}
 
 	parser.addOption({
 						 LParams,
@@ -395,7 +398,7 @@ int AppPrivate::purgeMaster(const QCommandLineParser &parser)
 	qint64 pid;
 	QString hostname;
 	QString appname;
-	if(this->masterLock->getLockInfo(&pid, &hostname, &appname)) {//TODO check QFile::exists...
+	if(this->masterLock->getLockInfo(&pid, &hostname, &appname)) {
 		if(this->masterLock->removeStaleLockFile())
 			std::cout << "Master lockfile successfully removed. It was locked by:";
 		else {
