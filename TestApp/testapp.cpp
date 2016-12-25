@@ -35,7 +35,7 @@ int TestApp::startupApp(const QCommandLineParser &parser)
 					this, &TestApp::addTerminal);
 			qDebug() << "Master started in echo mode!";
 		} else if(parser.value("m") == "status"){
-			statusTerm = new GlobalTerminal(this, this);
+			statusTerm = new GlobalTerminal(this);
 			qDebug() << "Master started in status mode!";
 		} else
 			qWarning() << "Unknown mode! Will be ignored";

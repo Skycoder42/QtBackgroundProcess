@@ -153,10 +153,9 @@ void App::setForwardMasterLog(bool forwardMasterLog)
 		return;
 
 	d->masterLogging = forwardMasterLog;
-	emit forwardMasterLogChanged(forwardMasterLog);
 	if(d->masterLock->isLocked()) {//I am master
 		if(forwardMasterLog)
-			d->debugTerm = new GlobalTerminal(this, d, true);
+			d->debugTerm = new GlobalTerminal(d, true);
 		else {
 			d->debugTerm->deleteLater();
 			d->debugTerm.clear();
@@ -221,8 +220,4 @@ bool App::requestAppShutdown(Terminal *terminal, int &exitCode)
 
 NotAllowedInRunningStateException::NotAllowedInRunningStateException(const QString &reason) :
 	QtException(QStringLiteral("You are not allowed to perform the following action while the application is running: ") + reason)
-{}
-
-InvalidArgumentsException::InvalidArgumentsException(const QString &errorText) :
-	QtException(errorText)
 {}

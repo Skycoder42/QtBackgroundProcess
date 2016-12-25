@@ -10,8 +10,8 @@ public:
 	App *app;
 	QBuffer *buffer;
 
-	GlobalTerminalPrivate(App *app, bool enableBootBuffer, GlobalTerminal *q_ptr) :
-		app(app),
+	GlobalTerminalPrivate(bool enableBootBuffer, GlobalTerminal *q_ptr) :
+		app(qApp),
 		buffer(enableBootBuffer ? new QBuffer(q_ptr) : nullptr)
 	{}
 };
@@ -25,12 +25,12 @@ using namespace QtBackgroundProcess;
 #endif
 #define d this->d_ptr
 
-GlobalTerminal::GlobalTerminal(App *app, QObject *parent, bool enableBootBuffer) :
+GlobalTerminal::GlobalTerminal(QObject *parent, bool enableBootBuffer) :
 	QIODevice(parent),
-	d_ptr(new GlobalTerminalPrivate(app, enableBootBuffer, this))
+	d_ptr(new GlobalTerminalPrivate(enableBootBuffer, this))
 {
 	if(enableBootBuffer) {
-		connect(app, &App::connectedTerminalsChanged,
+		connect(d->app, &App::connectedTerminalsChanged,
 				this, &GlobalTerminal::tryPushBuffer);
 		d->buffer->open(QIODevice::WriteOnly);
 

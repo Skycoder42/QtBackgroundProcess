@@ -15,9 +15,10 @@ class QTBACKGROUNDPROCESSSHARED_EXPORT GlobalTerminal : public QIODevice
 {
 	Q_OBJECT
 
+	struct SpamData {};
 public:
-	//! Creates a new global terminal
-	explicit GlobalTerminal(QObject *parent = nullptr, bool enableBootBuffer = false);
+	//! Creates a new terminal for
+	explicit GlobalTerminal(SpamData app, QObject *parent = nullptr, bool enableBootBuffer = false);
 	~GlobalTerminal();
 
 	bool isSequential() const override;

@@ -291,7 +291,7 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 		//setup master logging stuff
 		qSetMessagePattern(AppPrivate::masterMessageFormat);
 		if(this->masterLogging)
-			this->debugTerm = new GlobalTerminal(qApp, this, true);
+			this->debugTerm = new GlobalTerminal(this, true);
 		this->updateLoggingMode(parser.value("loglevel").toInt());
 		this->updateLoggingPath(parser.value("logpath"));
 
