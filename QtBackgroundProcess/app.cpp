@@ -153,7 +153,7 @@ void App::setForwardMasterLog(bool forwardMasterLog)
 		return;
 
 	d->masterLogging = forwardMasterLog;
-	if(d->masterLock->isLocked()) {//I am master
+	if(d->masterLock && d->masterLock->isLocked()) {//I am master
 		if(forwardMasterLog)
 			d->debugTerm = new GlobalTerminal(d, true);
 		else {
