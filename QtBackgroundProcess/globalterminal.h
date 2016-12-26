@@ -18,12 +18,14 @@ class QTBACKGROUNDPROCESSSHARED_EXPORT GlobalTerminal : public QIODevice
 public:
 	//! Creates a new global terminal
 	explicit GlobalTerminal(QObject *parent = nullptr, bool enableBootBuffer = false);
+	//! Destructor
 	~GlobalTerminal();
 
 	bool isSequential() const override;
 	bool canReadLine() const override;
 
 public slots:
+	//! Performs a flush on all connected terminals
 	void flush();
 
 protected:

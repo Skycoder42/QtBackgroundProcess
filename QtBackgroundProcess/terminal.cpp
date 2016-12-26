@@ -47,14 +47,14 @@ QSharedPointer<QCommandLineParser> Terminal::parser() const
 	return d->parser;
 }
 
+bool Terminal::isAutoDelete() const
+{
+	return d->autoDelete;
+}
+
 bool Terminal::isSequential() const
 {
 	return true;
-}
-
-void Terminal::disconnectTerminal()
-{
-	d->beginSoftDisconnect();
 }
 
 void Terminal::close()
@@ -68,9 +68,9 @@ qint64 Terminal::bytesAvailable() const
 	return this->QIODevice::bytesAvailable() + d->socket->bytesAvailable();
 }
 
-bool Terminal::isAutoDelete() const
+void Terminal::disconnectTerminal()
 {
-	return d->autoDelete;
+	d->beginSoftDisconnect();
 }
 
 void Terminal::setAutoDelete(bool autoDelete)
