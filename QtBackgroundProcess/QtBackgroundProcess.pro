@@ -18,6 +18,7 @@ win32 {
 	QMAKE_TARGET_COPYRIGHT = "Felix Barz"
 
 	CONFIG += skip_target_version_ext
+	LIBS += -lUser32
 } else:mac {
 	QMAKE_TARGET_BUNDLE_PREFIX = "com.Skycoder42."
 	QMAKE_FRAMEWORK_BUNDLE_NAME = "QtBackgroundProcess"

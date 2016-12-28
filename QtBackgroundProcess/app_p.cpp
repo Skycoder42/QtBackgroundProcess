@@ -205,6 +205,11 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 						 "4"
 					 #endif
 					 });
+	parser.addOption({
+						 "keep-console",
+						 "Windows only: Will prevent the master process from freeing it's console window. Can be useful "
+						 "for debugging purpose."
+					 });
 
 	parser.addOption({
 						 "accept",
@@ -294,6 +299,25 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 			this->debugTerm = new GlobalTerminal(this, true);
 		this->updateLoggingMode(parser.value("loglevel").toInt());
 		this->updateLoggingPath(parser.value("logpath"));
+
+		//detache from any console, if wished
+		if(!parser.isSet("keep-console")) {//TODO properly test
+#ifdef Q_OS_WIN //detach the console window
+			if(!FreeConsole()) {
+				auto console = GetConsoleWindow();
+				if(console)
+					ShowWindow(GetConsoleWindow(), SW_HIDE);
+			}
+#else
+			close(0);
+			close(1);
+			close(2);
+			/* Enter a new session */
+			setsid();
+#endif
+		}
+		//set current directory
+		QDir::setCurrent(QDir::rootPath());
 
 		auto res = this->q_ptr->startupApp(parser);
 		if(res != EXIT_SUCCESS) {
