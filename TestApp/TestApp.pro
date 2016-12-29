@@ -14,7 +14,11 @@ SOURCES += \
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../QtBackgroundProcess/release/ -lQtBackgroundProcess
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../QtBackgroundProcess/debug/ -lQtBackgroundProcess
-else:unix: LIBS += -L$$OUT_PWD/../QtBackgroundProcess/ -lQtBackgroundProcess
+else:mac {
+	QMAKE_LFLAGS += -F$$OUT_PWD/../QtBackgroundProcess/
+	QMAKE_LFLAGS += '-Wl,-rpath,\'@executable_path/../QtBackgroundProcess\'' #no bundle, thus only 1 up
+	LIBS += -F$$OUT_PWD/../QtBackgroundProcess/ -framework QtBackgroundProcess
+} else:unix: LIBS += -L$$OUT_PWD/../QtBackgroundProcess/ -lQtBackgroundProcess
 
 INCLUDEPATH += $$PWD/../QtBackgroundProcess
 DEPENDPATH += $$PWD/../QtBackgroundProcess

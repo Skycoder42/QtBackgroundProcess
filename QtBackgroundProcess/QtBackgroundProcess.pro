@@ -24,7 +24,7 @@ win32 {
 	QMAKE_FRAMEWORK_BUNDLE_NAME = "QtBackgroundProcess"
 
 	CONFIG += lib_bundle
-	QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/
+	QMAKE_LFLAGS_SONAME = '-Wl,-install_name,@rpath/'
 	QMAKE_LFLAGS += '-Wl,-rpath,\'@executable_path/../Frameworks\''
 } else:unix {
 	QMAKE_LFLAGS += '-Wl,-rpath,\'.\''
