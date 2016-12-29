@@ -32,8 +32,6 @@ However, if you want to create an application to run silently in the background,
 ## Usage
 Just download the library and add the line `include(<path_to>/QtBackgroundProcess/qtbackgroundprocess.pri)` to your .pro-file. This way all files and required libraries will automatically be added. Use `#include <QtBackgroundProcess>` to access the class.
 
-Just copy the library into you application (preferebly by adding it as a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules)) and add the line `include(./QtBackgroundProcess/qtbackgroundprocess.pri)` to your .pro-file. This way all files and required libraries will automatically be added. Use `#include <QtBackgroundProcess>` to access the class.
-
 ### Hint
 Instead of simply downloading the library, you can clone the `lib` branch! It contains all the library binaries, includes and more. The best way is to add it as a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) to your project. This way the library is directly connected to your repository!
 
@@ -75,5 +73,15 @@ Since all of the application logic is happening in the master process, debugging
 If your normal command looks for example like this: `./myApp start some arguments`<br>
 You can directly start the master process by using: `./myApp '__qbckgrndprcss$start#master~' some arguments`
 
-#### Note:
-The master process is not meant to be directly run. Thus, it will for example, not show a console window if possible. This makes it hard to get the debug output without a terminal. You can either watch the log file and reload it on changes, or simply start a argument-less terminal after you started the master explicitly to attach and receive the debug output. However, depending on your platform, it migth work without.
+The master process is not meant to be directly run. Thus, it will for example, not show a console window if possible. This makes it hard to get the debug output without a terminal. You can try the following options, depending on what suits you needs:
+- start the master with the `--keep-console` argument. This way the master will keep it's console window. **Note:** For this to work for qDebug, the master must not transfer it's debug output to any terminal or the log file.
+  - To start with disabled logfile, use: `start -L "" --keep-console ...`
+- Watch the log file and reload it on changes
+- Start a argument-less terminal after you started the master explicitly to attach and receive the debug output
+- Try to re-attach a console window (not recommended)
+
+## Documentation
+Not created yet. However, you will already find helpful doxy-style comments in the header files.
+
+## Technical Stuff
+Please not, that this library does NOT create a real deamon/service. It merely emulates the behavior. However, this approach allows more flexibility for the different platforms.
