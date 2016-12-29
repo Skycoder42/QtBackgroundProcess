@@ -4,10 +4,10 @@
 #include <QDir>
 #include <QProcess>
 #include <iostream>
+#include <QStandardPaths>
+#include <QDir>
 #ifdef Q_OS_WIN
 #include <qt_windows.h>
-#include <QDir>
-#include <QStandardPaths>
 #else
 #include <unistd.h>
 #include <sys/types.h>
