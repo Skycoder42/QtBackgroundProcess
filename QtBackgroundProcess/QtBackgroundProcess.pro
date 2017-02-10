@@ -8,8 +8,8 @@ TEMPLATE = lib
 QT       += network
 QT       -= gui
 
-TARGET = QtBackgroundProcess
-VERSION = 1.2.1
+TARGET = Qt5BackgroundProcess
+VERSION = 1.3.0
 
 win32 {
 	QMAKE_TARGET_COMPANY = "Skycoder42"
@@ -20,16 +20,12 @@ win32 {
 	CONFIG += skip_target_version_ext
 	LIBS += -lUser32
 } else:mac {
-	QMAKE_TARGET_BUNDLE_PREFIX = "com.Skycoder42."
+	QMAKE_TARGET_BUNDLE_PREFIX = "de.Skycoder42."
 	QMAKE_FRAMEWORK_BUNDLE_NAME = "QtBackgroundProcess"
 
 	CONFIG += lib_bundle
 	QMAKE_LFLAGS_SONAME = '-Wl,-install_name,@rpath/'
 	QMAKE_LFLAGS += '-Wl,-rpath,\'@executable_path/../Frameworks\''
-} else:unix {
-	QMAKE_LFLAGS += '-Wl,-rpath,\'.\''
-	QMAKE_LFLAGS += '-Wl,-rpath,\'\$$ORIGIN/../lib\''
-	QMAKE_LFLAGS += '-Wl,-rpath,\'\$$ORIGIN/lib\''
 }
 
 include(../QCtrlSignals/qctrlsignals.pri)
@@ -37,25 +33,25 @@ include(../QCtrlSignals/qctrlsignals.pri)
 DEFINES += QTBACKGROUNDPROCESS_LIBRARY
 
 SOURCES += \
-    qtexception.cpp \
-    app.cpp \
-    app_p.cpp \
-    terminal.cpp \
-    terminal_p.cpp \
-    masterconnecter.cpp \
-    globalterminal.cpp
+	qtexception.cpp \
+	app.cpp \
+	app_p.cpp \
+	terminal.cpp \
+	terminal_p.cpp \
+	masterconnecter.cpp \
+	globalterminal.cpp
 
 HEADERS += QtBackgroundProcess \
 	qtbackgroundprocess_global.h \
-    qtexception.h \
-    app.h \
+	qtexception.h \
+	app.h \
 	app_p.h \
-    terminal.h \
-    terminal_p.h \
-    masterconnecter.h \
-    globalterminal.h
+	terminal.h \
+	terminal_p.h \
+	masterconnecter.h \
+	globalterminal.h
 
 unix {
-    target.path = /usr/lib
-    INSTALLS += target
+	target.path = /usr/lib
+	INSTALLS += target
 }
