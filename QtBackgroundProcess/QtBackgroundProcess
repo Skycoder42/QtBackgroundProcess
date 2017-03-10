@@ -1,3 +1,0 @@
-#include "app.h"
-#include "terminal.h"
-#include "globalterminal.h"
