@@ -16,7 +16,7 @@ HEADERS += \
 	testapp.h
 
 DISTFILES += \
-	testing.md
+    README.md
 
 target.path = $$[QT_INSTALL_EXAMPLES]/backgroundprocess/DemoApp
 INSTALLS += target
