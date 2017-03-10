@@ -105,7 +105,7 @@ int App::exec()
 	parser.process(*this);
 
 	//update terminal logging
-	d->updateLoggingMode(parser.value("terminallog").toInt());
+	d->updateLoggingMode(parser.value(QStringLiteral("terminallog")).toInt());
 
 	//generate the single id
 	this->createDefaultInstanceID(false);
@@ -224,7 +224,10 @@ NotAllowedInRunningStateException::NotAllowedInRunningStateException() :
 
 const char *NotAllowedInRunningStateException::what() const noexcept
 {
-	return "You are not allowed to perform this operation while the application is running!";
+	const static auto trWhat = QCoreApplication::translate("NotAllowedInRunningStateException",
+														   "You are not allowed to perform this operation while the application is running!")
+							   .toUtf8();
+	return trWhat.constData();
 }
 
 void NotAllowedInRunningStateException::raise() const

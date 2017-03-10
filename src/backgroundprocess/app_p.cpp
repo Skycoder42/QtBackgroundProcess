@@ -133,56 +133,56 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 	if(!QCoreApplication::applicationVersion().isEmpty())
 		parser.addVersionOption();
 
-	QStringList DParams("detached");
-	QStringList lParams({"log", "loglevel"});
-	QStringList LParams("logpath");
+	QStringList DParams(QStringLiteral("detached"));
+	QStringList lParams({QStringLiteral("log"), QStringLiteral("loglevel")});
+	QStringList LParams(QStringLiteral("logpath"));
 	if(useShortOptions) {
-		DParams.prepend("D");
-		lParams.prepend("l");
-		LParams.prepend("L");
+		DParams.prepend(QStringLiteral("D"));
+		lParams.prepend(QStringLiteral("l"));
+		LParams.prepend(QStringLiteral("L"));
 	}
 
-	parser.addPositionalArgument("<command>",
-								 "A control command to control the background application. "
-								 "Possible options are:\n"
-								 " - start: starts the application\n"
-								 " - stop: stops the application\n"
-								 " - purge_master: purges local servers and lockfiles, in case the master process crashed. "
-								 "Pass \"--accept\" as second parameter, if you want to skip the prompt.",
-								 "[start|stop|purge_master]");
+	parser.addPositionalArgument(QStringLiteral("<command>"),
+								 tr("A control command to control the background application. "
+									"Possible options are:\n"
+									" - start: starts the application\n"
+									" - stop: stops the application\n"
+									" - purge_master: purges local servers and lockfiles, in case the master process crashed. "
+									"Pass \"--accept\" as second parameter, if you want to skip the prompt."),
+								 QStringLiteral("[start|stop|purge_master]"));
 
 	parser.addOption({
 						 DParams,
-						 "It set, the terminal will only pass it's arguments to the master, and automatically finish after."
+						 tr("It set, the terminal will only pass it's arguments to the master, and automatically finish after.")
 					 });
 	parser.addOption({
 						 lParams,
-						 "Set the desired log <level>. Possible values are:\n"
-						 " - 0: log nothing\n"
-						 " - 1: critical errors only\n"
-						 " - 2: like 1 plus warnings\n"
+						 tr("Set the desired log <level>. Possible values are:\n"
+							" - 0: log nothing\n"
+							" - 1: critical errors only\n"
+							" - 2: like 1 plus warnings\n") +
 					 #ifdef QT_NO_DEBUG
-						 " - 3: like 2 plus information messages (default)\n"
-						 " - 4: verbose - log everything",
-						 "level",
-						 "3"
+						 tr(" - 3: like 2 plus information messages (default)\n"
+							" - 4: verbose - log everything"),
+						 QStringLiteral("level"),
+						 QStringLiteral("3")
 					 #else
-						 " - 3: like 2 plus information messages\n"
-						 " - 4: verbose - log everything (default)",
-						 "level",
-						 "4"
+						 tr(" - 3: like 2 plus information messages\n"
+							" - 4: verbose - log everything (default)"),
+						 QStringLiteral("level"),
+						 QStringLiteral("4")
 					 #endif
 					 });
 
 	QString defaultPath;
 #ifdef Q_OS_UNIX
-	if(QFileInfo("/var/log").isWritable())
+	if(QFileInfo(QStringLiteral("/var/log")).isWritable())
 		defaultPath = QStringLiteral("/var/log/%1.log").arg(QCoreApplication::applicationName());
 	else
 #endif
 	{
 		auto basePath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-		QDir(basePath).mkpath(".");
+		QDir(basePath).mkpath(QStringLiteral("."));
 		defaultPath = QStringLiteral("%1/%2.log")
 			.arg(basePath)
 			.arg(QCoreApplication::applicationName());
@@ -190,32 +190,33 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 
 	parser.addOption({
 						 LParams,
-						 QStringLiteral("Overwrites the default log <path>. The default path is platform and application specific. "
-						 "For this instance, it defaults to \"%1\". NOTE: The application can override the value internally. "
-						 "Pass an empty string (--logpath \"\") to disable logging to a file.").arg(defaultPath),
-						 "path",
+						 tr("Overwrites the default log <path>. The default path is platform and application specific. "
+							"For this instance, it defaults to \"%1\". NOTE: The application can override the value internally. "
+							"Pass an empty string (--logpath \"\") to disable logging to a file.")
+						 .arg(defaultPath),
+						 QStringLiteral("path"),
 						 defaultPath
 					 });
 	parser.addOption({
-						 "terminallog",
-						 "Sets the log <level> for terminal only messages. This does not include messages forwarded from the master. "
-						 "Log levels are the same as for the <loglevel> option.",
-						 "level",
+						 QStringLiteral("terminallog"),
+						 tr("Sets the log <level> for terminal only messages. This does not include messages forwarded from the master. "
+							"Log levels are the same as for the <loglevel> option."),
+						 QStringLiteral("level"),
 					 #ifdef QT_NO_DEBUG
-						 "3"
+						 QStringLiteral("3")
 					 #else
-						 "4"
+						 QStringLiteral("4")
 					 #endif
 					 });
 	parser.addOption({
-						 "keep-console",
-						 "Windows only: Will prevent the master process from freeing it's console window. Can be useful "
-						 "for debugging purpose."
+						 QStringLiteral("keep-console"),
+						 tr("Will prevent the master process from freeing it's console window and other stuff. Can be useful "
+							"for debugging purpose.")
 					 });
 
 	parser.addOption({
-						 "accept",
-						 "purge_master only: skips the prompt and purges automatically."
+						 QStringLiteral("accept"),
+						 tr("purge_master only: skips the prompt and purges automatically.")
 					 });
 }
 
@@ -224,13 +225,13 @@ void AppPrivate::updateLoggingMode(int level)
 	QString logStr;
 	switch (level) {
 	case 0:
-		logStr.prepend("\n*.critical=false");
+		logStr.prepend(QStringLiteral("\n*.critical=false"));
 	case 1:
-		logStr.prepend("\n*.warning=false");
+		logStr.prepend(QStringLiteral("\n*.warning=false"));
 	case 2:
-		logStr.prepend("\n*.info=false");
+		logStr.prepend(QStringLiteral("\n*.info=false"));
 	case 3:
-		logStr.prepend("*.debug=false");
+		logStr.prepend(QStringLiteral("*.debug=false"));
 	case 4:
 		break;
 	default:
@@ -283,7 +284,7 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 			this, &AppPrivate::newTerminalConnected,
 			Qt::QueuedConnection);
 	if(!this->masterServer->listen(this->instanceId)) {
-		qCCritical(loggingCategory) << "Failed to create local server with error:"
+		qCCritical(loggingCategory) << tr("Failed to create local server with error:")
 					<< qUtf8Printable(this->masterServer->errorString());
 		return EXIT_FAILURE;
 	}
@@ -291,7 +292,7 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 	//get the lock
 	if(!this->masterLock->tryLock(5000)) {//wait at most 5 sec
 		this->masterServer->close();
-		qCCritical(loggingCategory) << "Unable to start master process. Failed with lock error:"
+		qCCritical(loggingCategory) << tr("Unable to start master process. Failed with lock error:")
 					<< qUtf8Printable(this->masterLock->error());
 		return EXIT_FAILURE;
 	} else {
@@ -299,11 +300,11 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 		qSetMessagePattern(AppPrivate::masterMessageFormat);
 		if(this->masterLogging)
 			this->debugTerm = new GlobalTerminal(this, true);
-		this->updateLoggingMode(parser.value("loglevel").toInt());
-		this->updateLoggingPath(parser.value("logpath"));
+		this->updateLoggingMode(parser.value(QStringLiteral("loglevel")).toInt());
+		this->updateLoggingPath(parser.value(QStringLiteral("logpath")));
 
 		//detache from any console, if wished
-		if(!parser.isSet("keep-console")) {//TODO properly test
+		if(!parser.isSet(QStringLiteral("keep-console"))) {
 #ifdef Q_OS_WIN //detach the console window
 			if(!FreeConsole()) {
 				auto console = GetConsoleWindow();
@@ -366,20 +367,20 @@ int AppPrivate::startMaster(bool isAutoStart)
 									  Q_ARG(bool, true));
 			return EXIT_SUCCESS;
 		} else {
-			qCCritical(loggingCategory) << "Failed to start master process! No master lock was detected.";
+			qCCritical(loggingCategory) << tr("Failed to start master process! No master lock was detected.");
 			return EXIT_FAILURE;
 		}
 	} else {//master is running --> ok
 		if(!isAutoStart && this->ignoreExtraStart) {// ignore only on normal starts, not on auto start
-			qCWarning(loggingCategory) << "Start commands ignored because master is already running!"
-									   << "The terminal will connect with an empty argument list!";
+			qCWarning(loggingCategory) << tr("Start commands ignored because master is already running! "
+											 "The terminal will connect with an empty argument list!");
 			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
 									  Q_ARG(QStringList, QStringList()),
 									  Q_ARG(bool, false));
 			return EXIT_SUCCESS;
 		} else {
 			if(!isAutoStart)
-				qCWarning(loggingCategory) << "Master is already running. Start arguments will be passed to it as is";
+				qCWarning(loggingCategory) << tr("Master is already running. Start arguments will be passed to it as is");
 			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
 									  Q_ARG(QStringList, arguments),//send original arguments
 									  Q_ARG(bool, false));
@@ -394,7 +395,7 @@ int AppPrivate::testMasterRunning()
 	arguments.removeFirst();//remove app name
 	if(this->masterLock->tryLock()) {
 		this->masterLock->unlock();
-		qCCritical(loggingCategory) << "Master process is not running! Please launch it by using:"
+		qCCritical(loggingCategory) << tr("Master process is not running! Please launch it by using:")
 					<< QCoreApplication::applicationFilePath() + QStringLiteral(" start");
 		return EXIT_FAILURE;
 	} else {
@@ -407,15 +408,15 @@ int AppPrivate::testMasterRunning()
 
 int AppPrivate::purgeMaster(const QCommandLineParser &parser)
 {
-	if(!parser.isSet("accept")) {
-		std::cout << "Are you shure you want to purge the master lock and server?\n"
-				  << "Only do this if the master process is not running anymore, but the lock/server "
-					 "are not available (for example after a crash)\n"
-				  << "Purging while the master process is still running will crash it.\n"
-				  << "Press (y) to purge, or (n) to cancel:";
+	if(!parser.isSet(QStringLiteral("accept"))) {
+		std::cout << tr("Are you shure you want to purge the master lock and server?\n"
+						"Only do this if the master process is not running anymore, but the lock/server "
+						"are not available (for example after a crash)\n"
+						"Purging while the master process is still running will crash it.\n"
+						"Press (y) to purge, or (n) to cancel:").toStdString();
 		std::cout.flush();
 		char res = (char)std::cin.get();
-		if(res != 'y' && res != 'Y')
+		if(res != tr("y") && res != tr("Y"))
 			return EXIT_FAILURE;
 	}
 
@@ -426,25 +427,25 @@ int AppPrivate::purgeMaster(const QCommandLineParser &parser)
 	QString appname;
 	if(this->masterLock->getLockInfo(&pid, &hostname, &appname)) {
 		if(this->masterLock->removeStaleLockFile())
-			std::cout << "Master lockfile successfully removed. It was locked by:";
+			std::cout << tr("Master lockfile successfully removed. It was locked by:").toStdString();
 		else {
-			std::cout << "Failed to remove master lockfile. Lock data is:";
+			std::cout << tr("Failed to remove master lockfile. Lock data is:").toStdString();
 			res |= 0x02;
 		}
-		std::cout << "\n - PID: "
+		std::cout << tr("\n - PID: ").toStdString()
 				  << pid
-				  << "\n - Hostname: "
+				  << tr("\n - Hostname: ").toStdString()
 				  << hostname.toStdString()
-				  << "\n - Appname: "
+				  << tr("\n - Appname: ").toStdString()
 				  << appname.toStdString()
 				  << std::endl;
 	} else
-		std::cout << "No lock file detected" << std::endl;
+		std::cout << tr("No lock file detected").toStdString() << std::endl;
 
 	if(QLocalServer::removeServer(this->instanceId))
-		std::cout << "Master server successfully removed" << std::endl;
+		std::cout << tr("Master server successfully removed").toStdString() << std::endl;
 	else {
-		std::cout << "Failed to remove master server" << std::endl;
+		std::cout << tr("Failed to remove master server").toStdString() << std::endl;
 		res |= 0x04;
 	}
 
@@ -467,17 +468,17 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 		terminal->parser.reset(new QCommandLineParser());
 		qApp->setupParser(*terminal->parser.data());
 		if(!terminal->loadParser()) {
-			qCWarning(loggingCategory) << "Terminal with invalid commands discarded. Error:"
+			qCWarning(loggingCategory) << tr("Terminal with invalid commands discarded. Error:")
 									   << terminal->parser->errorText();
 			terminal->deleteLater();
 			return;
 		}
 
 		//handle own arguments (logging)
-		if(terminal->parser->isSet("loglevel"))
-			this->updateLoggingMode(terminal->parser->value("loglevel").toInt());
-		if(terminal->parser->isSet("logpath"))
-			this->updateLoggingPath(terminal->parser->value("logpath"));
+		if(terminal->parser->isSet(QStringLiteral("loglevel")))
+			this->updateLoggingMode(terminal->parser->value(QStringLiteral("loglevel")).toInt());
+		if(terminal->parser->isSet(QStringLiteral("logpath")))
+			this->updateLoggingPath(terminal->parser->value(QStringLiteral("logpath")));
 
 		//add terminal to terminal list
 		auto rTerm = new Terminal(terminal, this);
@@ -496,7 +497,7 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 		if(!args.isEmpty() && args.first() == QStringLiteral("stop"))
 			this->stopMaster(rTerm);
 
-		if(this->autoKill || rTerm->parser()->isSet("detached")) {
+		if(this->autoKill || rTerm->parser()->isSet(QStringLiteral("detached"))) {
 			rTerm->setAutoDelete(true);
 			rTerm->disconnectTerminal();
 		} else

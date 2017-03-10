@@ -66,7 +66,7 @@ void MasterConnecter::disconnected()
 void MasterConnecter::error(QLocalSocket::LocalSocketError socketError)
 {
 	if(socketError != QLocalSocket::PeerClosedError) {
-		qCCritical(loggingCategory) << "Connection to Master process failed with error:"
+		qCCritical(loggingCategory) << tr("Connection to Master process failed with error:")
 					<< qUtf8Printable(this->socket->errorString());
 		this->socket->disconnectFromServer();
 		qApp->exit(EXIT_FAILURE);
@@ -112,5 +112,5 @@ void MasterConnecter::InThread::run()
 
 	inFile.close();
 	if(!this->isInterruptionRequested())
-		qCCritical(loggingCategory) << "stdin was unexpectedly closed! The terminal will not be able to foreward input to the master anymore!";
+		qCCritical(loggingCategory) << tr("stdin was unexpectedly closed! The terminal will not be able to foreward input to the master anymore!");
 }
