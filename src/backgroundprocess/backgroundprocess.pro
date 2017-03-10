@@ -13,7 +13,6 @@ PUBLIC_HEADERS += \
 PRIVATE_HEADERS += \
 	app_p.h \
 	masterconnecter_p.h \
-	qtexception.h \
 	terminal_p.h
 
 SOURCES += \
@@ -21,7 +20,6 @@ SOURCES += \
 	app.cpp \
 	globalterminal.cpp \
 	masterconnecter.cpp \
-	qtexception.cpp \
 	terminal_p.cpp \
 	terminal.cpp
 

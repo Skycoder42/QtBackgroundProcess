@@ -139,7 +139,7 @@ void App::createDefaultInstanceID(bool overwrite)
 void App::setInstanceID(QString instanceID, bool useAsSeed)
 {
 	if(d->running)
-		throw NotAllowedInRunningStateException(QStringLiteral("Change the instance id"));
+		throw NotAllowedInRunningStateException();
 
 	if(useAsSeed)
 		d->setInstanceId(AppPrivate::generateSingleId(instanceID));
@@ -218,6 +218,21 @@ bool App::requestAppShutdown(Terminal *terminal, int &exitCode)
 
 
 
-NotAllowedInRunningStateException::NotAllowedInRunningStateException(const QString &reason) :
-	QtException(QStringLiteral("You are not allowed to perform the following action while the application is running: ") + reason)
+NotAllowedInRunningStateException::NotAllowedInRunningStateException() :
+	QException()
 {}
+
+const char *NotAllowedInRunningStateException::what() const noexcept
+{
+	return "You are not allowed to perform this operation while the application is running!";
+}
+
+void NotAllowedInRunningStateException::raise() const
+{
+	throw *this;
+}
+
+QException *NotAllowedInRunningStateException::clone() const
+{
+	return new NotAllowedInRunningStateException();
+}

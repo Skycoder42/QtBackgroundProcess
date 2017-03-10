@@ -2,10 +2,10 @@
 #define QtBACKGROUNDPROCESS_APP_H
 
 #include "QtBackgroundProcess/qbackgroundprocess_global.h"
-#include "QtBackgroundProcess/qtexception.h"
 
 #include <QtCore/qcommandlineparser.h>
 #include <QtCore/qcoreapplication.h>
+#include <QtCore/qexception.h>
 
 #include <functional>
 class QCtrlSignalHandler;
@@ -15,9 +15,15 @@ namespace QtBackgroundProcess {
 class Terminal;
 
 //! Will be thrown, if you perform an operation, that is not allowed in running state
-class Q_BACKGROUNDPROCESS_EXPORT NotAllowedInRunningStateException : public QtException {
+class Q_BACKGROUNDPROCESS_EXPORT NotAllowedInRunningStateException : public QException
+{
 public:
-	NotAllowedInRunningStateException(const QString &reason);
+	NotAllowedInRunningStateException();
+
+	const char *what() const noexcept override;
+
+	void raise() const override;
+	QException *clone() const override;
 };
 
 class AppPrivate;
