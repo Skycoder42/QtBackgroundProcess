@@ -1,10 +1,12 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
 
-#include "qbackgroundprocess_global.h"
-#include <QCommandLineParser>
-#include <QIODevice>
-#include <QSharedPointer>
+#include "QtBackgroundProcess/qbackgroundprocess_global.h"
+
+#include <QtCore/qcommandlineparser.h>
+#include <QtCore/qiodevice.h>
+#include <QtCore/qsharedpointer.h>
+
 class QLocalSocket;
 
 namespace QtBackgroundProcess {

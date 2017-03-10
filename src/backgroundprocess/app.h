@@ -1,13 +1,15 @@
 #ifndef QtBACKGROUNDPROCESS_APP_H
 #define QtBACKGROUNDPROCESS_APP_H
 
-#include "qbackgroundprocess_global.h"
-#include <QCommandLineParser>
-#include <QCoreApplication>
-#include <functional>
-#include "qtexception.h"
+#include "QtBackgroundProcess/qbackgroundprocess_global.h"
+#include "QtBackgroundProcess/qtexception.h"
 
+#include <QtCore/qcommandlineparser.h>
+#include <QtCore/qcoreapplication.h>
+
+#include <functional>
 class QCtrlSignalHandler;
+
 namespace QtBackgroundProcess {
 
 class Terminal;
@@ -116,7 +118,6 @@ protected:
 
 private:
 	AppPrivate* d_ptr;
-	bool m_forwardMasterLog;
 };
 
 }

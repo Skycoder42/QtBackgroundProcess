@@ -1,6 +1,7 @@
-#include "app_p.h"
 #include "terminal.h"
 #include "terminal_p.h"
+#include "app_p.h"
+
 using namespace QtBackgroundProcess;
 
 #ifdef d

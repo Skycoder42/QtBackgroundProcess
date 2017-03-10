@@ -2,9 +2,11 @@
 #define MASTERCONNECTER_H
 
 #include "qbackgroundprocess_global.h"
-#include <QObject>
-#include <QLocalSocket>
-#include <QThread>
+
+#include <QtCore/QObject>
+#include <QtCore/QThread>
+
+#include <QtNetwork/QLocalSocket>
 
 namespace QtBackgroundProcess {
 
@@ -28,7 +30,7 @@ private slots:
 	void doWrite(const QByteArray &data);
 
 private:
-	class InThread : public QThread {
+	class Q_BACKGROUNDPROCESS_EXPORT InThread : public QThread {
 	public:
 		InThread(MasterConnecter *parent);
 

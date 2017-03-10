@@ -1,9 +1,10 @@
 #ifndef GLOBALTERMINAL_H
 #define GLOBALTERMINAL_H
 
-#include "qbackgroundprocess_global.h"
-#include <QIODevice>
-#include <QPointer>
+#include "QtBackgroundProcess/qbackgroundprocess_global.h"
+
+#include <QtCore/qiodevice.h>
+#include <QtCore/qpointer.h>
 
 namespace QtBackgroundProcess {
 

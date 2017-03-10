@@ -1,9 +1,11 @@
 #include "terminal_p.h"
 #include "app_p.h"
-#include <QtEndian>
-#include <QJsonDocument>
-#include <QJsonArray>
-#include <QTimer>
+
+#include <QtCore/QtEndian>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonArray>
+#include <QtCore/QTimer>
+
 using namespace QtBackgroundProcess;
 
 TerminalPrivate::TerminalPrivate(QLocalSocket *socket, QObject *parent) :

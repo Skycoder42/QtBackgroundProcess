@@ -12,7 +12,7 @@ PUBLIC_HEADERS += \
 
 PRIVATE_HEADERS += \
 	app_p.h \
-	masterconnecter.h \
+	masterconnecter_p.h \
 	qtexception.h \
 	terminal_p.h
 

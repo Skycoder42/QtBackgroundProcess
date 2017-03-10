@@ -1,12 +1,13 @@
 #ifndef TERMINALPRIVATE_H
 #define TERMINALPRIVATE_H
 
-#include "qbackgroundprocess_global.h"
 #include "terminal.h"
-#include <QObject>
-#include <QLocalSocket>
-#include <QJsonObject>
-#include <QBuffer>
+
+#include <QtCore/QObject>
+#include <QtCore/QJsonObject>
+#include <QtCore/QBuffer>
+
+#include <QtNetwork/QLocalSocket>
 
 namespace QtBackgroundProcess {
 

@@ -1,7 +1,7 @@
 #include "globalterminal.h"
 #include "app_p.h"
 
-#include <QTimer>
+#include <QtCore/QTimer>
 
 namespace QtBackgroundProcess {
 

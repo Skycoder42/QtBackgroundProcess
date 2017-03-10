@@ -1,11 +1,14 @@
-#include "masterconnecter.h"
+#include "masterconnecter_p.h"
 #include "app_p.h"
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QJsonArray>
-#include <QtEndian>
-#include <QFile>
+
+#include <QtCore/QJsonObject>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonArray>
+#include <QtCore/QtEndian>
+#include <QtCore/QFile>
+
 #include <iostream>
+
 using namespace QtBackgroundProcess;
 
 MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &arguments, bool isStarter, QObject *parent) :

@@ -1,17 +1,19 @@
 #include "app_p.h"
-#include <QRegularExpression>
-#include <QThread>
-#include <QDir>
-#include <QProcess>
+
+#include <QtCore/QRegularExpression>
+#include <QtCore/QThread>
+#include <QtCore/QDir>
+#include <QtCore/QProcess>
+#include <QtCore/QStandardPaths>
+
 #include <iostream>
-#include <QStandardPaths>
-#include <QDir>
 #ifdef Q_OS_WIN
 #include <qt_windows.h>
 #else
 #include <unistd.h>
 #include <sys/types.h>
 #endif
+
 using namespace QtBackgroundProcess;
 
 //logging category

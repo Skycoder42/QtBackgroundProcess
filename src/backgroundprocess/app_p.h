@@ -1,17 +1,19 @@
 #ifndef QtBACKGROUNDPROCESS_APPPRIVATE_H
 #define QtBACKGROUNDPROCESS_APPPRIVATE_H
 
-#include "qbackgroundprocess_global.h"
 #include "app.h"
-#include <QLockFile>
-#include <QScopedPointer>
-#include <QLocalServer>
-#include <QPointer>
-#include <QLoggingCategory>
-#include <QFile>
-#include "masterconnecter.h"
+
+#include "masterconnecter_p.h"
 #include "terminal_p.h"
 #include "globalterminal.h"
+
+#include <QtCore/QLockFile>
+#include <QtCore/QScopedPointer>
+#include <QtCore/QPointer>
+#include <QtCore/QLoggingCategory>
+#include <QtCore/QFile>
+
+#include <QtNetwork/QLocalServer>
 
 namespace QtBackgroundProcess {
 
