@@ -68,17 +68,15 @@ The first few commands (i.e. Version number) are done for every instance, includ
 To find out what you can do with this application, simply call `<path_to>/myApp --help` - this will show the command line arguments that can be used. Use `start` to start the master process and `stop` to stop it. Please remember the the master process will continue to run, even after you have closed all terminals. Use the `stop` command to stop it. For a demo app, see `examples/backgroundprocess/DemoApp`.
 
 ### Debugging the master process
-Since all of the application logic is happening in the master process, debugging the terminals does not really help. However, with "normal" commands you can only start terminals, not the master. If you need to debug the master, it can be helpful to start the master process directly, instead of using a terminal. To do so, all you need to do is launch it with a special first argument:
+Since all of the application logic is happening in the master process, debugging the terminals does not really help. However, with "normal" commands you can only start terminals, not the master, and thus not debug it. If you need to debug the master, it can be helpful to start the master process directly, instead of using a terminal. To do so, all you need to do is launch it with a special first argument:
 
 If your normal command looks for example like this: `./myApp start some arguments`<br>
 You can directly start the master process by using: `./myApp '__qbckgrndprcss$start#master~' some arguments`
 
-The master process is not meant to be directly run. Thus, it will for example, not show a console window, start a seperate session etc., if allowed by the platform. This makes it hard to get the debug output without a terminal. You can try the following options, depending on what suits you needs:
-- start the master with the `--keep-console` argument. This way the master will keep it's console window. **Note:** For this to work for qDebug, the master must not transfer it's debug output to any terminal or the log file.
-  - To start with disabled logfile, use: `start -L "" --keep-console ...`
-- Watch the log file and reload it on changes, i.e. use `tail -f logfile`. To get the location, run `--help` and see the `-L` parameter
-- Start a argument-less terminal after you started the master explicitly to attach and receive the debug output, if forwarding is enabled!
-- Try to re-attach a console window (not recommended)
+The master process is not meant to be directly run. Thus, it will for example, not show a console window, disconnect stdin/stdout, etc. This makes it hard to get the debug without a terminal. You can try the following options, depending on what suits you needs:
+- Start the master with a working console. This will only work as long as no terminals are attached, no logfile is used and you don't need stdin. For most situations, this is the recommended way of debugging. Use `-L "" --keep-console` as additional parameters for the master to enable this.
+- Watch the log file and reload it on changes, i.e. use `tail -f logfile`. To get the location, run `--help` and see the `-L` parameter. You can use terminals normally
+- Enable log forwarding to pass qDebug messages to all connected terminals. See QtBackgroundProcess::App::forwardMasterLog. Simply start a parameterless terminal after launching the master to see the output.
 
 ## Download/Installation
 There are multiple ways to install the Qt module, sorted by preference:
