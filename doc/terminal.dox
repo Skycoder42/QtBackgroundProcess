@@ -8,7 +8,7 @@ stdin and sending data to it's stdout.
 The Terminal implements the QIODevice interface. This allows easy integration into the
 application. The terminal is a sequential device.
 
-@sa App, App::connectedTerminals
+@sa App, App::connectedTerminals, GlobalTerminal
 */
 
 /*!

@@ -28,7 +28,7 @@ public:
 	bool canReadLine() const override;
 
 public slots:
-	//! Performs a flush on all connected terminals
+	//! Performs a flush on all connected terminals @sa Terminal::flush
 	void flush();
 
 protected:
