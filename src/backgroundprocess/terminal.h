@@ -39,7 +39,7 @@ public:
 
 	//! @inherit{QIODevice::isSequential}
 	bool isSequential() const override;
-	//! @inherit{QIODevice::close}
+	//! @inherit{QIODevice::close} @sa Terminal::disconnectTerminal
 	void close() override;
 	//! @inherit{QIODevice::bytesAvailable}
 	qint64 bytesAvailable() const override;
@@ -56,7 +56,7 @@ public slots:
 signals:
 	//! Will be emitted after the terminal has been disconnected
 	void terminalDisconnected();
-	//! Will be emitted if an error occures
+	//! Will be emitted if an error occured
 	void terminalError(int errorCode);
 
 protected:

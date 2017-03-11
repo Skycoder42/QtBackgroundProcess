@@ -42,7 +42,7 @@ void TerminalPrivate::beginSoftDisconnect()
 {
 	this->disconnecting = true;
 	if(this->socket->bytesToWrite() > 0) {
-		QTimer::singleShot(3000, this, [=](){
+		QTimer::singleShot(500, this, [=](){
 			if(this->socket->state() == QLocalSocket::ConnectedState)
 				this->socket->disconnectFromServer();
 		});
