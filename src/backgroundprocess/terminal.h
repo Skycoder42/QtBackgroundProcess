@@ -30,21 +30,24 @@ public:
 	//! Destructor
 	~Terminal();
 
-	//! @briefReadAc{App::starter}
+	//! @readAcFn{App::starter}
 	bool isStarter() const;
-	//! @briefReadAc{App::parser}
+	//! @readAcFn{App::parser}
 	QSharedPointer<QCommandLineParser> parser() const;
-	//! @briefReadAc{App::autoDelete}
+	//! @readAcFn{App::autoDelete}
 	bool isAutoDelete() const;
 
+	//! @inherit{QIODevice::isSequential}
 	bool isSequential() const override;
+	//! @inherit{QIODevice::close}
 	void close() override;
+	//! @inherit{QIODevice::bytesAvailable}
 	qint64 bytesAvailable() const override;
 
 public slots:
 	//! Disconnects the terminal from the master
 	void disconnectTerminal();
-	//! @briefWriteAc{App::autoDelete}
+	//! @writeAcFn{App::autoDelete}
 	void setAutoDelete(bool autoDelete);
 
 	//! Flushes the terminal
@@ -57,7 +60,9 @@ signals:
 	void terminalError(int errorCode);
 
 protected:
+	//! @inherit{QIODevice::readData}
 	qint64 readData(char *data, qint64 maxlen) override;
+	//! @inherit{QIODevice::writeData}
 	qint64 writeData(const char *data, qint64 len) override;
 
 private:

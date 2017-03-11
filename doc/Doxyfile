@@ -256,7 +256,7 @@ ALIASES                = "accessors{1}=<table><tr><th colspan= 2>Accessors</th><
                          "writeAcFn{1}=WRITE accessor for \1" \
                          "notifyAcFn{1}=NOTIFY accessor for \1" \
                          "memberAcFn{1}=MEMBER accessor for \1" \
-                         "inherit{1}=Inherits 1"
+                         "inherit{1}=Inherits \1"
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only).
 # A mapping has the form "name=value". For example adding "class=itcl::class"
@@ -1174,7 +1174,7 @@ HTML_FILE_EXTENSION    = .html
 # of the possible markers and block names see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_HEADER            = 
+HTML_HEADER            = gh_header.html
 
 # The HTML_FOOTER tag can be used to specify a user-defined HTML footer for each
 # generated HTML page. If the tag is left blank doxygen will generate a standard
@@ -1219,7 +1219,7 @@ HTML_EXTRA_STYLESHEET  =
 # files will be copied as-is; there are no commands or markers available.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_FILES       = 
+HTML_EXTRA_FILES       = images/GitHub_Logo.png
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
 # will adjust the colors in the style sheet and background images according to

@@ -19,9 +19,12 @@ class Q_BACKGROUNDPROCESS_EXPORT NotAllowedInRunningStateException : public QExc
 public:
 	NotAllowedInRunningStateException();
 
+	//! @inherit{std::exception::what}
 	const char *what() const noexcept override;
 
+	//! @inherit{QException::raise}
 	void raise() const override;
+	//! @inherit{QException::clone}
 	QException *clone() const override;
 };
 
@@ -53,17 +56,17 @@ public:
 	//! Destructor
 	~App();
 
-	//! @briefReadAc{App::instanceID}
+	//! @readAcFn{App::instanceID}
 	QString instanceID() const;
-	//! @briefReadAc{App::forwardMasterLog}
+	//! @readAcFn{App::forwardMasterLog}
 	bool forwardMasterLog() const;
-	//! @briefReadAc{App::autoStartMaster}
+	//! @readAcFn{App::autoStartMaster}
 	bool autoStartMaster() const;
-	//! @briefReadAc{App::ignoreMultiStarts}
+	//! @readAcFn{App::ignoreMultiStarts}
 	bool ignoreMultiStarts() const;
-	//! @briefReadAc{App::autoDeleteTerminals}
+	//! @readAcFn{App::autoDeleteTerminals}
 	bool autoDeleteTerminals() const;
-	//! @briefReadAc{App::autoKillTerminals}
+	//! @readAcFn{App::autoKillTerminals}
 	bool autoKillTerminals() const;
 
 	//! Sets the function to be called for the creation of the parser (Instead of overriding)
@@ -82,23 +85,23 @@ public:
 	//! Executes the application event loop
 	int exec();
 
-	//! @briefReadAc{App::connectedTerminals}
+	//! @readAcFn{App::connectedTerminals}
 	QList<Terminal*> connectedTerminals() const;
 
 public slots:
 	//! Creates the default instance id for this application
 	void createDefaultInstanceID(bool overwrite = true);
-	//! @briefWriteAc{App::instanceID}
+	//! @writeAcFn{App::instanceID}
 	void setInstanceID(QString instanceID, bool useAsSeed = true);
-	//! @briefWriteAc{App::forwardMasterLog}
+	//! @writeAcFn{App::forwardMasterLog}
 	void setForwardMasterLog(bool forwardMasterLog);
-	//! @briefWriteAc{App::autoStartMaster}
+	//! @writeAcFn{App::autoStartMaster}
 	void setAutoStartMaster(bool autoStartMaster);
-	//! @briefWriteAc{App::ignoreMultiStarts}
+	//! @writeAcFn{App::ignoreMultiStarts}
 	void setIgnoreMultiStarts(bool ignoreMultiStarts);
-	//! @briefWriteAc{App::autoDeleteTerminals}
+	//! @writeAcFn{App::autoDeleteTerminals}
 	void setAutoDeleteTerminals(bool autoDeleteTerminals, bool changeCurrent = false);
-	//! @briefWriteAc{App::autoKillTerminals}
+	//! @writeAcFn{App::autoKillTerminals}
 	void setAutoKillTerminals(bool autoKillTerminals, bool killCurrent = false);
 
 signals:
@@ -107,7 +110,7 @@ signals:
 	//! Will be emitted when a new terminal sent arguments to the master
 	void commandReceived(QSharedPointer<QCommandLineParser> parser, bool isStarter, QPrivateSignal);
 
-	//! @briefNotifyAc{App::connectedTerminals}
+	//! @notifyAcFn{App::connectedTerminals}
 	void connectedTerminalsChanged(QList<Terminal*> connectedTerminals, QPrivateSignal);
 
 protected:

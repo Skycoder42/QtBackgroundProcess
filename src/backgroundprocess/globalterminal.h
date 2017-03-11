@@ -22,7 +22,9 @@ public:
 	//! Destructor
 	~GlobalTerminal();
 
+	//! @inherit{QIODevice::isSequential}
 	bool isSequential() const override;
+	//! @inherit{QIODevice::canReadLine}
 	bool canReadLine() const override;
 
 public slots:
@@ -30,7 +32,9 @@ public slots:
 	void flush();
 
 protected:
+	//! @inherit{QIODevice::readData}
 	qint64 readData(char *data, qint64 maxlen) override;
+	//! @inherit{QIODevice::writeData}
 	qint64 writeData(const char *data, qint64 len) override;
 
 private slots:

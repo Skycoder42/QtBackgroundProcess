@@ -17,3 +17,6 @@ docInst1.files = $$OUT_PWD/qtbackgroundprocess.qch
 docInst2.path = $$[QT_INSTALL_DOCS]/qtbackgroundprocess
 docInst2.files = $$OUT_PWD/qtbackgroundprocess/*
 INSTALLS += docInst1 docInst2
+
+DISTFILES += \
+    gh_header.html
