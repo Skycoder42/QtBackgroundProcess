@@ -8,7 +8,6 @@
 #include <QtCore/qexception.h>
 
 #include <functional>
-class QCtrlSignalHandler;
 
 namespace QtBackgroundProcess {
 
@@ -85,9 +84,6 @@ public:
 
 	//! @briefReadAc{App::connectedTerminals}
 	QList<Terminal*> connectedTerminals() const;
-
-	//! Returns the instance of the QCtrlSignalHandler that resides in the library @sa https://github.com/Skycoder42/QCtrlSignals
-	QCtrlSignalHandler *signalHandler() const;
 
 public slots:
 	//! Creates the default instance id for this application
