@@ -69,24 +69,10 @@ void App::setStartupFunction(const std::function<int (const QCommandLineParser &
 	d->startupFunc = function;
 }
 
-void App::setShutdownRequestFunction(const std::function<bool(const QCommandLineParser &)> &function)
-{
-	d->shutdownFunc = [function](Terminal *t, int&){
-		return function(*t->parser().data());
-	};
-}
-
 void App::setShutdownRequestFunction(const std::function<bool(const QCommandLineParser &, int&)> &function)
 {
 	d->shutdownFunc = [function](Terminal *t, int &r){
 		return function(*t->parser().data(), r);
-	};
-}
-
-void App::setShutdownRequestFunction(const std::function<bool(Terminal*)> &function)
-{
-	d->shutdownFunc = [function](Terminal *t, int&){
-		return function(t);
 	};
 }
 
@@ -107,8 +93,10 @@ int App::exec()
 	//update terminal logging
 	d->updateLoggingMode(parser.value(QStringLiteral("terminallog")).toInt());
 
-	//generate the single id
+	//generate the single id (temporary disable running)
+	d->running = false;
 	this->createDefaultInstanceID(false);
+	d->running = true;
 
 	auto res = d->initControlFlow(parser);
 	if(res == -1)//special case
@@ -133,9 +121,6 @@ void App::createDefaultInstanceID(bool overwrite)
 
 void App::setInstanceID(QString instanceID, bool useAsSeed)
 {
-	if(d->running)
-		throw NotAllowedInRunningStateException();
-
 	if(useAsSeed)
 		d->setInstanceId(AppPrivate::generateSingleId(instanceID));
 	else

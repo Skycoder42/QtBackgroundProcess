@@ -29,7 +29,7 @@ public:
 };
 
 class AppPrivate;
-//! The Background process application. The main class of QtBackgroundProcess
+//! The background process application. The main class of QtBackgroundProcess
 class Q_BACKGROUNDPROCESS_EXPORT App : public QCoreApplication
 {
 	Q_OBJECT
@@ -74,11 +74,7 @@ public:
 	//! Sets the function to be called to startup the application (Instead of overriding)
 	void setStartupFunction(const std::function<int (const QCommandLineParser &)> &function);
 	//! Sets the function to be called to handle shutdown requests (Instead of overriding)
-	void setShutdownRequestFunction(const std::function<bool(const QCommandLineParser &)> &function);
-	//! Sets the function to be called to handle shutdown requests (Instead of overriding)
 	void setShutdownRequestFunction(const std::function<bool(const QCommandLineParser &, int&)> &function);
-	//! Sets the function to be called to handle shutdown requests (Instead of overriding)
-	void setShutdownRequestFunction(const std::function<bool(Terminal*)> &function);
 	//! Sets the function to be called to handle shutdown requests (Instead of overriding)
 	void setShutdownRequestFunction(const std::function<bool(Terminal*, int&)> &function);
 
@@ -89,7 +85,7 @@ public:
 	QList<Terminal*> connectedTerminals() const;
 
 public slots:
-	//! Creates the default instance id for this application
+	//! @resetAcFn{App::instanceID}
 	void createDefaultInstanceID(bool overwrite = true);
 	//! @writeAcFn{App::instanceID}
 	void setInstanceID(QString instanceID, bool useAsSeed = true);

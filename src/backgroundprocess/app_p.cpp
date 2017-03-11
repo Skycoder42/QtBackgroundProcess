@@ -105,7 +105,7 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	masterLogging(false),
 	autoStart(false),
 	ignoreExtraStart(false),
-	autoDelete(false),
+	autoDelete(true),
 	autoKill(false),
 	instanceId(),
 	masterLock(nullptr),
@@ -121,6 +121,9 @@ AppPrivate::AppPrivate(App *q_ptr) :
 
 void AppPrivate::setInstanceId(const QString &id)
 {
+	if(running)
+		throw NotAllowedInRunningStateException();
+
 	this->instanceId = id;
 	auto lockPath = QDir::temp().absoluteFilePath(id + QStringLiteral(".lock"));
 	this->masterLock.reset(new QLockFile(lockPath));
@@ -480,15 +483,9 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 		if(terminal->parser->isSet(QStringLiteral("logpath")))
 			this->updateLoggingPath(terminal->parser->value(QStringLiteral("logpath")));
 
-		//add terminal to terminal list
+		//create real terminal
 		auto rTerm = new Terminal(terminal, this);
 		rTerm->setAutoDelete(this->autoDelete);
-		connect(rTerm, &Terminal::destroyed, this, [=](){
-			this->activeTerminals.removeOne(rTerm);
-			emit this->q_ptr->connectedTerminalsChanged(this->activeTerminals, App::QPrivateSignal());
-		});
-		this->activeTerminals.append(rTerm);
-		emit this->q_ptr->connectedTerminalsChanged(this->activeTerminals, App::QPrivateSignal());
 		//emit the command
 		emit this->q_ptr->commandReceived(rTerm->parser(), rTerm->isStarter(), App::QPrivateSignal());
 
@@ -500,8 +497,17 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 		if(this->autoKill || rTerm->parser()->isSet(QStringLiteral("detached"))) {
 			rTerm->setAutoDelete(true);
 			rTerm->disconnectTerminal();
-		} else
+		} else {
+			//add terminal to terminal list
+			connect(rTerm, &Terminal::destroyed, this, [=](){
+				this->activeTerminals.removeOne(rTerm);
+				emit this->q_ptr->connectedTerminalsChanged(this->activeTerminals, App::QPrivateSignal());
+			});
+			this->activeTerminals.append(rTerm);
+			emit this->q_ptr->connectedTerminalsChanged(this->activeTerminals, App::QPrivateSignal());
+			//new terminal signal
 			emit this->q_ptr->newTerminalConnected(rTerm, App::QPrivateSignal());
+		}
 	} else
 		terminal->deleteLater();
 }

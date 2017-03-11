@@ -19,7 +19,6 @@ void TestApp::parseTerminalOptions()
 
 int TestApp::startupApp(const QCommandLineParser &parser)
 {
-	setAutoDeleteTerminals(true);
 	doCommand(parser);
 	qDebug() << "App Master Started with arguments:"
 			 << parser.positionalArguments()
