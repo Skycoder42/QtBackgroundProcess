@@ -4,13 +4,11 @@ QT = core network
 
 include(../3rdparty/QCtrlSignals/qctrlsignals.pri)
 
-PUBLIC_HEADERS += \
+HEADERS += \
 	qbackgroundprocess_global.h \
 	app.h \
 	globalterminal.h \
-	terminal.h
-
-PRIVATE_HEADERS += \
+	terminal.h \
 	app_p.h \
 	masterconnecter_p.h \
 	terminal_p.h
@@ -22,8 +20,6 @@ SOURCES += \
 	masterconnecter.cpp \
 	terminal_p.cpp \
 	terminal.cpp
-
-HEADERS += $$PUBLIC_HEADERS $$PRIVATE_HEADERS
 
 load(qt_module)
 
