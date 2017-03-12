@@ -26,12 +26,12 @@ public:
 	bool loadParser();
 	void beginSoftDisconnect();
 
-signals:
+Q_SIGNALS:
 	void statusLoadComplete(TerminalPrivate *terminal, bool successful);
 
 	void dataReady();
 
-private slots:
+private Q_SLOTS:
 	void disconnected();
 	void error(QLocalSocket::LocalSocketError socketError);
 	void readyRead();

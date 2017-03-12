@@ -65,10 +65,10 @@ public:
 	void updateLoggingMode(int level);
 	void updateLoggingPath(const QString &path);
 
-public slots:
+public Q_SLOTS:
 	int initControlFlow(const QCommandLineParser &parser);
 
-private slots:
+private Q_SLOTS:
 	int makeMaster(const QCommandLineParser &parser);
 	int startMaster(bool isAutoStart = false);
 	int testMasterRunning();

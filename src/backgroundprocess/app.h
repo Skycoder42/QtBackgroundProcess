@@ -84,7 +84,7 @@ public:
 	//! @readAcFn{App::connectedTerminals}
 	QList<Terminal*> connectedTerminals() const;
 
-public slots:
+public Q_SLOTS:
 	//! @resetAcFn{App::instanceID}
 	void createDefaultInstanceID(bool overwrite = true);
 	//! @writeAcFn{App::instanceID}
@@ -100,7 +100,7 @@ public slots:
 	//! @writeAcFn{App::autoKillTerminals}
 	void setAutoKillTerminals(bool autoKillTerminals, bool killCurrent = false);
 
-signals:
+Q_SIGNALS:
 	//! Will be emitted when a new terminal has connected to the master
 	void newTerminalConnected(QtBackgroundProcess::Terminal *terminal, QPrivateSignal);
 	//! Will be emitted when a new terminal sent arguments to the master

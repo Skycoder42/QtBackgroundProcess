@@ -44,7 +44,7 @@ public:
 	//! @inherit{QIODevice::bytesAvailable}
 	qint64 bytesAvailable() const override;
 
-public slots:
+public Q_SLOTS:
 	//! Disconnects the terminal from the master
 	void disconnectTerminal();
 	//! @writeAcFn{App::autoDelete}
@@ -53,7 +53,7 @@ public slots:
 	//! Flushes the terminal
 	void flush();
 
-signals:
+Q_SIGNALS:
 	//! Will be emitted after the terminal has been disconnected
 	void terminalDisconnected();
 	//! Will be emitted if an error occured

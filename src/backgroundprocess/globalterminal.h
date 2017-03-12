@@ -27,7 +27,7 @@ public:
 	//! @inherit{QIODevice::canReadLine}
 	bool canReadLine() const override;
 
-public slots:
+public Q_SLOTS:
 	//! Performs a flush on all connected terminals @sa Terminal::flush
 	void flush();
 
@@ -37,7 +37,7 @@ protected:
 	//! @inherit{QIODevice::writeData}
 	qint64 writeData(const char *data, qint64 len) override;
 
-private slots:
+private Q_SLOTS:
 	bool tryPushBuffer(QList<Terminal*> terms);
 
 private:

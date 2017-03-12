@@ -21,7 +21,7 @@ public:
 							 QObject *parent = nullptr);
 	~MasterConnecter();
 
-private slots:
+private Q_SLOTS:
 	void connected();
 	void disconnected();
 	void error(QLocalSocket::LocalSocketError socketError);
