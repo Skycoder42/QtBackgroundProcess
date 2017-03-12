@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+  <namespace>de.skycoder42.qtbackgroundprocess.140</namespace>
+  <virtualFolder>doc_qtbackgroundprocess</virtualFolder>
+  <customFilter name="BackgroundProcess 1.4.0">
+    <filterAttribute>qtbackgroundprocess</filterAttribute>
+    <filterAttribute>1.4.0</filterAttribute>
+  </customFilter>
+  <filterSection>
+    <filterAttribute>doxygen</filterAttribute>
+    <toc>
+      <section title="QtBackgroundProcess 1.4.0" ref="index.html">
+        <section title="Features" ref="index.html#qtbackgroundprocess_readme_label_0" />
+        <section title="Use Case" ref="index.html#qtbackgroundprocess_readme_label_1" />
+        <section title="Usage" ref="index.html#qtbackgroundprocess_readme_label_2">
+          <section title="Example" ref="index.html#qtbackgroundprocess_readme_label_3" />
+          <section title="Debugging the master process" ref="index.html#qtbackgroundprocess_readme_label_4" />
+        </section>
+        <section title="Download/Installation" ref="index.html#qtbackgroundprocess_readme_label_5" />
+        <section title="Documentation" ref="index.html#qtbackgroundprocess_readme_label_6" />
+        <section title="Technical Stuff" ref="index.html#qtbackgroundprocess_readme_label_7" />
+        <section title="Files">
+          <section title="File List" ref="files.html">
+            <section title="app.cpp" ref="app_8cpp_source.html" />
+            <section title="app.h" ref="app_8h_source.html" />
+            <section title="doxme.py" ref="doxme_8py_source.html" />
+            <section title="globalterminal.cpp" ref="globalterminal_8cpp_source.html" />
+            <section title="globalterminal.h" ref="globalterminal_8h_source.html" />
+            <section title="masterconnecter.cpp" ref="masterconnecter_8cpp_source.html" />
+            <section title="qbackgroundprocess_global.h" ref="qbackgroundprocess__global_8h_source.html" />
+            <section title="terminal.cpp" ref="terminal_8cpp_source.html" />
+            <section title="terminal.h" ref="terminal_8h_source.html" />
+          </section>
+        </section>
+      </section>
+    </toc>
+    <keywords>
+    </keywords>
+    <files>
+      <file>tabs.css</file>
+      <file>tab_a.png</file>
+      <file>tab_b.png</file>
+      <file>tab_h.png</file>
+      <file>tab_s.png</file>
+      <file>nav_h.png</file>
+      <file>nav_f.png</file>
+      <file>bc_s.png</file>
+      <file>doxygen.png</file>
+      <file>closed.png</file>
+      <file>open.png</file>
+      <file>bdwn.png</file>
+      <file>sync_on.png</file>
+      <file>sync_off.png</file>
+      <file>doxygen.css</file>
+      <file>jquery.js</file>
+      <file>dynsections.js</file>
+      <file>search/search_l.png</file>
+      <file>search/search_m.png</file>
+      <file>search/search_r.png</file>
+      <file>search/close.png</file>
+      <file>search/mag_sel.png</file>
+      <file>search/search.css</file>
+      <file>search/search.js</file>
+      <file>app_8cpp_source.html</file>
+      <file>app_8h_source.html</file>
+      <file>doxme_8py_source.html</file>
+      <file>globalterminal_8cpp_source.html</file>
+      <file>globalterminal_8h_source.html</file>
+      <file>masterconnecter_8cpp_source.html</file>
+      <file>qbackgroundprocess__global_8h_source.html</file>
+      <file>_r_e_a_d_m_e_8md_source.html</file>
+      <file>terminal_8cpp_source.html</file>
+      <file>terminal_8h_source.html</file>
+      <file>dir_36cb11756967b41cbe9fa55d8c46bbea.html</file>
+      <file>dir_68267d1309a1af8e8297ef4c3efbcdba.html</file>
+      <file>index.html</file>
+      <file>pages.html</file>
+      <file>files.html</file>
+    </files>
+  </filterSection>
+</QtHelpProject>
