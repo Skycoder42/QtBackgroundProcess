@@ -32,7 +32,7 @@ win32 {
 	QMAKE_TARGET_COMPANY = "Skycoder42"
 	QMAKE_TARGET_COPYRIGHT = "Felix Barz"
 
-	#LIBS += -lUser32
+	LIBS += -lUser32
 } else:mac {
 	QMAKE_TARGET_BUNDLE_PREFIX = "de.skycoder42."
 }
