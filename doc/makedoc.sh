@@ -11,13 +11,15 @@ scriptDir=$(dirname "$0")
 destDir="$(pwd)"
 srcDir=$1
 version=$2
-verTag=$(echo "$version" | sed -e 's/.//g')
+verTag=$(echo "$version" | sed -e 's/\.//g')
 qtBins=$3
 qtHeaders=$4
 qtDocs=$5
 doxyTemplate="$srcDir/Doxyfile"
 readme="$destDir/README.md"
 doxme="$scriptDir/doxme.py"
+
+
 
 python "$doxme" "$srcDir/../README.md"
 
