@@ -1,13 +1,13 @@
 var searchData=
 [
-  ['_7eapp',['~App',['https://doc.qt.io/qt-5/class_qt_background_process_1_1_app.html#a34f1f253b1cef5f4ecbac66eaf6964ec',0,'QtBackgroundProcess::App']]],
+  ['_7eapp',['~App',['../class_qt_background_process_1_1_app.html#a34f1f253b1cef5f4ecbac66eaf6964ec',1,'QtBackgroundProcess::App']]],
   ['_7eassimpio',['~AssimpIO',['https://doc.qt.io/qt-5/qt3drender-assimpio.html#dtor.AssimpIO',0,'Qt3DRender::AssimpIO']]],
   ['_7ebinder',['~Binder',['https://doc.qt.io/qt-5/qopenglvertexarrayobject-binder.html#dtor.Binder',0,'QOpenGLVertexArrayObject::Binder']]],
   ['_7econnection',['~Connection',['https://doc.qt.io/qt-5/qmetaobject-connection.html#dtor.Connection',0,'QMetaObject::Connection']]],
   ['_7econst_5fiterator',['~const_iterator',['https://doc.qt.io/qt-5/qsequentialiterable-const-iterator.html#dtor.const_iterator',0,'QSequentialIterable::const_iterator::~const_iterator()'],['https://doc.qt.io/qt-5/qassociativeiterable-const-iterator.html#dtor.const_iterator',0,'QAssociativeIterable::const_iterator::~const_iterator()']]],
   ['_7econverterstate',['~ConverterState',['https://doc.qt.io/qt-5/qtextcodec-converterstate.html#dtor.ConverterState',0,'QTextCodec::ConverterState']]],
   ['_7eforeachloopbody',['~ForeachLoopBody',['https://doc.qt.io/qt-5/qscxmldatamodel-foreachloopbody.html#dtor.ForeachLoopBody',0,'QScxmlDataModel::ForeachLoopBody']]],
-  ['_7eglobalterminal',['~GlobalTerminal',['https://doc.qt.io/qt-5/class_qt_background_process_1_1_global_terminal.html#a0f0e1ab757d594193f77c67ef2d19892',0,'QtBackgroundProcess::GlobalTerminal']]],
+  ['_7eglobalterminal',['~GlobalTerminal',['../class_qt_background_process_1_1_global_terminal.html#a0f0e1ab757d594193f77c67ef2d19892',1,'QtBackgroundProcess::GlobalTerminal']]],
   ['_7egltfio',['~GLTFIO',['https://doc.qt.io/qt-5/qt3drender-gltfio.html#dtor.GLTFIO',0,'Qt3DRender::GLTFIO']]],
   ['_7eipaging',['~IPaging',['https://doc.qt.io/qt-5/class_qt_rest_client_1_1_i_paging.html#a987ec4d85ef79dd5d97c4b52b6ac6536',0,'QtRestClient::IPaging']]],
   ['_7ekey',['~Key',['https://doc.qt.io/qt-5/qpixmapcache-key.html#dtor.Key',0,'QPixmapCache::Key']]],
@@ -790,6 +790,6 @@ var searchData=
   ['_7erestclass',['~RestClass',['https://doc.qt.io/qt-5/class_qt_rest_client_1_1_rest_class.html#a9136ec5bd82e69960027005b1869ec51',0,'QtRestClient::RestClass']]],
   ['_7erestclient',['~RestClient',['https://doc.qt.io/qt-5/class_qt_rest_client_1_1_rest_client.html#a9a6d211b09653ee470c320769edde80d',0,'QtRestClient::RestClient']]],
   ['_7esignalevent',['~SignalEvent',['https://doc.qt.io/qt-5/qstatemachine-signalevent.html#dtor.SignalEvent',0,'QStateMachine::SignalEvent']]],
-  ['_7eterminal',['~Terminal',['https://doc.qt.io/qt-5/class_qt_background_process_1_1_terminal.html#add5a7d4dd45b68af9a0afb1cc845af2f',0,'QtBackgroundProcess::Terminal']]],
+  ['_7eterminal',['~Terminal',['../class_qt_background_process_1_1_terminal.html#add5a7d4dd45b68af9a0afb1cc845af2f',1,'QtBackgroundProcess::Terminal']]],
   ['_7ewrappedevent',['~WrappedEvent',['https://doc.qt.io/qt-5/qstatemachine-wrappedevent.html#dtor.WrappedEvent',0,'QStateMachine::WrappedEvent']]]
 ];

@@ -87,7 +87,7 @@ var searchData=
   ['startdragdistance',['startDragDistance',['https://doc.qt.io/qt-5/qapplication.html#startDragDistance-prop',0,'QApplication::startDragDistance()'],['https://doc.qt.io/qt-5/qstylehints.html#startDragDistance-prop',0,'QStyleHints::startDragDistance()']]],
   ['startdragtime',['startDragTime',['https://doc.qt.io/qt-5/qapplication.html#startDragTime-prop',0,'QApplication::startDragTime()'],['https://doc.qt.io/qt-5/qstylehints.html#startDragTime-prop',0,'QStyleHints::startDragTime()']]],
   ['startdragvelocity',['startDragVelocity',['https://doc.qt.io/qt-5/qstylehints.html#startDragVelocity-prop',0,'QStyleHints']]],
-  ['starter',['starter',['https://doc.qt.io/qt-5/class_qt_background_process_1_1_terminal.html#af8de7a1804220a38f35a839d7f1f72a4',0,'QtBackgroundProcess::Terminal']]],
+  ['starter',['starter',['../class_qt_background_process_1_1_terminal.html#af8de7a1804220a38f35a839d7f1f72a4',1,'QtBackgroundProcess::Terminal']]],
   ['startid',['startId',['https://doc.qt.io/qt-5/qwizard.html#startId-prop',0,'QWizard']]],
   ['startvalue',['startValue',['https://doc.qt.io/qt-5/qvariantanimation.html#startValue-prop',0,'QVariantAnimation']]],
   ['state',['state',['https://doc.qt.io/qt-5/qabstractanimation.html#state-prop',0,'QAbstractAnimation::state()'],['https://doc.qt.io/qt-5/qgesture.html#state-prop',0,'QGesture::state()'],['https://doc.qt.io/qt-5/qscroller.html#state-prop',0,'QScroller::state()'],['https://doc.qt.io/qt-5/qabstractoauth2.html#state-prop',0,'QAbstractOAuth2::state()'],['https://doc.qt.io/qt-5/qquickitem.html#state-prop',0,'QQuickItem::state()']]],

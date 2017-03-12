@@ -241,7 +241,7 @@ var searchData=
   ['disconnectfromserver',['disconnectFromServer',['https://doc.qt.io/qt-5/qlocalsocket.html#disconnectFromServer',0,'QLocalSocket']]],
   ['disconnectfromservice',['disconnectFromService',['https://doc.qt.io/qt-5/qbluetoothsocket.html#disconnectFromService',0,'QBluetoothSocket']]],
   ['disconnectnotify',['disconnectNotify',['https://doc.qt.io/qt-5/qobject.html#disconnectNotify',0,'QObject']]],
-  ['disconnectterminal',['disconnectTerminal',['https://doc.qt.io/qt-5/class_qt_background_process_1_1_terminal.html#acdb8d00fa6cb46474b2350aac20928ca',0,'QtBackgroundProcess::Terminal']]],
+  ['disconnectterminal',['disconnectTerminal',['../class_qt_background_process_1_1_terminal.html#acdb8d00fa6cb46474b2350aac20928ca',1,'QtBackgroundProcess::Terminal']]],
   ['discoverability',['discoverability',['https://doc.qt.io/qt-5/qlowenergyadvertisingdata.html#discoverability',0,'QLowEnergyAdvertisingData']]],
   ['discoverdetails',['discoverDetails',['https://doc.qt.io/qt-5/qlowenergyservice.html#discoverDetails',0,'QLowEnergyService']]],
   ['discovereddevices',['discoveredDevices',['https://doc.qt.io/qt-5/qbluetoothdevicediscoveryagent.html#discoveredDevices',0,'QBluetoothDeviceDiscoveryAgent']]],

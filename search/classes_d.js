@@ -1733,7 +1733,7 @@ var searchData=
   ['qwebsocketserver',['QWebSocketServer',['https://doc.qt.io/qt-5/qwebsocketserver.html',0,'']]],
   ['qwhatsthis',['QWhatsThis',['https://doc.qt.io/qt-5/qwhatsthis.html',0,'']]],
   ['qwhatsthisclickedevent',['QWhatsThisClickedEvent',['https://doc.qt.io/qt-5/qwhatsthisclickedevent.html',0,'']]],
-  ['qwheelevent',['QWheelEvent',['https://doc.qt.io/qt-5/qt3dinput-qwheelevent.html',0,'Qt3DInput::QWheelEvent'],['https://doc.qt.io/qt-5/qwheelevent.html',0,'QWheelEvent']]],
+  ['qwheelevent',['QWheelEvent',['https://doc.qt.io/qt-5/qwheelevent.html',0,'QWheelEvent'],['https://doc.qt.io/qt-5/qt3dinput-qwheelevent.html',0,'Qt3DInput::QWheelEvent']]],
   ['qwidget',['QWidget',['https://doc.qt.io/qt-5/qwidget.html',0,'']]],
   ['qwidgetaction',['QWidgetAction',['https://doc.qt.io/qt-5/qwidgetaction.html',0,'']]],
   ['qwidgetitem',['QWidgetItem',['https://doc.qt.io/qt-5/qwidgetitem.html',0,'']]],

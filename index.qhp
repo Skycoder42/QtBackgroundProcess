@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QtHelpProject version="1.0">
-  <namespace>de.skycoder42.qtbackgroundprocess.140</namespace>
+  <namespace>de.skycoder42.qtbackgroundprocess.</namespace>
   <virtualFolder>doc_qtbackgroundprocess</virtualFolder>
   <customFilter name="BackgroundProcess 1.4.0">
     <filterAttribute>qtbackgroundprocess</filterAttribute>
@@ -19,6 +19,104 @@
         <section title="Download/Installation" ref="index.html#qtbackgroundprocess_readme_label_5" />
         <section title="Documentation" ref="index.html#qtbackgroundprocess_readme_label_6" />
         <section title="Technical Stuff" ref="index.html#qtbackgroundprocess_readme_label_7" />
+        <section title="Classes" ref="annotated.html">
+          <section title="Class List" ref="annotated.html">
+            <section title="QtBackgroundProcess">
+              <section title="App" ref="class_qt_background_process_1_1_app.html">
+                <section title="App" ref="class_qt_background_process_1_1_app.html#a58257f482a592c573d3f95e5fe56e3f0" />
+                <section title="~App" ref="class_qt_background_process_1_1_app.html#a34f1f253b1cef5f4ecbac66eaf6964ec" />
+                <section title="autoDeleteTerminals" ref="class_qt_background_process_1_1_app.html#abfb06fbeb31fc6a164f577aa21eb70be" />
+                <section title="autoKillTerminals" ref="class_qt_background_process_1_1_app.html#acb09dc3c1b731b61d2e0a613d84a6277" />
+                <section title="autoStartMaster" ref="class_qt_background_process_1_1_app.html#a4eb0b6d8c48cedcdda30be97d29de45e" />
+                <section title="commandReceived" ref="class_qt_background_process_1_1_app.html#a3e892a48255c68a03768bb9e5dbaed74" />
+                <section title="connectedTerminals" ref="class_qt_background_process_1_1_app.html#aec304a890f06b589084d7df4e60f00d1" />
+                <section title="connectedTerminalsChanged" ref="class_qt_background_process_1_1_app.html#ad96113846c842fa5702fe5fbec8d4da1" />
+                <section title="createDefaultInstanceID" ref="class_qt_background_process_1_1_app.html#a1059954d51fd5aa275303a627ec13743" />
+                <section title="exec" ref="class_qt_background_process_1_1_app.html#a7dc56263561f844ab8bc85d08baa3c9b" />
+                <section title="forwardMasterLog" ref="class_qt_background_process_1_1_app.html#a041821be87341ea682f959e5f1aeb524" />
+                <section title="ignoreMultiStarts" ref="class_qt_background_process_1_1_app.html#a0a12449db4f0d1aeaa7436de85fa9f9b" />
+                <section title="instanceID" ref="class_qt_background_process_1_1_app.html#af1e3f6b2b90dc1a15d8e0042744d4e71" />
+                <section title="newTerminalConnected" ref="class_qt_background_process_1_1_app.html#aa8b1a6cddc2928df99a76895e67e80d4" />
+                <section title="requestAppShutdown" ref="class_qt_background_process_1_1_app.html#a8fe9a15aaf82201b8a70d4705b1b37da" />
+                <section title="setAutoDeleteTerminals" ref="class_qt_background_process_1_1_app.html#a62090e7840cdb362dc69786240b6fd7c" />
+                <section title="setAutoKillTerminals" ref="class_qt_background_process_1_1_app.html#ae5787f7ba8c5de626e7f7ca9ab751612" />
+                <section title="setAutoStartMaster" ref="class_qt_background_process_1_1_app.html#ae2b20271277525d37912bb13828a7232" />
+                <section title="setForwardMasterLog" ref="class_qt_background_process_1_1_app.html#a8ae6d0e91bff937510e0d4bbdc1018b2" />
+                <section title="setIgnoreMultiStarts" ref="class_qt_background_process_1_1_app.html#a1af92dd061a660565e0ef79a525dd928" />
+                <section title="setInstanceID" ref="class_qt_background_process_1_1_app.html#af4743986bfcac29e54d772a29fc14a2b" />
+                <section title="setParserSetupFunction" ref="class_qt_background_process_1_1_app.html#a29ccb7694dfee860f7f4027446b33e89" />
+                <section title="setShutdownRequestFunction" ref="class_qt_background_process_1_1_app.html#ac1d4429df3c59eb17e42119f4ea89d32" />
+                <section title="setShutdownRequestFunction" ref="class_qt_background_process_1_1_app.html#aa84434d2c8757532641234d0df5594fa" />
+                <section title="setStartupFunction" ref="class_qt_background_process_1_1_app.html#a07a57a45a8f168333426dae03b5c11f9" />
+                <section title="setupParser" ref="class_qt_background_process_1_1_app.html#a3290a5811c6a129aca0997b87262c76c" />
+                <section title="startupApp" ref="class_qt_background_process_1_1_app.html#a60897709342db52a1d2505c28f3e58de" />
+                <section title="AppPrivate" ref="class_qt_background_process_1_1_app.html#ad697a70b7a3a356677a1c538c2914ca6" />
+                <section title="autoDeleteTerminals" ref="class_qt_background_process_1_1_app.html#a9cdc2522788442e97c76ed846b650bff" />
+                <section title="autoKillTerminals" ref="class_qt_background_process_1_1_app.html#ab51747ba6dc1c869b7a5b2207198470b" />
+                <section title="autoStartMaster" ref="class_qt_background_process_1_1_app.html#a0a2638719e0c74b12d4e18976ccaab08" />
+                <section title="connectedTerminals" ref="class_qt_background_process_1_1_app.html#a691dc150ad2814eb4be2936f681ea10f" />
+                <section title="forwardMasterLog" ref="class_qt_background_process_1_1_app.html#a8478470ce2306df1dcd8f162bca8ee73" />
+                <section title="ignoreMultiStarts" ref="class_qt_background_process_1_1_app.html#afc8d3c568d8a0981408474bdc3303a63" />
+                <section title="instanceID" ref="class_qt_background_process_1_1_app.html#a5c6198fa60f5b0144731c5849e032ad5" />
+              </section>
+              <section title="GlobalTerminal" ref="class_qt_background_process_1_1_global_terminal.html">
+                <section title="GlobalTerminal" ref="class_qt_background_process_1_1_global_terminal.html#a77e4a10e7ef41044825390731919b516" />
+                <section title="~GlobalTerminal" ref="class_qt_background_process_1_1_global_terminal.html#a0f0e1ab757d594193f77c67ef2d19892" />
+                <section title="canReadLine" ref="class_qt_background_process_1_1_global_terminal.html#ae4928ea9df77fab6e16e52bd024fb095" />
+                <section title="flush" ref="class_qt_background_process_1_1_global_terminal.html#a7c170a3a196375ddc7631a59602b9cee" />
+                <section title="isSequential" ref="class_qt_background_process_1_1_global_terminal.html#a3a35b0957aaaae78fab2ea0e4d088abc" />
+                <section title="readData" ref="class_qt_background_process_1_1_global_terminal.html#a4bd39e77cfab7aa5a02e48aaa7870ca9" />
+                <section title="writeData" ref="class_qt_background_process_1_1_global_terminal.html#a24b79b52f74b51854e8b3a8a507fcd38" />
+              </section>
+              <section title="NotAllowedInRunningStateException" ref="class_qt_background_process_1_1_not_allowed_in_running_state_exception.html">
+                <section title="NotAllowedInRunningStateException" ref="class_qt_background_process_1_1_not_allowed_in_running_state_exception.html#aa3ac8d6e0ed96918b1eab4dee1c4d8e8" />
+                <section title="clone" ref="class_qt_background_process_1_1_not_allowed_in_running_state_exception.html#a952fdaed3480b75541ebc1ac2040560d" />
+                <section title="raise" ref="class_qt_background_process_1_1_not_allowed_in_running_state_exception.html#a04913dcdfed822566b8fbe8625597cf7" />
+                <section title="what" ref="class_qt_background_process_1_1_not_allowed_in_running_state_exception.html#ac456ca7bcd02cf6e68f607cd5b6c1bfa" />
+              </section>
+              <section title="Terminal" ref="class_qt_background_process_1_1_terminal.html">
+                <section title="Terminal" ref="class_qt_background_process_1_1_terminal.html#aa305d31d4d1713a0b6d693c95f7491e7" />
+                <section title="~Terminal" ref="class_qt_background_process_1_1_terminal.html#add5a7d4dd45b68af9a0afb1cc845af2f" />
+                <section title="bytesAvailable" ref="class_qt_background_process_1_1_terminal.html#a603fca794cfa89b943a58da4eb7f22c8" />
+                <section title="close" ref="class_qt_background_process_1_1_terminal.html#a25c49802e89f7ee98ed51e6d20fde074" />
+                <section title="disconnectTerminal" ref="class_qt_background_process_1_1_terminal.html#acdb8d00fa6cb46474b2350aac20928ca" />
+                <section title="flush" ref="class_qt_background_process_1_1_terminal.html#a908cdfa64167279ed565d43b45470c3d" />
+                <section title="isAutoDelete" ref="class_qt_background_process_1_1_terminal.html#a70d816f30c1583467305d91f6a5b65bd" />
+                <section title="isSequential" ref="class_qt_background_process_1_1_terminal.html#a29f0725fb75fea1d89cd2d66872a3076" />
+                <section title="isStarter" ref="class_qt_background_process_1_1_terminal.html#ae2f639c26137bd9c0ec9fc5e25d4d514" />
+                <section title="parser" ref="class_qt_background_process_1_1_terminal.html#a0e4b341d9138915f08be1939831531c8" />
+                <section title="readData" ref="class_qt_background_process_1_1_terminal.html#ab9f0fd818c8c278ddd6704bab8f7e6f2" />
+                <section title="setAutoDelete" ref="class_qt_background_process_1_1_terminal.html#ad2825b538be19b0e74aac422e7050c63" />
+                <section title="terminalDisconnected" ref="class_qt_background_process_1_1_terminal.html#a29f320b5be31a3e8ef9b6f462c470b39" />
+                <section title="terminalError" ref="class_qt_background_process_1_1_terminal.html#a4c9e1f6fa8584b8ee8ca9c670829374c" />
+                <section title="writeData" ref="class_qt_background_process_1_1_terminal.html#ad0eb73759057f03b5fc6b1f333fc251d" />
+                <section title="autoDelete" ref="class_qt_background_process_1_1_terminal.html#aba7da15827a0a1af91e0568e80b1a2fc" />
+                <section title="parser" ref="class_qt_background_process_1_1_terminal.html#ab93a716135b2daced3c561f91f5dcc82" />
+                <section title="starter" ref="class_qt_background_process_1_1_terminal.html#af8de7a1804220a38f35a839d7f1f72a4" />
+              </section>
+            </section>
+          </section>
+          <section title="Class Index" ref="classes.html" />
+          <section title="Class Hierarchy" ref="hierarchy.html">
+            <section title="QException" ref="qexception.html">
+              <section title="QtBackgroundProcess::NotAllowedInRunningStateException" ref="class_qt_background_process_1_1_not_allowed_in_running_state_exception.html" />
+            </section>
+            <section title="QObject" ref="qobject.html">
+              <section title="QCoreApplication" ref="qcoreapplication.html">
+                <section title="QtBackgroundProcess::App" ref="class_qt_background_process_1_1_app.html" />
+              </section>
+              <section title="QIODevice" ref="qiodevice.html">
+                <section title="QtBackgroundProcess::GlobalTerminal" ref="class_qt_background_process_1_1_global_terminal.html" />
+                <section title="QtBackgroundProcess::Terminal" ref="class_qt_background_process_1_1_terminal.html" />
+              </section>
+            </section>
+          </section>
+          <section title="Class Members" ref="functions.html">
+            <section title="All" ref="functions.html" />
+            <section title="Functions" ref="functions_func.html" />
+            <section title="Properties" ref="functions_prop.html" />
+          </section>
+        </section>
         <section title="Files">
           <section title="File List" ref="files.html">
             <section title="app.cpp" ref="app_8cpp_source.html" />
@@ -35,6 +133,392 @@
       </section>
     </toc>
     <keywords>
+      <keyword name="QtBackgroundProcess::App" id="QtBackgroundProcess::App" ref="class_qt_background_process_1_1_app.html" />
+      <keyword name="createDefaultInstanceID" id="QtBackgroundProcess::App::createDefaultInstanceID" ref="class_qt_background_process_1_1_app.html#a1059954d51fd5aa275303a627ec13743" />
+      <keyword name="setInstanceID" id="QtBackgroundProcess::App::setInstanceID" ref="class_qt_background_process_1_1_app.html#af4743986bfcac29e54d772a29fc14a2b" />
+      <keyword name="setForwardMasterLog" id="QtBackgroundProcess::App::setForwardMasterLog" ref="class_qt_background_process_1_1_app.html#a8ae6d0e91bff937510e0d4bbdc1018b2" />
+      <keyword name="setAutoStartMaster" id="QtBackgroundProcess::App::setAutoStartMaster" ref="class_qt_background_process_1_1_app.html#ae2b20271277525d37912bb13828a7232" />
+      <keyword name="setIgnoreMultiStarts" id="QtBackgroundProcess::App::setIgnoreMultiStarts" ref="class_qt_background_process_1_1_app.html#a1af92dd061a660565e0ef79a525dd928" />
+      <keyword name="setAutoDeleteTerminals" id="QtBackgroundProcess::App::setAutoDeleteTerminals" ref="class_qt_background_process_1_1_app.html#a62090e7840cdb362dc69786240b6fd7c" />
+      <keyword name="setAutoKillTerminals" id="QtBackgroundProcess::App::setAutoKillTerminals" ref="class_qt_background_process_1_1_app.html#ae5787f7ba8c5de626e7f7ca9ab751612" />
+      <keyword name="newTerminalConnected" id="QtBackgroundProcess::App::newTerminalConnected" ref="class_qt_background_process_1_1_app.html#aa8b1a6cddc2928df99a76895e67e80d4" />
+      <keyword name="commandReceived" id="QtBackgroundProcess::App::commandReceived" ref="class_qt_background_process_1_1_app.html#a3e892a48255c68a03768bb9e5dbaed74" />
+      <keyword name="connectedTerminalsChanged" id="QtBackgroundProcess::App::connectedTerminalsChanged" ref="class_qt_background_process_1_1_app.html#ad96113846c842fa5702fe5fbec8d4da1" />
+      <keyword name="App" id="QtBackgroundProcess::App::App" ref="class_qt_background_process_1_1_app.html#a58257f482a592c573d3f95e5fe56e3f0" />
+      <keyword name="~App" id="QtBackgroundProcess::App::~App" ref="class_qt_background_process_1_1_app.html#a34f1f253b1cef5f4ecbac66eaf6964ec" />
+      <keyword name="instanceID" id="QtBackgroundProcess::App::instanceID" ref="class_qt_background_process_1_1_app.html#af1e3f6b2b90dc1a15d8e0042744d4e71" />
+      <keyword name="forwardMasterLog" id="QtBackgroundProcess::App::forwardMasterLog" ref="class_qt_background_process_1_1_app.html#a041821be87341ea682f959e5f1aeb524" />
+      <keyword name="autoStartMaster" id="QtBackgroundProcess::App::autoStartMaster" ref="class_qt_background_process_1_1_app.html#a4eb0b6d8c48cedcdda30be97d29de45e" />
+      <keyword name="ignoreMultiStarts" id="QtBackgroundProcess::App::ignoreMultiStarts" ref="class_qt_background_process_1_1_app.html#a0a12449db4f0d1aeaa7436de85fa9f9b" />
+      <keyword name="autoDeleteTerminals" id="QtBackgroundProcess::App::autoDeleteTerminals" ref="class_qt_background_process_1_1_app.html#abfb06fbeb31fc6a164f577aa21eb70be" />
+      <keyword name="autoKillTerminals" id="QtBackgroundProcess::App::autoKillTerminals" ref="class_qt_background_process_1_1_app.html#acb09dc3c1b731b61d2e0a613d84a6277" />
+      <keyword name="setParserSetupFunction" id="QtBackgroundProcess::App::setParserSetupFunction" ref="class_qt_background_process_1_1_app.html#a29ccb7694dfee860f7f4027446b33e89" />
+      <keyword name="setStartupFunction" id="QtBackgroundProcess::App::setStartupFunction" ref="class_qt_background_process_1_1_app.html#a07a57a45a8f168333426dae03b5c11f9" />
+      <keyword name="setShutdownRequestFunction" id="QtBackgroundProcess::App::setShutdownRequestFunction" ref="class_qt_background_process_1_1_app.html#ac1d4429df3c59eb17e42119f4ea89d32" />
+      <keyword name="setShutdownRequestFunction" id="QtBackgroundProcess::App::setShutdownRequestFunction" ref="class_qt_background_process_1_1_app.html#aa84434d2c8757532641234d0df5594fa" />
+      <keyword name="exec" id="QtBackgroundProcess::App::exec" ref="class_qt_background_process_1_1_app.html#a7dc56263561f844ab8bc85d08baa3c9b" />
+      <keyword name="connectedTerminals" id="QtBackgroundProcess::App::connectedTerminals" ref="class_qt_background_process_1_1_app.html#aec304a890f06b589084d7df4e60f00d1" />
+      <keyword name="QCoreApplication" id="QCoreApplication::QCoreApplication" ref="qcoreapplication.html#QCoreApplication" />
+      <keyword name="notify" id="QCoreApplication::notify" ref="qcoreapplication.html#notify" />
+      <keyword name="installNativeEventFilter" id="QCoreApplication::installNativeEventFilter" ref="qcoreapplication.html#installNativeEventFilter" />
+      <keyword name="removeNativeEventFilter" id="QCoreApplication::removeNativeEventFilter" ref="qcoreapplication.html#removeNativeEventFilter" />
+      <keyword name="aboutToQuit" id="QCoreApplication::aboutToQuit" ref="qcoreapplication.html#aboutToQuit" />
+      <keyword name="QObject" id="QObject::QObject" ref="qobject.html#QObject" />
+      <keyword name="eventFilter" id="QObject::eventFilter" ref="qobject.html#eventFilter" />
+      <keyword name="metaObject" id="QObject::metaObject" ref="qobject.html#metaObject" />
+      <keyword name="objectName" id="QObject::objectName" ref="qobject.html#objectName-prop" />
+      <keyword name="setObjectName" id="QObject::setObjectName" ref="qobject.html#objectName-prop" />
+      <keyword name="isWidgetType" id="QObject::isWidgetType" ref="qobject.html#isWidgetType" />
+      <keyword name="isWindowType" id="QObject::isWindowType" ref="qobject.html#isWindowType" />
+      <keyword name="signalsBlocked" id="QObject::signalsBlocked" ref="qobject.html#signalsBlocked" />
+      <keyword name="blockSignals" id="QObject::blockSignals" ref="qobject.html#blockSignals" />
+      <keyword name="thread" id="QObject::thread" ref="qobject.html#thread" />
+      <keyword name="moveToThread" id="QObject::moveToThread" ref="qobject.html#moveToThread" />
+      <keyword name="startTimer" id="QObject::startTimer" ref="qobject.html#startTimer" />
+      <keyword name="killTimer" id="QObject::killTimer" ref="qobject.html#killTimer" />
+      <keyword name="findChild" id="QObject::findChild" ref="qobject.html#findChild" />
+      <keyword name="findChildren" id="QObject::findChildren" ref="qobject.html#findChildren" />
+      <keyword name="findChildren" id="QObject::findChildren" ref="qobject.html#findChildren-1" />
+      <keyword name="findChildren" id="QObject::findChildren" ref="qobject.html#findChildren-2" />
+      <keyword name="children" id="QObject::children" ref="qobject.html#children" />
+      <keyword name="setParent" id="QObject::setParent" ref="qobject.html#setParent" />
+      <keyword name="installEventFilter" id="QObject::installEventFilter" ref="qobject.html#installEventFilter" />
+      <keyword name="removeEventFilter" id="QObject::removeEventFilter" ref="qobject.html#removeEventFilter" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-2" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-2" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-3" />
+      <keyword name="dumpObjectTree" id="QObject::dumpObjectTree" ref="qobject.html#dumpObjectTree" />
+      <keyword name="dumpObjectInfo" id="QObject::dumpObjectInfo" ref="qobject.html#dumpObjectInfo" />
+      <keyword name="setProperty" id="QObject::setProperty" ref="qobject.html#setProperty" />
+      <keyword name="property" id="QObject::property" ref="qobject.html#property" />
+      <keyword name="dynamicPropertyNames" id="QObject::dynamicPropertyNames" ref="qobject.html#dynamicPropertyNames" />
+      <keyword name="destroyed" id="QObject::destroyed" ref="qobject.html#destroyed" />
+      <keyword name="objectNameChanged" id="QObject::objectNameChanged" ref="qobject.html#objectNameChanged" />
+      <keyword name="parent" id="QObject::parent" ref="qobject.html#parent" />
+      <keyword name="inherits" id="QObject::inherits" ref="qobject.html#inherits" />
+      <keyword name="deleteLater" id="QObject::deleteLater" ref="qobject.html#deleteLater" />
+      <keyword name="setupParser" id="QtBackgroundProcess::App::setupParser" ref="class_qt_background_process_1_1_app.html#a3290a5811c6a129aca0997b87262c76c" />
+      <keyword name="startupApp" id="QtBackgroundProcess::App::startupApp" ref="class_qt_background_process_1_1_app.html#a60897709342db52a1d2505c28f3e58de" />
+      <keyword name="requestAppShutdown" id="QtBackgroundProcess::App::requestAppShutdown" ref="class_qt_background_process_1_1_app.html#a8fe9a15aaf82201b8a70d4705b1b37da" />
+      <keyword name="event" id="QCoreApplication::event" ref="qcoreapplication.html#event" />
+      <keyword name="sender" id="QObject::sender" ref="qobject.html#sender" />
+      <keyword name="senderSignalIndex" id="QObject::senderSignalIndex" ref="qobject.html#senderSignalIndex" />
+      <keyword name="receivers" id="QObject::receivers" ref="qobject.html#receivers" />
+      <keyword name="isSignalConnected" id="QObject::isSignalConnected" ref="qobject.html#isSignalConnected" />
+      <keyword name="timerEvent" id="QObject::timerEvent" ref="qobject.html#timerEvent" />
+      <keyword name="childEvent" id="QObject::childEvent" ref="qobject.html#childEvent" />
+      <keyword name="customEvent" id="QObject::customEvent" ref="qobject.html#customEvent" />
+      <keyword name="connectNotify" id="QObject::connectNotify" ref="qobject.html#connectNotify" />
+      <keyword name="disconnectNotify" id="QObject::disconnectNotify" ref="qobject.html#disconnectNotify" />
+      <keyword name="instanceID" id="QtBackgroundProcess::App::instanceID" ref="class_qt_background_process_1_1_app.html#a5c6198fa60f5b0144731c5849e032ad5" />
+      <keyword name="forwardMasterLog" id="QtBackgroundProcess::App::forwardMasterLog" ref="class_qt_background_process_1_1_app.html#a8478470ce2306df1dcd8f162bca8ee73" />
+      <keyword name="autoStartMaster" id="QtBackgroundProcess::App::autoStartMaster" ref="class_qt_background_process_1_1_app.html#a0a2638719e0c74b12d4e18976ccaab08" />
+      <keyword name="ignoreMultiStarts" id="QtBackgroundProcess::App::ignoreMultiStarts" ref="class_qt_background_process_1_1_app.html#afc8d3c568d8a0981408474bdc3303a63" />
+      <keyword name="autoDeleteTerminals" id="QtBackgroundProcess::App::autoDeleteTerminals" ref="class_qt_background_process_1_1_app.html#a9cdc2522788442e97c76ed846b650bff" />
+      <keyword name="autoKillTerminals" id="QtBackgroundProcess::App::autoKillTerminals" ref="class_qt_background_process_1_1_app.html#ab51747ba6dc1c869b7a5b2207198470b" />
+      <keyword name="connectedTerminals" id="QtBackgroundProcess::App::connectedTerminals" ref="class_qt_background_process_1_1_app.html#a691dc150ad2814eb4be2936f681ea10f" />
+      <keyword name="applicationName" id="QCoreApplication::applicationName" ref="qcoreapplication.html#applicationName-prop" />
+      <keyword name="applicationVersion" id="QCoreApplication::applicationVersion" ref="qcoreapplication.html#applicationVersion-prop" />
+      <keyword name="organizationName" id="QCoreApplication::organizationName" ref="qcoreapplication.html#organizationName-prop" />
+      <keyword name="organizationDomain" id="QCoreApplication::organizationDomain" ref="qcoreapplication.html#organizationDomain-prop" />
+      <keyword name="quitLockEnabled" id="QCoreApplication::quitLockEnabled" ref="qcoreapplication.html#quitLockEnabled-prop" />
+      <keyword name="objectName" id="QObject::objectName" ref="qobject.html#objectName-prop" />
+      <keyword name="arguments" id="QCoreApplication::arguments" ref="qcoreapplication.html#arguments" />
+      <keyword name="setAttribute" id="QCoreApplication::setAttribute" ref="qcoreapplication.html#setAttribute" />
+      <keyword name="testAttribute" id="QCoreApplication::testAttribute" ref="qcoreapplication.html#testAttribute" />
+      <keyword name="setOrganizationDomain" id="QCoreApplication::setOrganizationDomain" ref="qcoreapplication.html#organizationDomain-prop" />
+      <keyword name="organizationDomain" id="QCoreApplication::organizationDomain" ref="qcoreapplication.html#organizationDomain-prop" />
+      <keyword name="setOrganizationName" id="QCoreApplication::setOrganizationName" ref="qcoreapplication.html#organizationName-prop" />
+      <keyword name="organizationName" id="QCoreApplication::organizationName" ref="qcoreapplication.html#organizationName-prop" />
+      <keyword name="setApplicationName" id="QCoreApplication::setApplicationName" ref="qcoreapplication.html#applicationName-prop" />
+      <keyword name="applicationName" id="QCoreApplication::applicationName" ref="qcoreapplication.html#applicationName-prop" />
+      <keyword name="setApplicationVersion" id="QCoreApplication::setApplicationVersion" ref="qcoreapplication.html#applicationVersion-prop" />
+      <keyword name="applicationVersion" id="QCoreApplication::applicationVersion" ref="qcoreapplication.html#applicationVersion-prop" />
+      <keyword name="setSetuidAllowed" id="QCoreApplication::setSetuidAllowed" ref="qcoreapplication.html#setSetuidAllowed" />
+      <keyword name="isSetuidAllowed" id="QCoreApplication::isSetuidAllowed" ref="qcoreapplication.html#isSetuidAllowed" />
+      <keyword name="instance" id="QCoreApplication::instance" ref="qcoreapplication.html#instance" />
+      <keyword name="exec" id="QCoreApplication::exec" ref="qcoreapplication.html#exec" />
+      <keyword name="processEvents" id="QCoreApplication::processEvents" ref="qcoreapplication.html#processEvents" />
+      <keyword name="processEvents" id="QCoreApplication::processEvents" ref="qcoreapplication.html#processEvents-1" />
+      <keyword name="exit" id="QCoreApplication::exit" ref="qcoreapplication.html#exit" />
+      <keyword name="sendEvent" id="QCoreApplication::sendEvent" ref="qcoreapplication.html#sendEvent" />
+      <keyword name="postEvent" id="QCoreApplication::postEvent" ref="qcoreapplication.html#postEvent" />
+      <keyword name="sendPostedEvents" id="QCoreApplication::sendPostedEvents" ref="qcoreapplication.html#sendPostedEvents" />
+      <keyword name="removePostedEvents" id="QCoreApplication::removePostedEvents" ref="qcoreapplication.html#removePostedEvents" />
+      <keyword name="hasPendingEvents" id="QCoreApplication::hasPendingEvents" ref="qcoreapplication.html#hasPendingEvents" />
+      <keyword name="eventDispatcher" id="QCoreApplication::eventDispatcher" ref="qcoreapplication.html#eventDispatcher" />
+      <keyword name="setEventDispatcher" id="QCoreApplication::setEventDispatcher" ref="qcoreapplication.html#setEventDispatcher" />
+      <keyword name="startingUp" id="QCoreApplication::startingUp" ref="qcoreapplication.html#startingUp" />
+      <keyword name="closingDown" id="QCoreApplication::closingDown" ref="qcoreapplication.html#closingDown" />
+      <keyword name="applicationDirPath" id="QCoreApplication::applicationDirPath" ref="qcoreapplication.html#applicationDirPath" />
+      <keyword name="applicationFilePath" id="QCoreApplication::applicationFilePath" ref="qcoreapplication.html#applicationFilePath" />
+      <keyword name="applicationPid" id="QCoreApplication::applicationPid" ref="qcoreapplication.html#applicationPid" />
+      <keyword name="setLibraryPaths" id="QCoreApplication::setLibraryPaths" ref="qcoreapplication.html#setLibraryPaths" />
+      <keyword name="libraryPaths" id="QCoreApplication::libraryPaths" ref="qcoreapplication.html#libraryPaths" />
+      <keyword name="addLibraryPath" id="QCoreApplication::addLibraryPath" ref="qcoreapplication.html#addLibraryPath" />
+      <keyword name="removeLibraryPath" id="QCoreApplication::removeLibraryPath" ref="qcoreapplication.html#removeLibraryPath" />
+      <keyword name="installTranslator" id="QCoreApplication::installTranslator" ref="qcoreapplication.html#installTranslator" />
+      <keyword name="removeTranslator" id="QCoreApplication::removeTranslator" ref="qcoreapplication.html#removeTranslator" />
+      <keyword name="translate" id="QCoreApplication::translate" ref="qcoreapplication.html#translate" />
+      <keyword name="translate" id="QCoreApplication::translate" ref="qcoreapplication.html#translate-1" />
+      <keyword name="flush" id="QCoreApplication::flush" ref="qcoreapplication.html#flush" />
+      <keyword name="isQuitLockEnabled" id="QCoreApplication::isQuitLockEnabled" ref="qcoreapplication.html#quitLockEnabled-prop" />
+      <keyword name="setQuitLockEnabled" id="QCoreApplication::setQuitLockEnabled" ref="qcoreapplication.html#quitLockEnabled-prop" />
+      <keyword name="quit" id="QCoreApplication::quit" ref="qcoreapplication.html#quit" />
+      <keyword name="tr" id="QObject::tr" ref="qobject.html#tr" />
+      <keyword name="trUtf8" id="QObject::trUtf8" ref="qobject.html#trUtf8" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-1" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-3" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-4" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-5" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-1" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-4" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-5" />
+      <keyword name="QtBackgroundProcess::GlobalTerminal" id="QtBackgroundProcess::GlobalTerminal" ref="class_qt_background_process_1_1_global_terminal.html" />
+      <keyword name="flush" id="QtBackgroundProcess::GlobalTerminal::flush" ref="class_qt_background_process_1_1_global_terminal.html#a7c170a3a196375ddc7631a59602b9cee" />
+      <keyword name="GlobalTerminal" id="QtBackgroundProcess::GlobalTerminal::GlobalTerminal" ref="class_qt_background_process_1_1_global_terminal.html#a77e4a10e7ef41044825390731919b516" />
+      <keyword name="~GlobalTerminal" id="QtBackgroundProcess::GlobalTerminal::~GlobalTerminal" ref="class_qt_background_process_1_1_global_terminal.html#a0f0e1ab757d594193f77c67ef2d19892" />
+      <keyword name="isSequential" id="QtBackgroundProcess::GlobalTerminal::isSequential" ref="class_qt_background_process_1_1_global_terminal.html#a3a35b0957aaaae78fab2ea0e4d088abc" />
+      <keyword name="canReadLine" id="QtBackgroundProcess::GlobalTerminal::canReadLine" ref="class_qt_background_process_1_1_global_terminal.html#ae4928ea9df77fab6e16e52bd024fb095" />
+      <keyword name="QIODevice" id="QIODevice::QIODevice" ref="qiodevice.html#QIODevice-1" />
+      <keyword name="openMode" id="QIODevice::openMode" ref="qiodevice.html#openMode" />
+      <keyword name="setTextModeEnabled" id="QIODevice::setTextModeEnabled" ref="qiodevice.html#setTextModeEnabled" />
+      <keyword name="isTextModeEnabled" id="QIODevice::isTextModeEnabled" ref="qiodevice.html#isTextModeEnabled" />
+      <keyword name="isOpen" id="QIODevice::isOpen" ref="qiodevice.html#isOpen" />
+      <keyword name="isReadable" id="QIODevice::isReadable" ref="qiodevice.html#isReadable" />
+      <keyword name="isWritable" id="QIODevice::isWritable" ref="qiodevice.html#isWritable" />
+      <keyword name="readChannelCount" id="QIODevice::readChannelCount" ref="qiodevice.html#readChannelCount" />
+      <keyword name="writeChannelCount" id="QIODevice::writeChannelCount" ref="qiodevice.html#writeChannelCount" />
+      <keyword name="currentReadChannel" id="QIODevice::currentReadChannel" ref="qiodevice.html#currentReadChannel" />
+      <keyword name="setCurrentReadChannel" id="QIODevice::setCurrentReadChannel" ref="qiodevice.html#setCurrentReadChannel" />
+      <keyword name="currentWriteChannel" id="QIODevice::currentWriteChannel" ref="qiodevice.html#currentWriteChannel" />
+      <keyword name="setCurrentWriteChannel" id="QIODevice::setCurrentWriteChannel" ref="qiodevice.html#setCurrentWriteChannel" />
+      <keyword name="pos" id="QIODevice::pos" ref="qiodevice.html#pos" />
+      <keyword name="size" id="QIODevice::size" ref="qiodevice.html#size" />
+      <keyword name="seek" id="QIODevice::seek" ref="qiodevice.html#seek" />
+      <keyword name="atEnd" id="QIODevice::atEnd" ref="qiodevice.html#atEnd" />
+      <keyword name="reset" id="QIODevice::reset" ref="qiodevice.html#reset" />
+      <keyword name="bytesAvailable" id="QIODevice::bytesAvailable" ref="qiodevice.html#bytesAvailable" />
+      <keyword name="bytesToWrite" id="QIODevice::bytesToWrite" ref="qiodevice.html#bytesToWrite" />
+      <keyword name="read" id="QIODevice::read" ref="qiodevice.html#read" />
+      <keyword name="read" id="QIODevice::read" ref="qiodevice.html#read-1" />
+      <keyword name="readAll" id="QIODevice::readAll" ref="qiodevice.html#readAll" />
+      <keyword name="readLine" id="QIODevice::readLine" ref="qiodevice.html#readLine" />
+      <keyword name="readLine" id="QIODevice::readLine" ref="qiodevice.html#readLine-1" />
+      <keyword name="startTransaction" id="QIODevice::startTransaction" ref="qiodevice.html#startTransaction" />
+      <keyword name="commitTransaction" id="QIODevice::commitTransaction" ref="qiodevice.html#commitTransaction" />
+      <keyword name="rollbackTransaction" id="QIODevice::rollbackTransaction" ref="qiodevice.html#rollbackTransaction" />
+      <keyword name="isTransactionStarted" id="QIODevice::isTransactionStarted" ref="qiodevice.html#isTransactionStarted" />
+      <keyword name="write" id="QIODevice::write" ref="qiodevice.html#write" />
+      <keyword name="write" id="QIODevice::write" ref="qiodevice.html#write-1" />
+      <keyword name="write" id="QIODevice::write" ref="qiodevice.html#write-2" />
+      <keyword name="peek" id="QIODevice::peek" ref="qiodevice.html#peek" />
+      <keyword name="peek" id="QIODevice::peek" ref="qiodevice.html#peek-1" />
+      <keyword name="waitForReadyRead" id="QIODevice::waitForReadyRead" ref="qiodevice.html#waitForReadyRead" />
+      <keyword name="waitForBytesWritten" id="QIODevice::waitForBytesWritten" ref="qiodevice.html#waitForBytesWritten" />
+      <keyword name="ungetChar" id="QIODevice::ungetChar" ref="qiodevice.html#ungetChar" />
+      <keyword name="putChar" id="QIODevice::putChar" ref="qiodevice.html#putChar" />
+      <keyword name="getChar" id="QIODevice::getChar" ref="qiodevice.html#getChar" />
+      <keyword name="errorString" id="QIODevice::errorString" ref="qiodevice.html#errorString" />
+      <keyword name="readyRead" id="QIODevice::readyRead" ref="qiodevice.html#readyRead" />
+      <keyword name="channelReadyRead" id="QIODevice::channelReadyRead" ref="qiodevice.html#channelReadyRead" />
+      <keyword name="bytesWritten" id="QIODevice::bytesWritten" ref="qiodevice.html#bytesWritten" />
+      <keyword name="channelBytesWritten" id="QIODevice::channelBytesWritten" ref="qiodevice.html#channelBytesWritten" />
+      <keyword name="aboutToClose" id="QIODevice::aboutToClose" ref="qiodevice.html#aboutToClose" />
+      <keyword name="readChannelFinished" id="QIODevice::readChannelFinished" ref="qiodevice.html#readChannelFinished" />
+      <keyword name="QObject" id="QObject::QObject" ref="qobject.html#QObject" />
+      <keyword name="event" id="QObject::event" ref="qobject.html#event" />
+      <keyword name="eventFilter" id="QObject::eventFilter" ref="qobject.html#eventFilter" />
+      <keyword name="metaObject" id="QObject::metaObject" ref="qobject.html#metaObject" />
+      <keyword name="objectName" id="QObject::objectName" ref="qobject.html#objectName-prop" />
+      <keyword name="setObjectName" id="QObject::setObjectName" ref="qobject.html#objectName-prop" />
+      <keyword name="isWidgetType" id="QObject::isWidgetType" ref="qobject.html#isWidgetType" />
+      <keyword name="isWindowType" id="QObject::isWindowType" ref="qobject.html#isWindowType" />
+      <keyword name="signalsBlocked" id="QObject::signalsBlocked" ref="qobject.html#signalsBlocked" />
+      <keyword name="blockSignals" id="QObject::blockSignals" ref="qobject.html#blockSignals" />
+      <keyword name="thread" id="QObject::thread" ref="qobject.html#thread" />
+      <keyword name="moveToThread" id="QObject::moveToThread" ref="qobject.html#moveToThread" />
+      <keyword name="startTimer" id="QObject::startTimer" ref="qobject.html#startTimer" />
+      <keyword name="killTimer" id="QObject::killTimer" ref="qobject.html#killTimer" />
+      <keyword name="findChild" id="QObject::findChild" ref="qobject.html#findChild" />
+      <keyword name="findChildren" id="QObject::findChildren" ref="qobject.html#findChildren" />
+      <keyword name="findChildren" id="QObject::findChildren" ref="qobject.html#findChildren-1" />
+      <keyword name="findChildren" id="QObject::findChildren" ref="qobject.html#findChildren-2" />
+      <keyword name="children" id="QObject::children" ref="qobject.html#children" />
+      <keyword name="setParent" id="QObject::setParent" ref="qobject.html#setParent" />
+      <keyword name="installEventFilter" id="QObject::installEventFilter" ref="qobject.html#installEventFilter" />
+      <keyword name="removeEventFilter" id="QObject::removeEventFilter" ref="qobject.html#removeEventFilter" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-2" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-2" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-3" />
+      <keyword name="dumpObjectTree" id="QObject::dumpObjectTree" ref="qobject.html#dumpObjectTree" />
+      <keyword name="dumpObjectInfo" id="QObject::dumpObjectInfo" ref="qobject.html#dumpObjectInfo" />
+      <keyword name="setProperty" id="QObject::setProperty" ref="qobject.html#setProperty" />
+      <keyword name="property" id="QObject::property" ref="qobject.html#property" />
+      <keyword name="dynamicPropertyNames" id="QObject::dynamicPropertyNames" ref="qobject.html#dynamicPropertyNames" />
+      <keyword name="destroyed" id="QObject::destroyed" ref="qobject.html#destroyed" />
+      <keyword name="objectNameChanged" id="QObject::objectNameChanged" ref="qobject.html#objectNameChanged" />
+      <keyword name="parent" id="QObject::parent" ref="qobject.html#parent" />
+      <keyword name="inherits" id="QObject::inherits" ref="qobject.html#inherits" />
+      <keyword name="deleteLater" id="QObject::deleteLater" ref="qobject.html#deleteLater" />
+      <keyword name="readData" id="QtBackgroundProcess::GlobalTerminal::readData" ref="class_qt_background_process_1_1_global_terminal.html#a4bd39e77cfab7aa5a02e48aaa7870ca9" />
+      <keyword name="writeData" id="QtBackgroundProcess::GlobalTerminal::writeData" ref="class_qt_background_process_1_1_global_terminal.html#a24b79b52f74b51854e8b3a8a507fcd38" />
+      <keyword name="readLineData" id="QIODevice::readLineData" ref="qiodevice.html#readLineData" />
+      <keyword name="setOpenMode" id="QIODevice::setOpenMode" ref="qiodevice.html#setOpenMode" />
+      <keyword name="setErrorString" id="QIODevice::setErrorString" ref="qiodevice.html#setErrorString" />
+      <keyword name="sender" id="QObject::sender" ref="qobject.html#sender" />
+      <keyword name="senderSignalIndex" id="QObject::senderSignalIndex" ref="qobject.html#senderSignalIndex" />
+      <keyword name="receivers" id="QObject::receivers" ref="qobject.html#receivers" />
+      <keyword name="isSignalConnected" id="QObject::isSignalConnected" ref="qobject.html#isSignalConnected" />
+      <keyword name="timerEvent" id="QObject::timerEvent" ref="qobject.html#timerEvent" />
+      <keyword name="childEvent" id="QObject::childEvent" ref="qobject.html#childEvent" />
+      <keyword name="customEvent" id="QObject::customEvent" ref="qobject.html#customEvent" />
+      <keyword name="connectNotify" id="QObject::connectNotify" ref="qobject.html#connectNotify" />
+      <keyword name="disconnectNotify" id="QObject::disconnectNotify" ref="qobject.html#disconnectNotify" />
+      <keyword name="tr" id="QObject::tr" ref="qobject.html#tr" />
+      <keyword name="trUtf8" id="QObject::trUtf8" ref="qobject.html#trUtf8" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-1" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-3" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-4" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-5" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-1" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-4" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-5" />
+      <keyword name="OpenMode" id="QIODevice::OpenMode" ref="qiodevice.html#OpenModeFlag-enum" />
+      <keyword name="objectName" id="QObject::objectName" ref="qobject.html#objectName-prop" />
+      <keyword name="QtBackgroundProcess::NotAllowedInRunningStateException" id="QtBackgroundProcess::NotAllowedInRunningStateException" ref="class_qt_background_process_1_1_not_allowed_in_running_state_exception.html" />
+      <keyword name="what" id="QtBackgroundProcess::NotAllowedInRunningStateException::what" ref="class_qt_background_process_1_1_not_allowed_in_running_state_exception.html#ac456ca7bcd02cf6e68f607cd5b6c1bfa" />
+      <keyword name="raise" id="QtBackgroundProcess::NotAllowedInRunningStateException::raise" ref="class_qt_background_process_1_1_not_allowed_in_running_state_exception.html#a04913dcdfed822566b8fbe8625597cf7" />
+      <keyword name="clone" id="QtBackgroundProcess::NotAllowedInRunningStateException::clone" ref="class_qt_background_process_1_1_not_allowed_in_running_state_exception.html#a952fdaed3480b75541ebc1ac2040560d" />
+      <keyword name="QtBackgroundProcess::Terminal" id="QtBackgroundProcess::Terminal" ref="class_qt_background_process_1_1_terminal.html" />
+      <keyword name="disconnectTerminal" id="QtBackgroundProcess::Terminal::disconnectTerminal" ref="class_qt_background_process_1_1_terminal.html#acdb8d00fa6cb46474b2350aac20928ca" />
+      <keyword name="setAutoDelete" id="QtBackgroundProcess::Terminal::setAutoDelete" ref="class_qt_background_process_1_1_terminal.html#ad2825b538be19b0e74aac422e7050c63" />
+      <keyword name="flush" id="QtBackgroundProcess::Terminal::flush" ref="class_qt_background_process_1_1_terminal.html#a908cdfa64167279ed565d43b45470c3d" />
+      <keyword name="terminalDisconnected" id="QtBackgroundProcess::Terminal::terminalDisconnected" ref="class_qt_background_process_1_1_terminal.html#a29f320b5be31a3e8ef9b6f462c470b39" />
+      <keyword name="terminalError" id="QtBackgroundProcess::Terminal::terminalError" ref="class_qt_background_process_1_1_terminal.html#a4c9e1f6fa8584b8ee8ca9c670829374c" />
+      <keyword name="Terminal" id="QtBackgroundProcess::Terminal::Terminal" ref="class_qt_background_process_1_1_terminal.html#aa305d31d4d1713a0b6d693c95f7491e7" />
+      <keyword name="~Terminal" id="QtBackgroundProcess::Terminal::~Terminal" ref="class_qt_background_process_1_1_terminal.html#add5a7d4dd45b68af9a0afb1cc845af2f" />
+      <keyword name="isStarter" id="QtBackgroundProcess::Terminal::isStarter" ref="class_qt_background_process_1_1_terminal.html#ae2f639c26137bd9c0ec9fc5e25d4d514" />
+      <keyword name="parser" id="QtBackgroundProcess::Terminal::parser" ref="class_qt_background_process_1_1_terminal.html#a0e4b341d9138915f08be1939831531c8" />
+      <keyword name="isAutoDelete" id="QtBackgroundProcess::Terminal::isAutoDelete" ref="class_qt_background_process_1_1_terminal.html#a70d816f30c1583467305d91f6a5b65bd" />
+      <keyword name="isSequential" id="QtBackgroundProcess::Terminal::isSequential" ref="class_qt_background_process_1_1_terminal.html#a29f0725fb75fea1d89cd2d66872a3076" />
+      <keyword name="close" id="QtBackgroundProcess::Terminal::close" ref="class_qt_background_process_1_1_terminal.html#a25c49802e89f7ee98ed51e6d20fde074" />
+      <keyword name="bytesAvailable" id="QtBackgroundProcess::Terminal::bytesAvailable" ref="class_qt_background_process_1_1_terminal.html#a603fca794cfa89b943a58da4eb7f22c8" />
+      <keyword name="QIODevice" id="QIODevice::QIODevice" ref="qiodevice.html#QIODevice-1" />
+      <keyword name="openMode" id="QIODevice::openMode" ref="qiodevice.html#openMode" />
+      <keyword name="setTextModeEnabled" id="QIODevice::setTextModeEnabled" ref="qiodevice.html#setTextModeEnabled" />
+      <keyword name="isTextModeEnabled" id="QIODevice::isTextModeEnabled" ref="qiodevice.html#isTextModeEnabled" />
+      <keyword name="isOpen" id="QIODevice::isOpen" ref="qiodevice.html#isOpen" />
+      <keyword name="isReadable" id="QIODevice::isReadable" ref="qiodevice.html#isReadable" />
+      <keyword name="isWritable" id="QIODevice::isWritable" ref="qiodevice.html#isWritable" />
+      <keyword name="readChannelCount" id="QIODevice::readChannelCount" ref="qiodevice.html#readChannelCount" />
+      <keyword name="writeChannelCount" id="QIODevice::writeChannelCount" ref="qiodevice.html#writeChannelCount" />
+      <keyword name="currentReadChannel" id="QIODevice::currentReadChannel" ref="qiodevice.html#currentReadChannel" />
+      <keyword name="setCurrentReadChannel" id="QIODevice::setCurrentReadChannel" ref="qiodevice.html#setCurrentReadChannel" />
+      <keyword name="currentWriteChannel" id="QIODevice::currentWriteChannel" ref="qiodevice.html#currentWriteChannel" />
+      <keyword name="setCurrentWriteChannel" id="QIODevice::setCurrentWriteChannel" ref="qiodevice.html#setCurrentWriteChannel" />
+      <keyword name="pos" id="QIODevice::pos" ref="qiodevice.html#pos" />
+      <keyword name="size" id="QIODevice::size" ref="qiodevice.html#size" />
+      <keyword name="seek" id="QIODevice::seek" ref="qiodevice.html#seek" />
+      <keyword name="atEnd" id="QIODevice::atEnd" ref="qiodevice.html#atEnd" />
+      <keyword name="reset" id="QIODevice::reset" ref="qiodevice.html#reset" />
+      <keyword name="bytesToWrite" id="QIODevice::bytesToWrite" ref="qiodevice.html#bytesToWrite" />
+      <keyword name="read" id="QIODevice::read" ref="qiodevice.html#read" />
+      <keyword name="read" id="QIODevice::read" ref="qiodevice.html#read-1" />
+      <keyword name="readAll" id="QIODevice::readAll" ref="qiodevice.html#readAll" />
+      <keyword name="readLine" id="QIODevice::readLine" ref="qiodevice.html#readLine" />
+      <keyword name="readLine" id="QIODevice::readLine" ref="qiodevice.html#readLine-1" />
+      <keyword name="canReadLine" id="QIODevice::canReadLine" ref="qiodevice.html#canReadLine" />
+      <keyword name="startTransaction" id="QIODevice::startTransaction" ref="qiodevice.html#startTransaction" />
+      <keyword name="commitTransaction" id="QIODevice::commitTransaction" ref="qiodevice.html#commitTransaction" />
+      <keyword name="rollbackTransaction" id="QIODevice::rollbackTransaction" ref="qiodevice.html#rollbackTransaction" />
+      <keyword name="isTransactionStarted" id="QIODevice::isTransactionStarted" ref="qiodevice.html#isTransactionStarted" />
+      <keyword name="write" id="QIODevice::write" ref="qiodevice.html#write" />
+      <keyword name="write" id="QIODevice::write" ref="qiodevice.html#write-1" />
+      <keyword name="write" id="QIODevice::write" ref="qiodevice.html#write-2" />
+      <keyword name="peek" id="QIODevice::peek" ref="qiodevice.html#peek" />
+      <keyword name="peek" id="QIODevice::peek" ref="qiodevice.html#peek-1" />
+      <keyword name="waitForReadyRead" id="QIODevice::waitForReadyRead" ref="qiodevice.html#waitForReadyRead" />
+      <keyword name="waitForBytesWritten" id="QIODevice::waitForBytesWritten" ref="qiodevice.html#waitForBytesWritten" />
+      <keyword name="ungetChar" id="QIODevice::ungetChar" ref="qiodevice.html#ungetChar" />
+      <keyword name="putChar" id="QIODevice::putChar" ref="qiodevice.html#putChar" />
+      <keyword name="getChar" id="QIODevice::getChar" ref="qiodevice.html#getChar" />
+      <keyword name="errorString" id="QIODevice::errorString" ref="qiodevice.html#errorString" />
+      <keyword name="readyRead" id="QIODevice::readyRead" ref="qiodevice.html#readyRead" />
+      <keyword name="channelReadyRead" id="QIODevice::channelReadyRead" ref="qiodevice.html#channelReadyRead" />
+      <keyword name="bytesWritten" id="QIODevice::bytesWritten" ref="qiodevice.html#bytesWritten" />
+      <keyword name="channelBytesWritten" id="QIODevice::channelBytesWritten" ref="qiodevice.html#channelBytesWritten" />
+      <keyword name="aboutToClose" id="QIODevice::aboutToClose" ref="qiodevice.html#aboutToClose" />
+      <keyword name="readChannelFinished" id="QIODevice::readChannelFinished" ref="qiodevice.html#readChannelFinished" />
+      <keyword name="QObject" id="QObject::QObject" ref="qobject.html#QObject" />
+      <keyword name="event" id="QObject::event" ref="qobject.html#event" />
+      <keyword name="eventFilter" id="QObject::eventFilter" ref="qobject.html#eventFilter" />
+      <keyword name="metaObject" id="QObject::metaObject" ref="qobject.html#metaObject" />
+      <keyword name="objectName" id="QObject::objectName" ref="qobject.html#objectName-prop" />
+      <keyword name="setObjectName" id="QObject::setObjectName" ref="qobject.html#objectName-prop" />
+      <keyword name="isWidgetType" id="QObject::isWidgetType" ref="qobject.html#isWidgetType" />
+      <keyword name="isWindowType" id="QObject::isWindowType" ref="qobject.html#isWindowType" />
+      <keyword name="signalsBlocked" id="QObject::signalsBlocked" ref="qobject.html#signalsBlocked" />
+      <keyword name="blockSignals" id="QObject::blockSignals" ref="qobject.html#blockSignals" />
+      <keyword name="thread" id="QObject::thread" ref="qobject.html#thread" />
+      <keyword name="moveToThread" id="QObject::moveToThread" ref="qobject.html#moveToThread" />
+      <keyword name="startTimer" id="QObject::startTimer" ref="qobject.html#startTimer" />
+      <keyword name="killTimer" id="QObject::killTimer" ref="qobject.html#killTimer" />
+      <keyword name="findChild" id="QObject::findChild" ref="qobject.html#findChild" />
+      <keyword name="findChildren" id="QObject::findChildren" ref="qobject.html#findChildren" />
+      <keyword name="findChildren" id="QObject::findChildren" ref="qobject.html#findChildren-1" />
+      <keyword name="findChildren" id="QObject::findChildren" ref="qobject.html#findChildren-2" />
+      <keyword name="children" id="QObject::children" ref="qobject.html#children" />
+      <keyword name="setParent" id="QObject::setParent" ref="qobject.html#setParent" />
+      <keyword name="installEventFilter" id="QObject::installEventFilter" ref="qobject.html#installEventFilter" />
+      <keyword name="removeEventFilter" id="QObject::removeEventFilter" ref="qobject.html#removeEventFilter" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-2" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-2" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-3" />
+      <keyword name="dumpObjectTree" id="QObject::dumpObjectTree" ref="qobject.html#dumpObjectTree" />
+      <keyword name="dumpObjectInfo" id="QObject::dumpObjectInfo" ref="qobject.html#dumpObjectInfo" />
+      <keyword name="setProperty" id="QObject::setProperty" ref="qobject.html#setProperty" />
+      <keyword name="property" id="QObject::property" ref="qobject.html#property" />
+      <keyword name="dynamicPropertyNames" id="QObject::dynamicPropertyNames" ref="qobject.html#dynamicPropertyNames" />
+      <keyword name="destroyed" id="QObject::destroyed" ref="qobject.html#destroyed" />
+      <keyword name="objectNameChanged" id="QObject::objectNameChanged" ref="qobject.html#objectNameChanged" />
+      <keyword name="parent" id="QObject::parent" ref="qobject.html#parent" />
+      <keyword name="inherits" id="QObject::inherits" ref="qobject.html#inherits" />
+      <keyword name="deleteLater" id="QObject::deleteLater" ref="qobject.html#deleteLater" />
+      <keyword name="readData" id="QtBackgroundProcess::Terminal::readData" ref="class_qt_background_process_1_1_terminal.html#ab9f0fd818c8c278ddd6704bab8f7e6f2" />
+      <keyword name="writeData" id="QtBackgroundProcess::Terminal::writeData" ref="class_qt_background_process_1_1_terminal.html#ad0eb73759057f03b5fc6b1f333fc251d" />
+      <keyword name="readLineData" id="QIODevice::readLineData" ref="qiodevice.html#readLineData" />
+      <keyword name="setOpenMode" id="QIODevice::setOpenMode" ref="qiodevice.html#setOpenMode" />
+      <keyword name="setErrorString" id="QIODevice::setErrorString" ref="qiodevice.html#setErrorString" />
+      <keyword name="sender" id="QObject::sender" ref="qobject.html#sender" />
+      <keyword name="senderSignalIndex" id="QObject::senderSignalIndex" ref="qobject.html#senderSignalIndex" />
+      <keyword name="receivers" id="QObject::receivers" ref="qobject.html#receivers" />
+      <keyword name="isSignalConnected" id="QObject::isSignalConnected" ref="qobject.html#isSignalConnected" />
+      <keyword name="timerEvent" id="QObject::timerEvent" ref="qobject.html#timerEvent" />
+      <keyword name="childEvent" id="QObject::childEvent" ref="qobject.html#childEvent" />
+      <keyword name="customEvent" id="QObject::customEvent" ref="qobject.html#customEvent" />
+      <keyword name="connectNotify" id="QObject::connectNotify" ref="qobject.html#connectNotify" />
+      <keyword name="disconnectNotify" id="QObject::disconnectNotify" ref="qobject.html#disconnectNotify" />
+      <keyword name="starter" id="QtBackgroundProcess::Terminal::starter" ref="class_qt_background_process_1_1_terminal.html#af8de7a1804220a38f35a839d7f1f72a4" />
+      <keyword name="parser" id="QtBackgroundProcess::Terminal::parser" ref="class_qt_background_process_1_1_terminal.html#ab93a716135b2daced3c561f91f5dcc82" />
+      <keyword name="autoDelete" id="QtBackgroundProcess::Terminal::autoDelete" ref="class_qt_background_process_1_1_terminal.html#aba7da15827a0a1af91e0568e80b1a2fc" />
+      <keyword name="objectName" id="QObject::objectName" ref="qobject.html#objectName-prop" />
+      <keyword name="tr" id="QObject::tr" ref="qobject.html#tr" />
+      <keyword name="trUtf8" id="QObject::trUtf8" ref="qobject.html#trUtf8" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-1" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-3" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-4" />
+      <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-5" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-1" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-4" />
+      <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-5" />
+      <keyword name="OpenMode" id="QIODevice::OpenMode" ref="qiodevice.html#OpenModeFlag-enum" />
     </keywords>
     <files>
       <file>tabs.css</file>
@@ -71,10 +555,61 @@
       <file>_r_e_a_d_m_e_8md_source.html</file>
       <file>terminal_8cpp_source.html</file>
       <file>terminal_8h_source.html</file>
+      <file>class_qt_background_process_1_1_app.html</file>
+      <file>class_qt_background_process_1_1_app.png</file>
+      <file>class_qt_background_process_1_1_app-members.html</file>
+      <file>class_qt_background_process_1_1_global_terminal.html</file>
+      <file>class_qt_background_process_1_1_global_terminal.png</file>
+      <file>class_qt_background_process_1_1_global_terminal-members.html</file>
+      <file>class_qt_background_process_1_1_not_allowed_in_running_state_exception.html</file>
+      <file>class_qt_background_process_1_1_not_allowed_in_running_state_exception.png</file>
+      <file>class_qt_background_process_1_1_not_allowed_in_running_state_exception-members.html</file>
+      <file>class_qt_background_process_1_1_terminal.html</file>
+      <file>class_qt_background_process_1_1_terminal.png</file>
+      <file>class_qt_background_process_1_1_terminal-members.html</file>
       <file>dir_36cb11756967b41cbe9fa55d8c46bbea.html</file>
       <file>dir_68267d1309a1af8e8297ef4c3efbcdba.html</file>
       <file>index.html</file>
       <file>pages.html</file>
+      <file>annotated.html</file>
+      <file>classes.html</file>
+      <file>hierarchy.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_prop.html</file>
+      <file>functions_prop.html</file>
+      <file>functions_prop.html</file>
+      <file>functions_prop.html</file>
+      <file>functions_prop.html</file>
+      <file>functions_prop.html</file>
       <file>files.html</file>
     </files>
   </filterSection>

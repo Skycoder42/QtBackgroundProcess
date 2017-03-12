@@ -7,7 +7,7 @@ var searchData=
   ['parent',['parent',['https://doc.qt.io/qt-5/qgraphicsobject.html#parent-prop',0,'QGraphicsObject::parent()'],['https://doc.qt.io/qt-5/qquickitem.html#parent-prop',0,'QQuickItem::parent()'],['https://doc.qt.io/qt-5/qt3dcore-qnode.html#parent-prop',0,'Qt3DCore::QNode::parent()']]],
   ['parentstatemachine',['parentStateMachine',['https://doc.qt.io/qt-5/qscxmlinvokableservice.html#parentStateMachine-prop',0,'QScxmlInvokableService']]],
   ['parseerrors',['parseErrors',['https://doc.qt.io/qt-5/qscxmlstatemachine.html#parseErrors-prop',0,'QScxmlStateMachine']]],
-  ['parser',['parser',['https://doc.qt.io/qt-5/class_qt_background_process_1_1_terminal.html#ab93a716135b2daced3c561f91f5dcc82',0,'QtBackgroundProcess::Terminal']]],
+  ['parser',['parser',['../class_qt_background_process_1_1_terminal.html#ab93a716135b2daced3c561f91f5dcc82',1,'QtBackgroundProcess::Terminal']]],
   ['passwordmaskcharacter',['passwordMaskCharacter',['https://doc.qt.io/qt-5/qstylehints.html#passwordMaskCharacter-prop',0,'QStyleHints']]],
   ['passwordmaskdelay',['passwordMaskDelay',['https://doc.qt.io/qt-5/qstylehints.html#passwordMaskDelay-prop',0,'QStyleHints']]],
   ['persistentcookiespolicy',['persistentCookiesPolicy',['https://doc.qt.io/qt-5/qquickwebengineprofile.html#persistentCookiesPolicy-prop',0,'QQuickWebEngineProfile']]],
