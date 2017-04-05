@@ -1,5 +1,5 @@
-#ifndef GLOBALTERMINAL_H
-#define GLOBALTERMINAL_H
+#ifndef QTBACKGROUNDPROCESS_GLOBALTERMINAL_H
+#define QTBACKGROUNDPROCESS_GLOBALTERMINAL_H
 
 #include "QtBackgroundProcess/qtbackgroundprocess_global.h"
 
@@ -52,4 +52,4 @@ private:
 
 }
 
-#endif // GLOBALTERMINAL_H
+#endif // QTBACKGROUNDPROCESS_GLOBALTERMINAL_H

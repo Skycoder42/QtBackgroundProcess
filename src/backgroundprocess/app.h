@@ -1,5 +1,5 @@
-#ifndef QtBACKGROUNDPROCESS_APP_H
-#define QtBACKGROUNDPROCESS_APP_H
+#ifndef QTBACKGROUNDPROCESS_APP_H
+#define QTBACKGROUNDPROCESS_APP_H
 
 #include "QtBackgroundProcess/qtbackgroundprocess_global.h"
 
@@ -126,4 +126,4 @@ private:
 #undef qApp
 #define qApp static_cast<QtBackgroundProcess::App*>(QCoreApplication::instance())
 
-#endif // QtBACKGROUNDPROCESS_APP_H
+#endif // QTBACKGROUNDPROCESS_APP_H
