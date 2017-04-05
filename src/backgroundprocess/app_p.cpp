@@ -12,6 +12,7 @@
 #else
 #include <unistd.h>
 #include <sys/types.h>
+#include <QCtrlSignals>
 #endif
 
 using namespace QtBackgroundProcess;
@@ -212,7 +213,7 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 					 #endif
 					 });
 	parser.addOption({
-						 QStringLiteral("keep-console"),
+						 {QStringLiteral("no-daemon"), QStringLiteral("keep-console")},
 						 tr("Will prevent the master process from freeing it's console window and other stuff. Can be useful "
 							"for debugging purpose.")
 					 });
@@ -307,23 +308,29 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 		this->updateLoggingPath(parser.value(QStringLiteral("logpath")));
 
 		//detache from any console, if wished
-		if(!parser.isSet(QStringLiteral("keep-console"))) {
+		if(!parser.isSet(QStringLiteral("no-daemon"))) {
 #ifdef Q_OS_WIN //detach the console window
 			if(!FreeConsole()) {
 				auto console = GetConsoleWindow();
 				if(console)
 					ShowWindow(GetConsoleWindow(), SW_HIDE);
 			}
+
+			//set current directory
+			QDir::setCurrent(QDir::rootPath());
 #else
-			close(0);
-			close(1);
-			close(2);
-			/* Enter a new session */
-			setsid();
+			daemon(false, false);
+
+			auto sigHandler = QCtrlSignalHandler::instance();
+			sigHandler->setAutoQuitActive(true);
+			sigHandler->registerForSignal(SIGINT);
+			sigHandler->registerForSignal(SIGHUP);
+			sigHandler->registerForSignal(SIGWINCH);
+
+			qDebug() << QDir::currentPath();
 #endif
-		}
-		//set current directory
-		QDir::setCurrent(QDir::rootPath());
+		} else
+			QDir::setCurrent(QDir::rootPath());
 
 		auto res = this->q_ptr->startupApp(parser);
 		if(res != EXIT_SUCCESS) {
