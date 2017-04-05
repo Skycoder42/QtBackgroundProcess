@@ -5,13 +5,13 @@ QT = core network
 include(../3rdparty/QCtrlSignals/qctrlsignals.pri)
 
 HEADERS += \
-	qbackgroundprocess_global.h \
 	app.h \
 	globalterminal.h \
 	terminal.h \
 	app_p.h \
 	masterconnecter_p.h \
-	terminal_p.h
+	terminal_p.h \
+    qtbackgroundprocess_global.h
 
 SOURCES += \
 	app_p.cpp \

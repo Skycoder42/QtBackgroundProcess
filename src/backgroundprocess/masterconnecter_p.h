@@ -1,7 +1,7 @@
 #ifndef MASTERCONNECTER_H
 #define MASTERCONNECTER_H
 
-#include "qbackgroundprocess_global.h"
+#include "qtbackgroundprocess_global.h"
 
 #include <QtCore/QObject>
 #include <QtCore/QThread>

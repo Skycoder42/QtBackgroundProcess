@@ -1,7 +1,7 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
 
-#include "QtBackgroundProcess/qbackgroundprocess_global.h"
+#include "QtBackgroundProcess/qtbackgroundprocess_global.h"
 
 #include <QtCore/qcommandlineparser.h>
 #include <QtCore/qiodevice.h>

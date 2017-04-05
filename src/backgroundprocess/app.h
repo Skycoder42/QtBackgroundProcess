@@ -1,7 +1,7 @@
 #ifndef QtBACKGROUNDPROCESS_APP_H
 #define QtBACKGROUNDPROCESS_APP_H
 
-#include "QtBackgroundProcess/qbackgroundprocess_global.h"
+#include "QtBackgroundProcess/qtbackgroundprocess_global.h"
 
 #include <QtCore/qcommandlineparser.h>
 #include <QtCore/qcoreapplication.h>
