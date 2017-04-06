@@ -50,6 +50,8 @@ public Q_SLOTS:
 	//! @writeAcFn{App::autoDelete}
 	void setAutoDelete(bool autoDelete);
 
+	//! Writes the given line, appends a newline and optionally flushes
+	void writeLine(const QByteArray &line, bool flush = true);
 	//! Flushes the terminal
 	void flush();
 

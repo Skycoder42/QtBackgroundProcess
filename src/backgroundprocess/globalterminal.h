@@ -28,6 +28,8 @@ public:
 	bool canReadLine() const override;
 
 public Q_SLOTS:
+	//! Writes the given line on all connected terminals @sa Terminal::writeLine
+	void writeLine(const QByteArray &line, bool doFlush = true);
 	//! Performs a flush on all connected terminals @sa Terminal::flush
 	void flush();
 

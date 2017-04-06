@@ -79,6 +79,13 @@ void Terminal::setAutoDelete(bool autoDelete)
 	d->autoDelete = autoDelete;
 }
 
+void Terminal::writeLine(const QByteArray &line, bool flush)
+{
+	d->socket->write(line + '\n');
+	if(flush)
+		d->socket->flush();
+}
+
 void Terminal::flush()
 {
 	d->socket->flush();

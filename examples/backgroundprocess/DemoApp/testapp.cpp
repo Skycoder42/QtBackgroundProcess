@@ -108,7 +108,7 @@ void TestApp::handleCommand(QSharedPointer<QCommandLineParser> parser, bool star
 	}
 
 	if(statusTerm)
-		statusTerm->write("[" + parser->positionalArguments().join(", ").toUtf8() + "]\n");
+		statusTerm->writeLine("[" + parser->positionalArguments().join(", ").toUtf8() + "]");
 }
 
 void TestApp::addTerminal(Terminal *terminal)

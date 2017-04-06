@@ -58,6 +58,13 @@ bool GlobalTerminal::canReadLine() const
 	return false;
 }
 
+void GlobalTerminal::writeLine(const QByteArray &line, bool doFlush)
+{
+	write(line + '\n');
+	if(doFlush)
+		flush();
+}
+
 void GlobalTerminal::flush()
 {
 	auto terms = d->app->connectedTerminals();
