@@ -98,7 +98,7 @@ void AppPrivate::qbackProcMessageHandler(QtMsgType type, const QMessageLogContex
 	}
 
 	if(type == QtMsgType::QtFatalMsg)
-		qt_assert_x(context.function, qUtf8Printable(msg), context.file, context.line);
+		std::abort();
 }
 
 AppPrivate::AppPrivate(App *q_ptr) :
