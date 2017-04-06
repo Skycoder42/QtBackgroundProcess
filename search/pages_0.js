@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['the_20qrestbuilder_20tool',['The QRestBuilder Tool',['https://doc.qt.io/qt-5/generator.html',0,'']]]
+  ['image_20page',['Image Page',['https://doc.qt.io/qt-5/image_page.html',0,'']]]
 ];

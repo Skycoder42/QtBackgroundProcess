@@ -25,6 +25,7 @@ var searchData=
   ['sendid',['sendId',['https://doc.qt.io/qt-5/qscxmlevent.html#sendId-prop',0,'QScxmlEvent']]],
   ['sensitivity',['sensitivity',['https://doc.qt.io/qt-5/qt3dinput-qmousedevice.html#sensitivity-prop',0,'Qt3DInput::QMouseDevice']]],
   ['separatorscollapsible',['separatorsCollapsible',['https://doc.qt.io/qt-5/qmenu.html#separatorsCollapsible-prop',0,'QMenu']]],
+  ['serversecret',['serverSecret',['https://doc.qt.io/qt-5/class_qt_data_sync_1_1_ws_authenticator.html#a96290386827ef22368eb95ede5014f0b',0,'QtDataSync::WsAuthenticator']]],
   ['sessionid',['sessionId',['https://doc.qt.io/qt-5/qscxmlstatemachine.html#sessionId-prop',0,'QScxmlStateMachine']]],
   ['setfocusontouchrelease',['setFocusOnTouchRelease',['https://doc.qt.io/qt-5/qstylehints.html#setFocusOnTouchRelease-prop',0,'QStyleHints']]],
   ['shaderprogram',['shaderProgram',['https://doc.qt.io/qt-5/qt3drender-qrenderpass.html#shaderProgram-prop',0,'Qt3DRender::QRenderPass']]],
@@ -37,6 +38,7 @@ var searchData=
   ['showgroupseparator',['showGroupSeparator',['https://doc.qt.io/qt-5/qabstractspinbox.html#showGroupSeparator-prop',0,'QAbstractSpinBox']]],
   ['showisfullscreen',['showIsFullScreen',['https://doc.qt.io/qt-5/qstylehints.html#showIsFullScreen-prop',0,'QStyleHints']]],
   ['showismaximized',['showIsMaximized',['https://doc.qt.io/qt-5/qstylehints.html#showIsMaximized-prop',0,'QStyleHints']]],
+  ['showresult',['showResult',['https://doc.qt.io/qt-5/class_qt_auto_updater_1_1_update_button.html#a1f8896a26f98af3b772a6acea73a8e1a',0,'QtAutoUpdater::UpdateButton']]],
   ['showsortindicator',['showSortIndicator',['https://doc.qt.io/qt-5/qheaderview.html#showSortIndicator-prop',0,'QHeaderView']]],
   ['signal',['signal',['https://doc.qt.io/qt-5/qsignaltransition.html#signal-prop',0,'QSignalTransition']]],
   ['singleclickactivation',['singleClickActivation',['https://doc.qt.io/qt-5/qstylehints.html#singleClickActivation-prop',0,'QStyleHints']]],
@@ -109,5 +111,7 @@ var searchData=
   ['surface',['surface',['https://doc.qt.io/qt-5/qt3drender-qrendersurfaceselector.html#surface-prop',0,'Qt3DRender::QRenderSurfaceSelector::surface()'],['https://doc.qt.io/qt-5/qt3dextras-qforwardrenderer.html#surface-prop',0,'Qt3DExtras::QForwardRenderer::surface()']]],
   ['surfacepixelratio',['surfacePixelRatio',['https://doc.qt.io/qt-5/qt3drender-qrendersurfaceselector.html#surfacePixelRatio-prop',0,'Qt3DRender::QRenderSurfaceSelector']]],
   ['swipeangle',['swipeAngle',['https://doc.qt.io/qt-5/qswipegesture.html#swipeAngle-prop',0,'QSwipeGesture']]],
-  ['syncdata',['syncData',['https://doc.qt.io/qt-5/qt3drender-qbuffer.html#syncData-prop',0,'Qt3DRender::QBuffer']]]
+  ['syncdata',['syncData',['https://doc.qt.io/qt-5/qt3drender-qbuffer.html#syncData-prop',0,'Qt3DRender::QBuffer']]],
+  ['syncpolicy',['syncPolicy',['https://doc.qt.io/qt-5/class_qt_data_sync_1_1_data_merger.html#a0dc4627679825189c6cdecc3c560fc6a',0,'QtDataSync::DataMerger']]],
+  ['syncstate',['syncState',['https://doc.qt.io/qt-5/class_qt_data_sync_1_1_sync_controller.html#aa8ea8b1342be92b312a8cdbfee99cbf4',0,'QtDataSync::SyncController']]]
 ];

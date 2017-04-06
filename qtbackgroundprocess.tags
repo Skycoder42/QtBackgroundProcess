@@ -249,6 +249,13 @@
     <base>QIODevice</base>
     <member kind="slot">
       <type>void</type>
+      <name>writeLine</name>
+      <anchorfile>class_qt_background_process_1_1_global_terminal.html</anchorfile>
+      <anchor>a4145f421608696e79cceaa0b74a6676b</anchor>
+      <arglist>(const QByteArray &amp;line, bool doFlush=true)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>flush</name>
       <anchorfile>class_qt_background_process_1_1_global_terminal.html</anchorfile>
       <anchor>a7c170a3a196375ddc7631a59602b9cee</anchor>
@@ -340,6 +347,13 @@
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
       <anchor>ad2825b538be19b0e74aac422e7050c63</anchor>
       <arglist>(bool autoDelete)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>writeLine</name>
+      <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
+      <anchor>aed92af28b4b46a07b290e0e584bb55f0</anchor>
+      <arglist>(const QByteArray &amp;line, bool flush=true)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -454,16 +468,24 @@
       <arglist></arglist>
     </member>
   </compound>
+  <compound kind="namespace">
+    <name>QtBackgroundProcess</name>
+    <filename>namespace_qt_background_process.html</filename>
+    <class kind="class">QtBackgroundProcess::App</class>
+    <class kind="class">QtBackgroundProcess::GlobalTerminal</class>
+    <class kind="class">QtBackgroundProcess::NotAllowedInRunningStateException</class>
+    <class kind="class">QtBackgroundProcess::Terminal</class>
+  </compound>
   <compound kind="page">
     <name>index</name>
     <title></title>
     <filename>index</filename>
     <docanchor file="index" title="Features">qtbackgroundprocess_readme_label_0</docanchor>
     <docanchor file="index" title="Use Case">qtbackgroundprocess_readme_label_1</docanchor>
-    <docanchor file="index" title="Usage">qtbackgroundprocess_readme_label_2</docanchor>
-    <docanchor file="index" title="Example">qtbackgroundprocess_readme_label_3</docanchor>
-    <docanchor file="index" title="Debugging the master process">qtbackgroundprocess_readme_label_4</docanchor>
-    <docanchor file="index" title="Download/Installation">qtbackgroundprocess_readme_label_5</docanchor>
+    <docanchor file="index" title="Download/Installation">qtbackgroundprocess_readme_label_2</docanchor>
+    <docanchor file="index" title="Usage">qtbackgroundprocess_readme_label_3</docanchor>
+    <docanchor file="index" title="Example">qtbackgroundprocess_readme_label_4</docanchor>
+    <docanchor file="index" title="Debugging the master process">qtbackgroundprocess_readme_label_5</docanchor>
     <docanchor file="index" title="Documentation">qtbackgroundprocess_readme_label_6</docanchor>
     <docanchor file="index" title="Technical Stuff">qtbackgroundprocess_readme_label_7</docanchor>
   </compound>

@@ -1,11 +1,14 @@
 var searchData=
 [
+  ['_7eadminauthoriser',['~AdminAuthoriser',['https://doc.qt.io/qt-5/class_qt_auto_updater_1_1_admin_authoriser.html#a71fa6a5ba3cee8eb2f4d095539a74139',0,'QtAutoUpdater::AdminAuthoriser']]],
   ['_7eapp',['~App',['../class_qt_background_process_1_1_app.html#a34f1f253b1cef5f4ecbac66eaf6964ec',1,'QtBackgroundProcess::App']]],
   ['_7eassimpio',['~AssimpIO',['https://doc.qt.io/qt-5/qt3drender-assimpio.html#dtor.AssimpIO',0,'Qt3DRender::AssimpIO']]],
+  ['_7easyncdatastore',['~AsyncDataStore',['https://doc.qt.io/qt-5/class_qt_data_sync_1_1_async_data_store.html#a06219211628752f4ee56a626b91ccc20',0,'QtDataSync::AsyncDataStore']]],
   ['_7ebinder',['~Binder',['https://doc.qt.io/qt-5/qopenglvertexarrayobject-binder.html#dtor.Binder',0,'QOpenGLVertexArrayObject::Binder']]],
   ['_7econnection',['~Connection',['https://doc.qt.io/qt-5/qmetaobject-connection.html#dtor.Connection',0,'QMetaObject::Connection']]],
   ['_7econst_5fiterator',['~const_iterator',['https://doc.qt.io/qt-5/qsequentialiterable-const-iterator.html#dtor.const_iterator',0,'QSequentialIterable::const_iterator::~const_iterator()'],['https://doc.qt.io/qt-5/qassociativeiterable-const-iterator.html#dtor.const_iterator',0,'QAssociativeIterable::const_iterator::~const_iterator()']]],
   ['_7econverterstate',['~ConverterState',['https://doc.qt.io/qt-5/qtextcodec-converterstate.html#dtor.ConverterState',0,'QTextCodec::ConverterState']]],
+  ['_7edatamerger',['~DataMerger',['https://doc.qt.io/qt-5/class_qt_data_sync_1_1_data_merger.html#aaf089ecdf095a33d201f29afc08f9aee',0,'QtDataSync::DataMerger']]],
   ['_7eforeachloopbody',['~ForeachLoopBody',['https://doc.qt.io/qt-5/qscxmldatamodel-foreachloopbody.html#dtor.ForeachLoopBody',0,'QScxmlDataModel::ForeachLoopBody']]],
   ['_7eglobalterminal',['~GlobalTerminal',['../class_qt_background_process_1_1_global_terminal.html#a0f0e1ab757d594193f77c67ef2d19892',1,'QtBackgroundProcess::GlobalTerminal']]],
   ['_7egltfio',['~GLTFIO',['https://doc.qt.io/qt-5/qt3drender-gltfio.html#dtor.GLTFIO',0,'Qt3DRender::GLTFIO']]],
@@ -789,7 +792,14 @@ var searchData=
   ['_7erequestid',['~RequestId',['https://doc.qt.io/qt-5/qnearfieldtarget-requestid.html#dtor.RequestId',0,'QNearFieldTarget::RequestId']]],
   ['_7erestclass',['~RestClass',['https://doc.qt.io/qt-5/class_qt_rest_client_1_1_rest_class.html#a9136ec5bd82e69960027005b1869ec51',0,'QtRestClient::RestClass']]],
   ['_7erestclient',['~RestClient',['https://doc.qt.io/qt-5/class_qt_rest_client_1_1_rest_client.html#a9a6d211b09653ee470c320769edde80d',0,'QtRestClient::RestClient']]],
+  ['_7esetup',['~Setup',['https://doc.qt.io/qt-5/class_qt_data_sync_1_1_setup.html#a89f03a5baa81da62c886e8c887b2d7b2',0,'QtDataSync::Setup']]],
   ['_7esignalevent',['~SignalEvent',['https://doc.qt.io/qt-5/qstatemachine-signalevent.html#dtor.SignalEvent',0,'QStateMachine::SignalEvent']]],
+  ['_7esimple',['~Simple',['https://doc.qt.io/qt-5/class_qt_rest_client_1_1_simple_3_01_t_00_01typename_01std_1_1enable__if_3_01std_1_1is__void_3_0e3917a0d7780becccdeb92e5e53ff1ab.html#a7d365d02989e98e81a389ac0d3423bb2',0,'QtRestClient::Simple&lt; T, typename std::enable_if&lt; std::is_void&lt; typename T::QtGadgetHelper &gt;::value &gt;::type &gt;']]],
+  ['_7esynccontroller',['~SyncController',['https://doc.qt.io/qt-5/class_qt_data_sync_1_1_sync_controller.html#a58e5aad6e00749326c2e4a34866b7df0',0,'QtDataSync::SyncController']]],
   ['_7eterminal',['~Terminal',['../class_qt_background_process_1_1_terminal.html#add5a7d4dd45b68af9a0afb1cc845af2f',1,'QtBackgroundProcess::Terminal']]],
-  ['_7ewrappedevent',['~WrappedEvent',['https://doc.qt.io/qt-5/qstatemachine-wrappedevent.html#dtor.WrappedEvent',0,'QStateMachine::WrappedEvent']]]
+  ['_7eupdatebutton',['~UpdateButton',['https://doc.qt.io/qt-5/class_qt_auto_updater_1_1_update_button.html#a84cd7e0899cc5926d78cbe4fbd079579',0,'QtAutoUpdater::UpdateButton']]],
+  ['_7eupdatecontroller',['~UpdateController',['https://doc.qt.io/qt-5/class_qt_auto_updater_1_1_update_controller.html#abacdda249401974823d69bb5024e495d',0,'QtAutoUpdater::UpdateController']]],
+  ['_7eupdater',['~Updater',['https://doc.qt.io/qt-5/class_qt_auto_updater_1_1_updater.html#a1294129a47405b4e29932555bb9cdf43',0,'QtAutoUpdater::Updater']]],
+  ['_7ewrappedevent',['~WrappedEvent',['https://doc.qt.io/qt-5/qstatemachine-wrappedevent.html#dtor.WrappedEvent',0,'QStateMachine::WrappedEvent']]],
+  ['_7ewsauthenticator',['~WsAuthenticator',['https://doc.qt.io/qt-5/class_qt_data_sync_1_1_ws_authenticator.html#ae4ae918958b753ce6230b515ee262f25',0,'QtDataSync::WsAuthenticator']]]
 ];

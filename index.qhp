@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QtHelpProject version="1.0">
-  <namespace>de.skycoder42.qtbackgroundprocess.</namespace>
+  <namespace>de.skycoder42.qtbackgroundprocess.150</namespace>
   <virtualFolder>doc_qtbackgroundprocess</virtualFolder>
-  <customFilter name="BackgroundProcess 1.4.0">
+  <customFilter name="BackgroundProcess 1.5.0">
     <filterAttribute>qtbackgroundprocess</filterAttribute>
-    <filterAttribute>1.4.0</filterAttribute>
+    <filterAttribute>1.5.0</filterAttribute>
   </customFilter>
   <filterSection>
     <filterAttribute>doxygen</filterAttribute>
     <toc>
-      <section title="QtBackgroundProcess 1.4.0" ref="index.html">
+      <section title="QtBackgroundProcess 1.5.0" ref="index.html">
         <section title="Features" ref="index.html#qtbackgroundprocess_readme_label_0" />
         <section title="Use Case" ref="index.html#qtbackgroundprocess_readme_label_1" />
-        <section title="Usage" ref="index.html#qtbackgroundprocess_readme_label_2">
-          <section title="Example" ref="index.html#qtbackgroundprocess_readme_label_3" />
-          <section title="Debugging the master process" ref="index.html#qtbackgroundprocess_readme_label_4" />
+        <section title="Download/Installation" ref="index.html#qtbackgroundprocess_readme_label_2" />
+        <section title="Usage" ref="index.html#qtbackgroundprocess_readme_label_3">
+          <section title="Example" ref="index.html#qtbackgroundprocess_readme_label_4" />
+          <section title="Debugging the master process" ref="index.html#qtbackgroundprocess_readme_label_5" />
         </section>
-        <section title="Download/Installation" ref="index.html#qtbackgroundprocess_readme_label_5" />
         <section title="Documentation" ref="index.html#qtbackgroundprocess_readme_label_6" />
         <section title="Technical Stuff" ref="index.html#qtbackgroundprocess_readme_label_7" />
+        <section title="Namespaces">
+          <section title="Namespace List" ref="namespaces.html">
+            <section title="QtBackgroundProcess" ref="namespace_qt_background_process.html" />
+          </section>
+        </section>
         <section title="Classes" ref="annotated.html">
           <section title="Class List" ref="annotated.html">
-            <section title="QtBackgroundProcess">
+            <section title="QtBackgroundProcess" ref="namespace_qt_background_process.html">
               <section title="App" ref="class_qt_background_process_1_1_app.html">
                 <section title="App" ref="class_qt_background_process_1_1_app.html#a58257f482a592c573d3f95e5fe56e3f0" />
                 <section title="~App" ref="class_qt_background_process_1_1_app.html#a34f1f253b1cef5f4ecbac66eaf6964ec" />
@@ -67,6 +72,7 @@
                 <section title="isSequential" ref="class_qt_background_process_1_1_global_terminal.html#a3a35b0957aaaae78fab2ea0e4d088abc" />
                 <section title="readData" ref="class_qt_background_process_1_1_global_terminal.html#a4bd39e77cfab7aa5a02e48aaa7870ca9" />
                 <section title="writeData" ref="class_qt_background_process_1_1_global_terminal.html#a24b79b52f74b51854e8b3a8a507fcd38" />
+                <section title="writeLine" ref="class_qt_background_process_1_1_global_terminal.html#a4145f421608696e79cceaa0b74a6676b" />
               </section>
               <section title="NotAllowedInRunningStateException" ref="class_qt_background_process_1_1_not_allowed_in_running_state_exception.html">
                 <section title="NotAllowedInRunningStateException" ref="class_qt_background_process_1_1_not_allowed_in_running_state_exception.html#aa3ac8d6e0ed96918b1eab4dee1c4d8e8" />
@@ -90,6 +96,7 @@
                 <section title="terminalDisconnected" ref="class_qt_background_process_1_1_terminal.html#a29f320b5be31a3e8ef9b6f462c470b39" />
                 <section title="terminalError" ref="class_qt_background_process_1_1_terminal.html#a4c9e1f6fa8584b8ee8ca9c670829374c" />
                 <section title="writeData" ref="class_qt_background_process_1_1_terminal.html#ad0eb73759057f03b5fc6b1f333fc251d" />
+                <section title="writeLine" ref="class_qt_background_process_1_1_terminal.html#aed92af28b4b46a07b290e0e584bb55f0" />
                 <section title="autoDelete" ref="class_qt_background_process_1_1_terminal.html#aba7da15827a0a1af91e0568e80b1a2fc" />
                 <section title="parser" ref="class_qt_background_process_1_1_terminal.html#ab93a716135b2daced3c561f91f5dcc82" />
                 <section title="starter" ref="class_qt_background_process_1_1_terminal.html#af8de7a1804220a38f35a839d7f1f72a4" />
@@ -110,6 +117,7 @@
                 <section title="QtBackgroundProcess::Terminal" ref="class_qt_background_process_1_1_terminal.html" />
               </section>
             </section>
+            <section title="typedef" ref="classtypedef.html" />
           </section>
           <section title="Class Members" ref="functions.html">
             <section title="All" ref="functions.html" />
@@ -125,7 +133,7 @@
             <section title="globalterminal.cpp" ref="globalterminal_8cpp_source.html" />
             <section title="globalterminal.h" ref="globalterminal_8h_source.html" />
             <section title="masterconnecter.cpp" ref="masterconnecter_8cpp_source.html" />
-            <section title="qbackgroundprocess_global.h" ref="qbackgroundprocess__global_8h_source.html" />
+            <section title="qtbackgroundprocess_global.h" ref="qtbackgroundprocess__global_8h_source.html" />
             <section title="terminal.cpp" ref="terminal_8cpp_source.html" />
             <section title="terminal.h" ref="terminal_8h_source.html" />
           </section>
@@ -133,6 +141,8 @@
       </section>
     </toc>
     <keywords>
+      <keyword name="typedef" id="typedef" ref="classtypedef.html" />
+      <keyword name="QtBackgroundProcess" id="QtBackgroundProcess" ref="namespace_qt_background_process.html" />
       <keyword name="QtBackgroundProcess::App" id="QtBackgroundProcess::App" ref="class_qt_background_process_1_1_app.html" />
       <keyword name="createDefaultInstanceID" id="QtBackgroundProcess::App::createDefaultInstanceID" ref="class_qt_background_process_1_1_app.html#a1059954d51fd5aa275303a627ec13743" />
       <keyword name="setInstanceID" id="QtBackgroundProcess::App::setInstanceID" ref="class_qt_background_process_1_1_app.html#af4743986bfcac29e54d772a29fc14a2b" />
@@ -277,6 +287,7 @@
       <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-4" />
       <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-5" />
       <keyword name="QtBackgroundProcess::GlobalTerminal" id="QtBackgroundProcess::GlobalTerminal" ref="class_qt_background_process_1_1_global_terminal.html" />
+      <keyword name="writeLine" id="QtBackgroundProcess::GlobalTerminal::writeLine" ref="class_qt_background_process_1_1_global_terminal.html#a4145f421608696e79cceaa0b74a6676b" />
       <keyword name="flush" id="QtBackgroundProcess::GlobalTerminal::flush" ref="class_qt_background_process_1_1_global_terminal.html#a7c170a3a196375ddc7631a59602b9cee" />
       <keyword name="GlobalTerminal" id="QtBackgroundProcess::GlobalTerminal::GlobalTerminal" ref="class_qt_background_process_1_1_global_terminal.html#a77e4a10e7ef41044825390731919b516" />
       <keyword name="~GlobalTerminal" id="QtBackgroundProcess::GlobalTerminal::~GlobalTerminal" ref="class_qt_background_process_1_1_global_terminal.html#a0f0e1ab757d594193f77c67ef2d19892" />
@@ -397,6 +408,7 @@
       <keyword name="QtBackgroundProcess::Terminal" id="QtBackgroundProcess::Terminal" ref="class_qt_background_process_1_1_terminal.html" />
       <keyword name="disconnectTerminal" id="QtBackgroundProcess::Terminal::disconnectTerminal" ref="class_qt_background_process_1_1_terminal.html#acdb8d00fa6cb46474b2350aac20928ca" />
       <keyword name="setAutoDelete" id="QtBackgroundProcess::Terminal::setAutoDelete" ref="class_qt_background_process_1_1_terminal.html#ad2825b538be19b0e74aac422e7050c63" />
+      <keyword name="writeLine" id="QtBackgroundProcess::Terminal::writeLine" ref="class_qt_background_process_1_1_terminal.html#aed92af28b4b46a07b290e0e584bb55f0" />
       <keyword name="flush" id="QtBackgroundProcess::Terminal::flush" ref="class_qt_background_process_1_1_terminal.html#a908cdfa64167279ed565d43b45470c3d" />
       <keyword name="terminalDisconnected" id="QtBackgroundProcess::Terminal::terminalDisconnected" ref="class_qt_background_process_1_1_terminal.html#a29f320b5be31a3e8ef9b6f462c470b39" />
       <keyword name="terminalError" id="QtBackgroundProcess::Terminal::terminalError" ref="class_qt_background_process_1_1_terminal.html#a4c9e1f6fa8584b8ee8ca9c670829374c" />
@@ -551,10 +563,12 @@
       <file>globalterminal_8cpp_source.html</file>
       <file>globalterminal_8h_source.html</file>
       <file>masterconnecter_8cpp_source.html</file>
-      <file>qbackgroundprocess__global_8h_source.html</file>
+      <file>qtbackgroundprocess__global_8h_source.html</file>
       <file>_r_e_a_d_m_e_8md_source.html</file>
       <file>terminal_8cpp_source.html</file>
       <file>terminal_8h_source.html</file>
+      <file>classtypedef.html</file>
+      <file>namespace_qt_background_process.html</file>
       <file>class_qt_background_process_1_1_app.html</file>
       <file>class_qt_background_process_1_1_app.png</file>
       <file>class_qt_background_process_1_1_app-members.html</file>
@@ -571,6 +585,7 @@
       <file>dir_68267d1309a1af8e8297ef4c3efbcdba.html</file>
       <file>index.html</file>
       <file>pages.html</file>
+      <file>namespaces.html</file>
       <file>annotated.html</file>
       <file>classes.html</file>
       <file>hierarchy.html</file>
