@@ -5,14 +5,9 @@
 
 using namespace QtBackgroundProcess;
 
-#ifdef d
-#undef d
-#endif
-#define d this->d_ptr
-
 App::App(int &argc, char **argv, int flags) :
 	QCoreApplication(argc, argv, flags),
-	d_ptr(new AppPrivate(this))
+	d(new AppPrivate(this))
 {
 	AppPrivate::p_valid = true;
 

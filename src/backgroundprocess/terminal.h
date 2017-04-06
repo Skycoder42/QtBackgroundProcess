@@ -68,7 +68,7 @@ protected:
 	qint64 writeData(const char *data, qint64 len) override;
 
 private:
-	TerminalPrivate *d_ptr;
+	TerminalPrivate *d;
 
 	bool open(OpenMode mode) override;
 };

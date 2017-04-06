@@ -84,7 +84,7 @@ private Q_SLOTS:
 	void beginMasterConnect(const QStringList &arguments, bool isStarter);
 
 private:
-	App *q_ptr;
+	App *q;
 };
 
 Q_DECLARE_LOGGING_CATEGORY(loggingCategory)

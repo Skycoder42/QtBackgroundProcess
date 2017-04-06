@@ -68,7 +68,7 @@ QString AppPrivate::generateSingleId(const QString &seed)
 
 AppPrivate *AppPrivate::p_ptr()
 {
-	return qApp->d_ptr;
+	return qApp->d;
 }
 
 void AppPrivate::qbackProcMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
@@ -118,7 +118,7 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	master(nullptr),
 	debugTerm(nullptr),
 	logFile(nullptr),
-	q_ptr(q_ptr)
+	q(q_ptr)
 {}
 
 void AppPrivate::setInstanceId(const QString &id)
@@ -335,7 +335,7 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 		} else
 			QDir::setCurrent(QDir::rootPath());
 
-		auto res = q_ptr->startupApp(parser);
+		auto res = q->startupApp(parser);
 		if(res != EXIT_SUCCESS) {
 			//cleanup
 			masterServer->close();
@@ -517,7 +517,7 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 		auto rTerm = new Terminal(terminal, this);
 		rTerm->setAutoDelete(autoDelete);
 		//emit the command
-		emit q_ptr->commandReceived(rTerm->parser(), rTerm->isStarter(), App::QPrivateSignal());
+		emit q->commandReceived(rTerm->parser(), rTerm->isStarter(), App::QPrivateSignal());
 
 		//test if stop command
 		auto args = rTerm->parser()->positionalArguments();
@@ -531,12 +531,12 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 			//add terminal to terminal list
 			connect(rTerm, &Terminal::destroyed, this, [=](){
 				activeTerminals.removeOne(rTerm);
-				emit q_ptr->connectedTerminalsChanged(activeTerminals, App::QPrivateSignal());
+				emit q->connectedTerminalsChanged(activeTerminals, App::QPrivateSignal());
 			});
 			activeTerminals.append(rTerm);
-			emit q_ptr->connectedTerminalsChanged(activeTerminals, App::QPrivateSignal());
+			emit q->connectedTerminalsChanged(activeTerminals, App::QPrivateSignal());
 			//new terminal signal
-			emit q_ptr->newTerminalConnected(rTerm, App::QPrivateSignal());
+			emit q->newTerminalConnected(rTerm, App::QPrivateSignal());
 		}
 	} else
 		terminal->deleteLater();
@@ -545,7 +545,7 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 void AppPrivate::stopMaster(Terminal *term)
 {
 	int eCode = EXIT_SUCCESS;
-	if(q_ptr->requestAppShutdown(term, eCode)) {
+	if(q->requestAppShutdown(term, eCode)) {
 		foreach(auto termin, activeTerminals)
 			termin->flush();
 		QMetaObject::invokeMethod(this, "doExit", Qt::QueuedConnection,

@@ -118,7 +118,7 @@ protected:
 	virtual bool requestAppShutdown(Terminal *terminal, int &exitCode);
 
 private:
-	AppPrivate* d_ptr;
+	AppPrivate* d;
 };
 
 }

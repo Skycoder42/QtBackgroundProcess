@@ -43,7 +43,7 @@ private Q_SLOTS:
 	bool tryPushBuffer(QList<Terminal*> terms);
 
 private:
-	QScopedPointer<GlobalTerminalPrivate> d_ptr;
+	QScopedPointer<GlobalTerminalPrivate> d;
 
 	bool open(OpenMode mode) override;
 	void close() override;

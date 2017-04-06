@@ -20,14 +20,9 @@ public:
 
 using namespace QtBackgroundProcess;
 
-#ifdef d
-#undef d
-#endif
-#define d this->d_ptr
-
 GlobalTerminal::GlobalTerminal(QObject *parent, bool enableBootBuffer) :
 	QIODevice(parent),
-	d_ptr(new GlobalTerminalPrivate(enableBootBuffer, this))
+	d(new GlobalTerminalPrivate(enableBootBuffer, this))
 {
 	if(enableBootBuffer) {
 		connect(d->app, &App::connectedTerminalsChanged,

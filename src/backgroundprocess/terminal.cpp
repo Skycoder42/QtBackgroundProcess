@@ -4,14 +4,9 @@
 
 using namespace QtBackgroundProcess;
 
-#ifdef d
-#undef d
-#endif
-#define d this->d_ptr
-
 Terminal::Terminal(TerminalPrivate *d_ptr, QObject *parent) :
 	QIODevice(parent),
-	d_ptr(d_ptr)
+	d(d_ptr)
 {
 	d->setParent(this);
 	open(QIODevice::ReadWrite | QIODevice::Unbuffered);
