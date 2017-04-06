@@ -35,17 +35,17 @@ GlobalTerminal::GlobalTerminal(QObject *parent, bool enableBootBuffer) :
 		d->buffer->open(QIODevice::WriteOnly);
 
 		QTimer::singleShot(10*1000, this, [this](){//wait up to 10 seconds for the first terminal to connect
-			if(d->buffer && !this->tryPushBuffer(d->app->connectedTerminals()))
-				this->discardBuffer();
+			if(d->buffer && !tryPushBuffer(d->app->connectedTerminals()))
+				discardBuffer();
 		});
 	}
 
-	this->open(QIODevice::WriteOnly | QIODevice::Unbuffered);
+	open(QIODevice::WriteOnly | QIODevice::Unbuffered);
 }
 
 GlobalTerminal::~GlobalTerminal()
 {
-	this->QIODevice::close();
+	QIODevice::close();
 }
 
 bool GlobalTerminal::isSequential() const
@@ -69,7 +69,7 @@ void GlobalTerminal::flush()
 {
 	auto terms = d->app->connectedTerminals();
 	if(d->buffer && !terms.isEmpty())
-		this->pushBuffer(terms);
+		pushBuffer(terms);
 	foreach(auto term, terms)
 		term->flush();
 }
@@ -88,7 +88,7 @@ qint64 GlobalTerminal::writeData(const char *data, qint64 len)
 		if(terms.isEmpty())
 			return d->buffer->write(data, len);
 		else
-			this->pushBuffer(terms);
+			pushBuffer(terms);
 	}
 
 	foreach(auto term, terms)
@@ -99,7 +99,7 @@ qint64 GlobalTerminal::writeData(const char *data, qint64 len)
 bool GlobalTerminal::tryPushBuffer(QList<Terminal *> terms)
 {
 	if(d->buffer && !terms.isEmpty()) {
-		this->pushBuffer(terms);
+		pushBuffer(terms);
 		return true;
 	} else
 		return false;
@@ -107,7 +107,7 @@ bool GlobalTerminal::tryPushBuffer(QList<Terminal *> terms)
 
 bool GlobalTerminal::open(QIODevice::OpenMode mode)
 {
-	return this->QIODevice::open(mode);
+	return QIODevice::open(mode);
 }
 
 void GlobalTerminal::close() {}
@@ -119,7 +119,7 @@ void GlobalTerminal::pushBuffer(QList<Terminal *> terms)
 		foreach(auto term, terms)
 			term->write(data);
 	}
-	this->discardBuffer();
+	discardBuffer();
 }
 
 void GlobalTerminal::discardBuffer()

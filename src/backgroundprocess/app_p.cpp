@@ -126,10 +126,10 @@ void AppPrivate::setInstanceId(const QString &id)
 	if(running)
 		throw NotAllowedInRunningStateException();
 
-	this->instanceId = id;
+	instanceId = id;
 	auto lockPath = QDir::temp().absoluteFilePath(id + QStringLiteral(".lock"));
-	this->masterLock.reset(new QLockFile(lockPath));
-	this->masterLock->setStaleLockTime(0);
+	masterLock.reset(new QLockFile(lockPath));
+	masterLock->setStaleLockTime(0);
 }
 
 void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOptions)
@@ -247,16 +247,16 @@ void AppPrivate::updateLoggingMode(int level)
 
 void AppPrivate::updateLoggingPath(const QString &path)
 {
-	if(this->logFile) {
-		this->logFile->close();
-		this->logFile->deleteLater();
-		this->logFile.clear();
+	if(logFile) {
+		logFile->close();
+		logFile->deleteLater();
+		logFile.clear();
 	}
 	if(!path.isEmpty()) {
-		this->logFile = new QFile(path, this);
-		if(!this->logFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) {
-			this->logFile->deleteLater();
-			this->logFile.clear();
+		logFile = new QFile(path, this);
+		if(!logFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) {
+			logFile->deleteLater();
+			logFile.clear();
 		}
 	}
 }
@@ -267,48 +267,48 @@ int AppPrivate::initControlFlow(const QCommandLineParser &parser)
 	auto args = parser.positionalArguments();
 	if(args.size() > 0) {
 		if(args[0] == masterArgument)
-			return this->makeMaster(parser);
+			return makeMaster(parser);
 		else if(args[0] == purgeArgument)
-			return this->purgeMaster(parser);
+			return purgeMaster(parser);
 		else if(args[0] == startArgument)
-			return this->startMaster();
+			return startMaster();
 		else if(args[0] == restartArgument)
-			return this->restartMaster(parser);
+			return restartMaster(parser);
 	}
 
 	//neither start nor make master --> "normal" client or autostart
-	if(this->autoStart)
-		return this->startMaster(true);
+	if(autoStart)
+		return startMaster(true);
 	else
-		return this->commandMaster();
+		return commandMaster();
 }
 
 int AppPrivate::makeMaster(const QCommandLineParser &parser)
 {
 	//create local server --> do first to make shure clients only see a "valid" master lock if the master started successfully
-	this->masterServer = new QLocalServer(this);
-	connect(this->masterServer, &QLocalServer::newConnection,
+	masterServer = new QLocalServer(this);
+	connect(masterServer, &QLocalServer::newConnection,
 			this, &AppPrivate::newTerminalConnected,
 			Qt::QueuedConnection);
-	if(!this->masterServer->listen(this->instanceId)) {
+	if(!masterServer->listen(instanceId)) {
 		qCCritical(loggingCategory) << tr("Failed to create local server with error:")
-					<< qUtf8Printable(this->masterServer->errorString());
+					<< qUtf8Printable(masterServer->errorString());
 		return EXIT_FAILURE;
 	}
 
 	//get the lock
-	if(!this->masterLock->tryLock(5000)) {//wait at most 5 sec
-		this->masterServer->close();
+	if(!masterLock->tryLock(5000)) {//wait at most 5 sec
+		masterServer->close();
 		qCCritical(loggingCategory) << tr("Unable to start master process. Failed with lock error:")
-					<< qUtf8Printable(this->masterLock->error());
+					<< qUtf8Printable(masterLock->error());
 		return EXIT_FAILURE;
 	} else {
 		//setup master logging stuff
 		qSetMessagePattern(AppPrivate::masterMessageFormat);
-		if(this->masterLogging)
-			this->debugTerm = new GlobalTerminal(this, true);
-		this->updateLoggingMode(parser.value(QStringLiteral("loglevel")).toInt());
-		this->updateLoggingPath(parser.value(QStringLiteral("logpath")));
+		if(masterLogging)
+			debugTerm = new GlobalTerminal(this, true);
+		updateLoggingMode(parser.value(QStringLiteral("loglevel")).toInt());
+		updateLoggingPath(parser.value(QStringLiteral("logpath")));
 
 		//detache from any console, if wished
 		if(!parser.isSet(QStringLiteral("no-daemon"))) {
@@ -335,11 +335,11 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 		} else
 			QDir::setCurrent(QDir::rootPath());
 
-		auto res = this->q_ptr->startupApp(parser);
+		auto res = q_ptr->startupApp(parser);
 		if(res != EXIT_SUCCESS) {
 			//cleanup
-			this->masterServer->close();
-			this->masterLock->unlock();
+			masterServer->close();
+			masterLock->unlock();
 		}
 
 		return res;
@@ -351,7 +351,7 @@ int AppPrivate::startMaster(bool isAutoStart, bool isRestart)
 	auto arguments = QCoreApplication::arguments();
 	arguments.removeFirst();//remove app name
 	//check if master already lives
-	if(this->masterLock->tryLock()) {//no master alive
+	if(masterLock->tryLock()) {//no master alive
 		auto ok = false;
 
 		auto args = arguments;
@@ -362,12 +362,12 @@ int AppPrivate::startMaster(bool isAutoStart, bool isRestart)
 		args.prepend(masterArgument);
 		if(QProcess::startDetached(QCoreApplication::applicationFilePath(), args)) {//start MASTER with additional start params
 			//wait for the master to start
-			this->masterLock->unlock();
+			masterLock->unlock();
 			for(auto i = 0; i < 50; i++) {//wait at most 5 sec
 				qint64 pid;
 				QString hostname;
 				QString appname;
-				if(this->masterLock->getLockInfo(&pid, &hostname, &appname)) {
+				if(masterLock->getLockInfo(&pid, &hostname, &appname)) {
 					ok = true;
 					break;
 				} else
@@ -386,7 +386,7 @@ int AppPrivate::startMaster(bool isAutoStart, bool isRestart)
 			return EXIT_FAILURE;
 		}
 	} else {//master is running --> ok
-		if(!isAutoStart && this->ignoreExtraStart) {// ignore only on normal starts, not on auto start
+		if(!isAutoStart && ignoreExtraStart) {// ignore only on normal starts, not on auto start
 			qCWarning(loggingCategory) << tr("Start commands ignored because master is already running! "
 											 "The terminal will connect with an empty argument list!");
 			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
@@ -426,8 +426,8 @@ int AppPrivate::commandMaster()
 {
 	auto arguments = QCoreApplication::arguments();
 	arguments.removeFirst();//remove app name
-	if(this->masterLock->tryLock()) {
-		this->masterLock->unlock();
+	if(masterLock->tryLock()) {
+		masterLock->unlock();
 		qCCritical(loggingCategory) << tr("Master process is not running! Please launch it by using:")
 					<< QCoreApplication::applicationFilePath() + QStringLiteral(" start");
 		return EXIT_FAILURE;
@@ -458,8 +458,8 @@ int AppPrivate::purgeMaster(const QCommandLineParser &parser)
 	qint64 pid;
 	QString hostname;
 	QString appname;
-	if(this->masterLock->getLockInfo(&pid, &hostname, &appname)) {
-		if(this->masterLock->removeStaleLockFile())
+	if(masterLock->getLockInfo(&pid, &hostname, &appname)) {
+		if(masterLock->removeStaleLockFile())
 			std::cout << tr("Master lockfile successfully removed. It was locked by:").toStdString();
 		else {
 			std::cout << tr("Failed to remove master lockfile. Lock data is:").toStdString();
@@ -475,7 +475,7 @@ int AppPrivate::purgeMaster(const QCommandLineParser &parser)
 	} else
 		std::cout << tr("No lock file detected").toStdString() << std::endl;
 
-	if(QLocalServer::removeServer(this->instanceId))
+	if(QLocalServer::removeServer(instanceId))
 		std::cout << tr("Master server successfully removed").toStdString() << std::endl;
 	else {
 		std::cout << tr("Failed to remove master server").toStdString() << std::endl;
@@ -487,8 +487,8 @@ int AppPrivate::purgeMaster(const QCommandLineParser &parser)
 
 void AppPrivate::newTerminalConnected()
 {
-	while(this->masterServer->hasPendingConnections()) {
-		auto termp = new TerminalPrivate(this->masterServer->nextPendingConnection(), this);
+	while(masterServer->hasPendingConnections()) {
+		auto termp = new TerminalPrivate(masterServer->nextPendingConnection(), this);
 		connect(termp, &TerminalPrivate::statusLoadComplete,
 				this, &AppPrivate::terminalLoaded);
 	}
@@ -509,34 +509,34 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 
 		//handle own arguments (logging)
 		if(terminal->parser->isSet(QStringLiteral("loglevel")))
-			this->updateLoggingMode(terminal->parser->value(QStringLiteral("loglevel")).toInt());
+			updateLoggingMode(terminal->parser->value(QStringLiteral("loglevel")).toInt());
 		if(terminal->parser->isSet(QStringLiteral("logpath")))
-			this->updateLoggingPath(terminal->parser->value(QStringLiteral("logpath")));
+			updateLoggingPath(terminal->parser->value(QStringLiteral("logpath")));
 
 		//create real terminal
 		auto rTerm = new Terminal(terminal, this);
-		rTerm->setAutoDelete(this->autoDelete);
+		rTerm->setAutoDelete(autoDelete);
 		//emit the command
-		emit this->q_ptr->commandReceived(rTerm->parser(), rTerm->isStarter(), App::QPrivateSignal());
+		emit q_ptr->commandReceived(rTerm->parser(), rTerm->isStarter(), App::QPrivateSignal());
 
 		//test if stop command
 		auto args = rTerm->parser()->positionalArguments();
 		if(!args.isEmpty() && args.first() == QStringLiteral("stop"))
-			this->stopMaster(rTerm);
+			stopMaster(rTerm);
 
-		if(this->autoKill || rTerm->parser()->isSet(QStringLiteral("detached"))) {
+		if(autoKill || rTerm->parser()->isSet(QStringLiteral("detached"))) {
 			rTerm->setAutoDelete(true);
 			rTerm->disconnectTerminal();
 		} else {
 			//add terminal to terminal list
 			connect(rTerm, &Terminal::destroyed, this, [=](){
-				this->activeTerminals.removeOne(rTerm);
-				emit this->q_ptr->connectedTerminalsChanged(this->activeTerminals, App::QPrivateSignal());
+				activeTerminals.removeOne(rTerm);
+				emit q_ptr->connectedTerminalsChanged(activeTerminals, App::QPrivateSignal());
 			});
-			this->activeTerminals.append(rTerm);
-			emit this->q_ptr->connectedTerminalsChanged(this->activeTerminals, App::QPrivateSignal());
+			activeTerminals.append(rTerm);
+			emit q_ptr->connectedTerminalsChanged(activeTerminals, App::QPrivateSignal());
 			//new terminal signal
-			emit this->q_ptr->newTerminalConnected(rTerm, App::QPrivateSignal());
+			emit q_ptr->newTerminalConnected(rTerm, App::QPrivateSignal());
 		}
 	} else
 		terminal->deleteLater();
@@ -545,8 +545,8 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 void AppPrivate::stopMaster(Terminal *term)
 {
 	int eCode = EXIT_SUCCESS;
-	if(this->q_ptr->requestAppShutdown(term, eCode)) {
-		foreach(auto termin, this->activeTerminals)
+	if(q_ptr->requestAppShutdown(term, eCode)) {
+		foreach(auto termin, activeTerminals)
 			termin->flush();
 		QMetaObject::invokeMethod(this, "doExit", Qt::QueuedConnection,
 								  Q_ARG(int, eCode));
@@ -560,5 +560,5 @@ void AppPrivate::doExit(int code)
 
 void AppPrivate::beginMasterConnect(const QStringList &arguments, bool isStarter)
 {
-	this->master = new MasterConnecter(this->instanceId, arguments, isStarter, this);
+	master = new MasterConnecter(instanceId, arguments, isStarter, this);
 }

@@ -18,24 +18,24 @@ MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &a
 	socket(new QLocalSocket(this)),
 	readThread(new InThread(this))
 {
-	connect(this->socket, &QLocalSocket::connected,
+	connect(socket, &QLocalSocket::connected,
 			this, &MasterConnecter::connected);
-	connect(this->socket, &QLocalSocket::disconnected,
+	connect(socket, &QLocalSocket::disconnected,
 			this, &MasterConnecter::disconnected);
-	connect(this->socket, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error),
+	connect(socket, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error),
 			this, &MasterConnecter::error);
-	connect(this->socket, &QLocalSocket::readyRead,
+	connect(socket, &QLocalSocket::readyRead,
 			this, &MasterConnecter::readyRead);
 
-	this->socket->connectToServer(instanceId);
+	socket->connectToServer(instanceId);
 }
 
 MasterConnecter::~MasterConnecter()
 {
-	this->readThread->requestInterruption();
-	if(!this->readThread->wait(500)) {
-		this->readThread->terminate();
-		this->readThread->wait(100);//additional wait, to complete termination
+	readThread->requestInterruption();
+	if(!readThread->wait(500)) {
+		readThread->terminate();
+		readThread->wait(100);//additional wait, to complete termination
 	}
 }
 
@@ -43,23 +43,23 @@ void MasterConnecter::connected()
 {
 	//send over the status
 	QJsonObject status;
-	status[QStringLiteral("isStarter")] = this->isStarter;
-	status[QStringLiteral("arguments")] = QJsonArray::fromStringList(this->arguments);
+	status[QStringLiteral("isStarter")] = isStarter;
+	status[QStringLiteral("arguments")] = QJsonArray::fromStringList(arguments);
 
 	auto data = QJsonDocument(status).toBinaryData();
 	QByteArray dataSize(sizeof(quint32), Qt::Uninitialized);
 	qToBigEndian<quint32>((quint32)data.size(), dataSize.data());
-	this->socket->write(dataSize);
-	this->socket->write(data);
-	this->socket->flush();
+	socket->write(dataSize);
+	socket->write(data);
+	socket->flush();
 
 	//begin stdin reading
-	this->readThread->start();
+	readThread->start();
 }
 
 void MasterConnecter::disconnected()
 {
-	this->socket->close();
+	socket->close();
 	qApp->quit();
 }
 
@@ -67,23 +67,23 @@ void MasterConnecter::error(QLocalSocket::LocalSocketError socketError)
 {
 	if(socketError != QLocalSocket::PeerClosedError) {
 		qCCritical(loggingCategory) << tr("Connection to Master process failed with error:")
-					<< qUtf8Printable(this->socket->errorString());
-		this->socket->disconnectFromServer();
+					<< qUtf8Printable(socket->errorString());
+		socket->disconnectFromServer();
 		qApp->exit(EXIT_FAILURE);
 	}
 }
 
 void MasterConnecter::readyRead()
 {
-	auto data  = this->socket->readAll();
+	auto data  = socket->readAll();
 	std::cout.write(data.constData(), data.size());
 	std::cout.flush();
 }
 
 void MasterConnecter::doWrite(const QByteArray &data)
 {
-	this->socket->write(data);
-	this->socket->flush();
+	socket->write(data);
+	socket->flush();
 }
 
 
@@ -91,14 +91,14 @@ void MasterConnecter::doWrite(const QByteArray &data)
 MasterConnecter::InThread::InThread(MasterConnecter *parent) :
 	QThread(parent)
 {
-	this->setTerminationEnabled(true);
+	setTerminationEnabled(true);
 }
 
 void MasterConnecter::InThread::run()
 {
 	QFile inFile;
 	inFile.open(stdin, QIODevice::ReadOnly);
-	while(!this->isInterruptionRequested()) {
+	while(!isInterruptionRequested()) {
 		if(inFile.error() != QFile::NoError)
 			break;
 
@@ -106,12 +106,12 @@ void MasterConnecter::InThread::run()
 		if(data.isEmpty())
 			QThread::msleep(100);
 		else {
-			QMetaObject::invokeMethod(this->parent(), "doWrite", Qt::QueuedConnection,
+			QMetaObject::invokeMethod(parent(), "doWrite", Qt::QueuedConnection,
 									  Q_ARG(const QByteArray &, data));
 		}
 	}
 
 	inFile.close();
-	if(!this->isInterruptionRequested())
+	if(!isInterruptionRequested())
 		qCCritical(loggingCategory) << tr("stdin was unexpectedly closed! The terminal will not be able to foreward input to the master anymore!");
 }

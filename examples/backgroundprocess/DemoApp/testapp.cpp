@@ -11,10 +11,10 @@ TestApp::TestApp(int &argc, char **argv) :
 void TestApp::parseTerminalOptions()
 {
 	QCommandLineParser parser;
-	this->setupParser(parser, true);
+	setupParser(parser, true);
 	parser.process(*this);
-	this->setAutoStartMaster(parser.isSet("a"));
-	this->setIgnoreMultiStarts(parser.isSet("i"));
+	setAutoStartMaster(parser.isSet("a"));
+	setIgnoreMultiStarts(parser.isSet("i"));
 }
 
 int TestApp::startupApp(const QCommandLineParser &parser)
@@ -67,7 +67,7 @@ bool TestApp::requestAppShutdown(Terminal *terminal, int &)
 
 void TestApp::setupParser(QCommandLineParser &parser, bool useShortOptions)
 {
-	this->App::setupParser(parser, useShortOptions);
+	App::setupParser(parser, useShortOptions);
 
 	parser.addOption({
 						 {"a", "autostart"},
@@ -122,7 +122,7 @@ void TestApp::addTerminal(Terminal *terminal)
 void TestApp::doCommand(const QCommandLineParser &parser)
 {
 	if(parser.isSet("f"))
-		this->setForwardMasterLog(parser.value("f").toInt());
+		setForwardMasterLog(parser.value("f").toInt());
 }
 
 int main(int argc, char *argv[])

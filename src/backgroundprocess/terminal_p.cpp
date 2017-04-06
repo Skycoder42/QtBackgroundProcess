@@ -31,7 +31,7 @@ TerminalPrivate::TerminalPrivate(QLocalSocket *socket, QObject *parent) :
 
 bool TerminalPrivate::loadParser()
 {
-	auto array = this->status[QStringLiteral("arguments")].toArray();
+	auto array = status[QStringLiteral("arguments")].toArray();
 	QStringList lst(QCoreApplication::applicationFilePath());
 	foreach(auto value, array)
 		lst.append(value.toString());
@@ -40,54 +40,54 @@ bool TerminalPrivate::loadParser()
 
 void TerminalPrivate::beginSoftDisconnect()
 {
-	this->disconnecting = true;
-	if(this->socket->bytesToWrite() > 0) {
+	disconnecting = true;
+	if(socket->bytesToWrite() > 0) {
 		QTimer::singleShot(500, this, [=](){
-			if(this->socket->state() == QLocalSocket::ConnectedState)
-				this->socket->disconnectFromServer();
+			if(socket->state() == QLocalSocket::ConnectedState)
+				socket->disconnectFromServer();
 		});
-		this->socket->flush();
+		socket->flush();
 	} else
-		this->socket->disconnectFromServer();
+		socket->disconnectFromServer();
 }
 
 void TerminalPrivate::disconnected()
 {
-	if(this->isLoading) {
+	if(isLoading) {
 		emit statusLoadComplete(this, false);
-		this->socket->close();
-	} else if(this->autoDelete && this->parent())
-		this->parent()->deleteLater();
+		socket->close();
+	} else if(autoDelete && parent())
+		parent()->deleteLater();
 }
 
 void TerminalPrivate::error(QLocalSocket::LocalSocketError socketError)
 {
 	if(socketError != QLocalSocket::PeerClosedError) {
-		if(this->isLoading) {
+		if(isLoading) {
 			qCWarning(loggingCategory) << tr("Terminal closed due to connection error while loading terminal status:")
-					   << qUtf8Printable(this->socket->errorString());
+					   << qUtf8Printable(socket->errorString());
 		}
-		this->socket->disconnectFromServer();
+		socket->disconnectFromServer();
 	}
 }
 
 void TerminalPrivate::readyRead()
 {
-	if(this->isLoading) {
-		if(this->socket->bytesAvailable() < (qint64)sizeof(quint32))
+	if(isLoading) {
+		if(socket->bytesAvailable() < (qint64)sizeof(quint32))
 			return;
-		auto size = qFromBigEndian<quint32>(this->socket->peek(sizeof(quint32)));
-		if(this->socket->bytesAvailable() >= (qint64)(size + sizeof(quint32))) {
-			this->socket->read(sizeof(quint32));
-			auto doc = QJsonDocument::fromBinaryData(this->socket->read(size));
+		auto size = qFromBigEndian<quint32>(socket->peek(sizeof(quint32)));
+		if(socket->bytesAvailable() >= (qint64)(size + sizeof(quint32))) {
+			socket->read(sizeof(quint32));
+			auto doc = QJsonDocument::fromBinaryData(socket->read(size));
 
 			if(doc.isNull()) {
 				qCWarning(loggingCategory) << tr("Invalid Terminal status received. Data is corrupted. Terminal will be disconnected");
-				this->socket->disconnectFromServer();
+				socket->disconnectFromServer();
 				return;
 			} else {
-				this->status = doc.object();
-				this->isLoading = false;
+				status = doc.object();
+				isLoading = false;
 				emit statusLoadComplete(this, true);
 			}
 		}
@@ -96,10 +96,10 @@ void TerminalPrivate::readyRead()
 
 void TerminalPrivate::writeReady()
 {
-	if(this->disconnecting && this->socket->bytesToWrite() == 0) {
+	if(disconnecting && socket->bytesToWrite() == 0) {
 		QTimer::singleShot(500, this, [=](){
-			if(this->socket->state() == QLocalSocket::ConnectedState)
-				this->socket->disconnectFromServer();
+			if(socket->state() == QLocalSocket::ConnectedState)
+				socket->disconnectFromServer();
 		});
 	}
 }

@@ -87,7 +87,7 @@ int App::exec()
 
 	//process arguments
 	QCommandLineParser parser;
-	this->setupParser(parser);
+	setupParser(parser);
 	parser.process(*this);
 
 	//update terminal logging
@@ -95,7 +95,7 @@ int App::exec()
 
 	//generate the single id (temporary disable running)
 	d->running = false;
-	this->createDefaultInstanceID(false);
+	createDefaultInstanceID(false);
 	d->running = true;
 
 	auto res = d->initControlFlow(parser);

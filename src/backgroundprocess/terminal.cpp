@@ -14,14 +14,14 @@ Terminal::Terminal(TerminalPrivate *d_ptr, QObject *parent) :
 	d_ptr(d_ptr)
 {
 	d->setParent(this);
-	this->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
+	open(QIODevice::ReadWrite | QIODevice::Unbuffered);
 
 	connect(d->socket, &QLocalSocket::disconnected,
 			this, &Terminal::terminalDisconnected);
 	connect(d->socket, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error),
 			this, [this](QLocalSocket::LocalSocketError e) {
 		if(e != QLocalSocket::PeerClosedError) {
-			this->setErrorString(d->socket->errorString());
+			setErrorString(d->socket->errorString());
 			emit terminalError((int)e);
 		}
 	});
@@ -61,12 +61,12 @@ bool Terminal::isSequential() const
 void Terminal::close()
 {
 	d->socket->close();
-	this->QIODevice::close();
+	QIODevice::close();
 }
 
 qint64 Terminal::bytesAvailable() const
 {
-	return this->QIODevice::bytesAvailable() + d->socket->bytesAvailable();
+	return QIODevice::bytesAvailable() + d->socket->bytesAvailable();
 }
 
 void Terminal::disconnectTerminal()
@@ -103,5 +103,5 @@ qint64 Terminal::writeData(const char *data, qint64 len)
 
 bool Terminal::open(QIODevice::OpenMode mode)
 {
-	return this->QIODevice::open(mode);
+	return QIODevice::open(mode);
 }
