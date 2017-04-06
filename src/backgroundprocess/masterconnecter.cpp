@@ -77,6 +77,7 @@ void MasterConnecter::readyRead()
 {
 	auto data  = this->socket->readAll();
 	std::cout.write(data.constData(), data.size());
+	std::cout.flush();
 }
 
 void MasterConnecter::doWrite(const QByteArray &data)

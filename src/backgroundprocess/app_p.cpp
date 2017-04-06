@@ -214,8 +214,8 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 					 });
 	parser.addOption({
 						 {QStringLiteral("no-daemon"), QStringLiteral("keep-console")},
-						 tr("Will prevent the master process from freeing it's console window and other stuff. Can be useful "
-							"for debugging purpose.")
+						 tr("Will prevent the master process from \"closing\" the console and other stuff that is done to daemonize the process. "
+							"Can be useful for debugging purpose.")
 					 });
 
 	parser.addOption({

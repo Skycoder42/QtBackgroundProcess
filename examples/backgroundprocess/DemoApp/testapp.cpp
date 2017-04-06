@@ -36,6 +36,19 @@ int TestApp::startupApp(const QCommandLineParser &parser)
 		} else if(parser.value("m") == "status"){
 			statusTerm = new GlobalTerminal(this);
 			qDebug() << "Master started in status mode!";
+		} else if(parser.value("m") == "scream"){
+			auto term = new GlobalTerminal(this);
+			auto timer = new QTimer(this);
+			timer->setInterval(500);
+			qsrand(QDateTime::currentMSecsSinceEpoch());
+			connect(timer, &QTimer::timeout, this, [term](){
+				static const QByteArray strings="qwertzuiopasdfghjklyxcvbnm\n ";
+				auto idx = (qrand() / (double)RAND_MAX) * (strings.size() - 1);
+				term->write(strings.mid(idx, 1));
+				term->flush();
+			});
+			timer->start();
+			qDebug() << "Master started in scream mode!";
 		} else
 			qWarning() << "Unknown mode! Will be ignored";
 	}
@@ -73,10 +86,9 @@ void TestApp::setupParser(QCommandLineParser &parser, bool useShortOptions)
 	parser.addOption({
 						 {"m", "mode"},
 						 "Tells the master to run <mode>. Can be \"echo\" to simply echo all terminals, "
-						 "or \"status\" to simply broadcast new arguments to all terminals. Until explicitly set, "
-						 "nothing will be done",
-						 "mode",
-						 "echo"
+						 "\"status\" to simply broadcast new arguments to all terminals, or \"scream\" to permanently "
+						 "print stuff to all terminals. Unless explicitly set, nothing will be done",
+						 "mode"
 					 });
 }
 
