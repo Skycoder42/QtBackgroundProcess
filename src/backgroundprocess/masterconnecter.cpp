@@ -36,8 +36,8 @@ MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &a
 MasterConnecter::~MasterConnecter()
 {
 	readThread->requestInterruption();
-	//close stdin to "cancel" the blocking read
 #ifdef Q_OS_UNIX
+	//close stdin to "cancel" the blocking read
 	close(fileno(stdin));
 #endif
 	if(!readThread->wait(500)) {

@@ -26,6 +26,15 @@ const QString AppPrivate::masterArgument(QStringLiteral("__qbckgrndprcss$start#m
 const QString AppPrivate::purgeArgument(QStringLiteral("purge_master"));
 const QString AppPrivate::startArgument(QStringLiteral("start"));
 const QString AppPrivate::restartArgument(QStringLiteral("restart"));
+#ifdef Q_OS_WIN
+const QString AppPrivate::terminalMessageFormat(QStringLiteral("%{if-debug}[Debug]    %{endif}"
+															   "%{if-info}[Info]     %{endif}"
+															   "%{if-warning}[Warning]  %{endif}"
+															   "%{if-critical}[Critical] %{endif}"
+															   "%{if-fatal}[Fatal]    %{endif}"
+															   "%{if-category}%{category}: %{endif}"
+															   "%{message}\n"));
+#else
 const QString AppPrivate::terminalMessageFormat(QStringLiteral("%{if-debug}[\033[32mDebug\033[0m]    %{endif}"
 															   "%{if-info}[\033[36mInfo\033[0m]     %{endif}"
 															   "%{if-warning}[\033[33mWarning\033[0m]  %{endif}"
@@ -33,6 +42,7 @@ const QString AppPrivate::terminalMessageFormat(QStringLiteral("%{if-debug}[\033
 															   "%{if-fatal}[\033[35mFatal\033[0m]    %{endif}"
 															   "%{if-category}%{category}: %{endif}"
 															   "%{message}\n"));
+#endif
 const QString AppPrivate::masterMessageFormat(QStringLiteral("[%{time} "
 															 "%{if-debug}Debug]    %{endif}"
 															 "%{if-info}Info]     %{endif}"
