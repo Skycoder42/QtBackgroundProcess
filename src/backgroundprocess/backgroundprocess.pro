@@ -11,7 +11,7 @@ HEADERS += \
 	app_p.h \
 	masterconnecter_p.h \
 	terminal_p.h \
-    qtbackgroundprocess_global.h
+	qtbackgroundprocess_global.h
 
 SOURCES += \
 	app_p.cpp \
@@ -20,6 +20,8 @@ SOURCES += \
 	masterconnecter.cpp \
 	terminal_p.cpp \
 	terminal.cpp
+
+include(./translations/translations.pri)
 
 load(qt_module)
 
@@ -34,4 +36,4 @@ win32 {
 }
 
 DISTFILES += \
-    systemd.service
+	systemd.service

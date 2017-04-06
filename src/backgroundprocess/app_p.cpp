@@ -152,6 +152,7 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 									"Possible options are:\n"
 									" - start: starts the application\n"
 									" - stop: stops the application\n"
+									" - restart: stops the application and then starts it again with the given arguments\n"
 									" - purge_master: purges local servers and lockfiles, in case the master process crashed. "
 									"Pass \"--accept\" as second parameter, if you want to skip the prompt."),
 								 QStringLiteral("[start|stop|purge_master]"));
@@ -221,7 +222,7 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 
 	parser.addOption({
 						 QStringLiteral("accept"),
-						 tr("purge_master only: skips the prompt and purges automatically.")
+						 tr("Skips the prompt and accepts where possible.")
 					 });
 }
 
