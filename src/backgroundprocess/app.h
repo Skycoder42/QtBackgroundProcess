@@ -9,6 +9,7 @@
 
 #include <functional>
 
+//! The Namespace containing all classes of the QtBackgroundProcess module
 namespace QtBackgroundProcess {
 
 class Terminal;

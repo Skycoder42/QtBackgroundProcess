@@ -42,8 +42,8 @@ if [ "$DOXY_STYLE_EXTRA" ]; then
 fi
 
 for tagFile in $(find "$qtDocs" -name *.tags); do
-	if [ $(basename "$tagFile") != "qtbackgroundprocess/.tags" ]; then
-		echo "TAGFILES += "$tagFile=https://doc.qt.io/qt-5"" >> Doxyfile
+	if [ $(basename "$tagFile") != "qtbackgroundprocess.tags" ]; then
+		echo "TAGFILES += \"$tagFile=https://doc.qt.io/qt-5\"" >> Doxyfile
 	fi
 done
 
