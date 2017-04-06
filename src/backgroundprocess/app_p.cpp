@@ -446,10 +446,10 @@ int AppPrivate::purgeMaster(const QCommandLineParser &parser)
 						"Only do this if the master process is not running anymore, but the lock/server "
 						"are not available (for example after a crash)\n"
 						"Purging while the master process is still running will crash it.\n"
-						"Press (y) to purge, or (N) to cancel:").toStdString();
+						"Press (Y) to purge, or (n) to cancel:").toStdString();
 		std::cout.flush();
 		char res = (char)std::cin.get();
-		if(res != tr("y") && res != tr("Y"))
+		if(res == tr("n") || res == tr("N"))
 			return EXIT_FAILURE;
 	}
 
