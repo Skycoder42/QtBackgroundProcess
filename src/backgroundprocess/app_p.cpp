@@ -25,6 +25,7 @@ bool AppPrivate::p_valid = false;
 const QString AppPrivate::masterArgument(QStringLiteral("__qbckgrndprcss$start#master~"));
 const QString AppPrivate::purgeArgument(QStringLiteral("purge_master"));
 const QString AppPrivate::startArgument(QStringLiteral("start"));
+const QString AppPrivate::restartArgument(QStringLiteral("restart"));
 const QString AppPrivate::terminalMessageFormat(QStringLiteral("%{if-debug}[\033[32mDebug\033[0m]    %{endif}"
 															   "%{if-info}[\033[36mInfo\033[0m]     %{endif}"
 															   "%{if-warning}[\033[33mWarning\033[0m]  %{endif}"
@@ -271,13 +272,15 @@ int AppPrivate::initControlFlow(const QCommandLineParser &parser)
 			return this->purgeMaster(parser);
 		else if(args[0] == startArgument)
 			return this->startMaster();
+		else if(args[0] == restartArgument)
+			return this->restartMaster(parser);
 	}
 
 	//neither start nor make master --> "normal" client or autostart
 	if(this->autoStart)
 		return this->startMaster(true);
 	else
-		return this->testMasterRunning();
+		return this->commandMaster();
 }
 
 int AppPrivate::makeMaster(const QCommandLineParser &parser)
@@ -343,7 +346,7 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 	}
 }
 
-int AppPrivate::startMaster(bool isAutoStart)
+int AppPrivate::startMaster(bool isAutoStart, bool isRestart)
 {
 	auto arguments = QCoreApplication::arguments();
 	arguments.removeFirst();//remove app name
@@ -352,7 +355,9 @@ int AppPrivate::startMaster(bool isAutoStart)
 		auto ok = false;
 
 		auto args = arguments;
-		if(!isAutoStart)
+		if(isRestart)
+			args.removeOne(restartArgument);
+		else if(!isAutoStart)
 			args.removeOne(startArgument);
 		args.prepend(masterArgument);
 		if(QProcess::startDetached(QCoreApplication::applicationFilePath(), args)) {//start MASTER with additional start params
@@ -399,7 +404,25 @@ int AppPrivate::startMaster(bool isAutoStart)
 	}
 }
 
-int AppPrivate::testMasterRunning()
+int AppPrivate::restartMaster(const QCommandLineParser &parser)
+{
+	//step 1 -> stop master, by running another terminal
+	auto res = QProcess::execute(QCoreApplication::applicationFilePath(), {QStringLiteral("stop")});
+	if(res != EXIT_SUCCESS && !parser.isSet(QStringLiteral("accept"))) {
+		std::cout << tr("\nFailed to stop the running master process.\n"
+						"Do you want to restart it anyway? (y/N)").toStdString();
+		std::cout.flush();
+		char res = (char)std::cin.get();
+		if(res != tr("y") && res != tr("Y"))
+			return EXIT_FAILURE;
+	} else
+		qDebug() << "Master process successfully stopped";
+
+	//step 2 -> start master
+	return startMaster(false, true);
+}
+
+int AppPrivate::commandMaster()
 {
 	auto arguments = QCoreApplication::arguments();
 	arguments.removeFirst();//remove app name
@@ -423,7 +446,7 @@ int AppPrivate::purgeMaster(const QCommandLineParser &parser)
 						"Only do this if the master process is not running anymore, but the lock/server "
 						"are not available (for example after a crash)\n"
 						"Purging while the master process is still running will crash it.\n"
-						"Press (y) to purge, or (n) to cancel:").toStdString();
+						"Press (y) to purge, or (N) to cancel:").toStdString();
 		std::cout.flush();
 		char res = (char)std::cin.get();
 		if(res != tr("y") && res != tr("Y"))

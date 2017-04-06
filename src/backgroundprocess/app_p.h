@@ -25,6 +25,7 @@ public:
 	static const QString masterArgument;
 	static const QString purgeArgument;
 	static const QString startArgument;
+	static const QString restartArgument;
 
 	static const QString terminalMessageFormat;
 	static const QString masterMessageFormat;
@@ -70,8 +71,9 @@ public Q_SLOTS:
 
 private Q_SLOTS:
 	int makeMaster(const QCommandLineParser &parser);
-	int startMaster(bool isAutoStart = false);
-	int testMasterRunning();
+	int startMaster(bool isAutoStart = false, bool isRestart = false);
+	int restartMaster(const QCommandLineParser &parser);
+	int commandMaster();
 	int purgeMaster(const QCommandLineParser &parser);
 
 	void newTerminalConnected();
