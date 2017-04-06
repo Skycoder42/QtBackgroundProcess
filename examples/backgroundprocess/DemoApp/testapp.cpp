@@ -53,6 +53,10 @@ int TestApp::startupApp(const QCommandLineParser &parser)
 			qWarning() << "Unknown mode! Will be ignored";
 	}
 
+	connect(this, &App::aboutToQuit, this, [](){
+		qDebug() << "I am quitting!";
+	});
+
 	return EXIT_SUCCESS;
 }
 

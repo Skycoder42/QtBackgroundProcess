@@ -330,8 +330,6 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 			sigHandler->registerForSignal(SIGINT);
 			sigHandler->registerForSignal(SIGHUP);
 			sigHandler->registerForSignal(SIGWINCH);
-
-			qDebug() << QDir::currentPath();
 #endif
 		} else
 			QDir::setCurrent(QDir::rootPath());
