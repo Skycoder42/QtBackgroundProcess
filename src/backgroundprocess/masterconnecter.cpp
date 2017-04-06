@@ -8,6 +8,9 @@
 #include <QtCore/QFile>
 
 #include <iostream>
+#ifdef Q_OS_UNIX
+#include <unistd.h>
+#endif
 
 using namespace QtBackgroundProcess;
 
@@ -33,6 +36,9 @@ MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &a
 MasterConnecter::~MasterConnecter()
 {
 	readThread->requestInterruption();
+#ifdef Q_OS_UNIX
+	close(fileno(stdin));
+#endif
 	if(!readThread->wait(500)) {
 		readThread->terminate();
 		readThread->wait(100);//additional wait, to complete termination
