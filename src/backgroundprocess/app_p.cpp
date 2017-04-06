@@ -25,11 +25,11 @@ bool AppPrivate::p_valid = false;
 const QString AppPrivate::masterArgument(QStringLiteral("__qbckgrndprcss$start#master~"));
 const QString AppPrivate::purgeArgument(QStringLiteral("purge_master"));
 const QString AppPrivate::startArgument(QStringLiteral("start"));
-const QString AppPrivate::terminalMessageFormat(QStringLiteral("%{if-debug}[Debug]    %{endif}"
-															   "%{if-info}[Info]     %{endif}"
-															   "%{if-warning}[Warning]  %{endif}"
-															   "%{if-critical}[Critical] %{endif}"
-															   "%{if-fatal}[Fatal]    %{endif}"
+const QString AppPrivate::terminalMessageFormat(QStringLiteral("%{if-debug}[\033[32mDebug\033[0m]    %{endif}"
+															   "%{if-info}[\033[36mInfo\033[0m]     %{endif}"
+															   "%{if-warning}[\033[33mWarning\033[0m]  %{endif}"
+															   "%{if-critical}[\033[31mCritical\033[0m] %{endif}"
+															   "%{if-fatal}[\033[35mFatal\033[0m]    %{endif}"
 															   "%{if-category}%{category}: %{endif}"
 															   "%{message}\n"));
 const QString AppPrivate::masterMessageFormat(QStringLiteral("[%{time} "
