@@ -32,3 +32,6 @@ win32 {
 } else:mac {
 	QMAKE_TARGET_BUNDLE_PREFIX = "de.skycoder42."
 }
+
+DISTFILES += \
+    systemd.service

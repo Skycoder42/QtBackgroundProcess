@@ -1,0 +1,14 @@
+[Unit]
+Description=<myapp>
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/run/<myapp>.pid
+ExecStart=/usr/bin/<myapp> start
+ExecReload=/usr/bin/<myapp> restart
+ExecStop=/usr/bin/<myapp> stop
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target
