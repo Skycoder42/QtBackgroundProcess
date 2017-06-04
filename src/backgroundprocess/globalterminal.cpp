@@ -2,6 +2,7 @@
 #include "app_p.h"
 
 #include <QtCore/QTimer>
+#include <QtCore/QBuffer>
 
 namespace QtBackgroundProcess {
 
