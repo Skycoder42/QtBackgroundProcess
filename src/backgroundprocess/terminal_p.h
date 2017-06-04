@@ -5,7 +5,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QJsonObject>
-#include <QtCore/QBuffer>
+#include <QtCore/QDataStream>
 
 #include <QtNetwork/QLocalSocket>
 
@@ -40,6 +40,7 @@ private Q_SLOTS:
 private:
 	bool isLoading;
 	bool disconnecting;
+	QDataStream stream;
 };
 
 }

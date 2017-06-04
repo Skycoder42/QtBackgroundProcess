@@ -1,9 +1,8 @@
 #include "terminal_p.h"
 #include "app_p.h"
 
-#include <QtCore/QtEndian>
-#include <QtCore/QJsonDocument>
 #include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
 #include <QtCore/QTimer>
 
 using namespace QtBackgroundProcess;
@@ -15,7 +14,8 @@ TerminalPrivate::TerminalPrivate(QLocalSocket *socket, QObject *parent) :
 	parser(),
 	autoDelete(false),
 	isLoading(true),
-	disconnecting(false)
+	disconnecting(false),
+	stream(socket)
 {
 	socket->setParent(this);
 
@@ -74,17 +74,14 @@ void TerminalPrivate::error(QLocalSocket::LocalSocketError socketError)
 void TerminalPrivate::readyRead()
 {
 	if(isLoading) {
-		if(socket->bytesAvailable() < (qint64)sizeof(quint32))
-			return;
-		auto size = qFromBigEndian<quint32>(socket->peek(sizeof(quint32)));
-		if(socket->bytesAvailable() >= (qint64)(size + sizeof(quint32))) {
-			socket->read(sizeof(quint32));
-			auto doc = QJsonDocument::fromBinaryData(socket->read(size));
-
+		stream.startTransaction();
+		QByteArray data;
+		stream >> data;
+		if(stream.commitTransaction()) {
+			auto doc = QJsonDocument::fromBinaryData(data);
 			if(doc.isNull()) {
 				qCWarning(loggingCategory) << tr("Invalid Terminal status received. Data is corrupted. Terminal will be disconnected");
 				socket->disconnectFromServer();
-				return;
 			} else {
 				status = doc.object();
 				isLoading = false;

@@ -2,9 +2,9 @@
 #include "app_p.h"
 
 #include <QtCore/QJsonObject>
-#include <QtCore/QJsonDocument>
 #include <QtCore/QJsonArray>
-#include <QtCore/QtEndian>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QDataStream>
 #include <QtCore/QFile>
 
 #include <iostream>
@@ -53,11 +53,8 @@ void MasterConnecter::connected()
 	status[QStringLiteral("isStarter")] = isStarter;
 	status[QStringLiteral("arguments")] = QJsonArray::fromStringList(arguments);
 
-	auto data = QJsonDocument(status).toBinaryData();
-	QByteArray dataSize(sizeof(quint32), Qt::Uninitialized);
-	qToBigEndian<quint32>((quint32)data.size(), dataSize.data());
-	socket->write(dataSize);
-	socket->write(data);
+	QDataStream connectData(socket);
+	connectData << QJsonDocument(status).toBinaryData();
 	socket->flush();
 
 	//begin stdin reading
