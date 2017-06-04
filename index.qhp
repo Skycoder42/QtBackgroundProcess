@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QtHelpProject version="1.0">
-  <namespace>de.skycoder42.qtbackgroundprocess.150</namespace>
+  <namespace>de.skycoder42.qtbackgroundprocess.151</namespace>
   <virtualFolder>doc_qtbackgroundprocess</virtualFolder>
-  <customFilter name="BackgroundProcess 1.5.0">
+  <customFilter name="BackgroundProcess 1.5.1">
     <filterAttribute>qtbackgroundprocess</filterAttribute>
-    <filterAttribute>1.5.0</filterAttribute>
+    <filterAttribute>1.5.1</filterAttribute>
   </customFilter>
   <filterSection>
     <filterAttribute>doxygen</filterAttribute>
     <toc>
-      <section title="QtBackgroundProcess 1.5.0" ref="index.html">
+      <section title="QtBackgroundProcess 1.5.1" ref="index.html">
         <section title="Features" ref="index.html#qtbackgroundprocess_readme_label_0" />
         <section title="Use Case" ref="index.html#qtbackgroundprocess_readme_label_1" />
         <section title="Download/Installation" ref="index.html#qtbackgroundprocess_readme_label_2" />
@@ -18,7 +18,8 @@
           <section title="Debugging the master process" ref="index.html#qtbackgroundprocess_readme_label_5" />
         </section>
         <section title="Documentation" ref="index.html#qtbackgroundprocess_readme_label_6" />
-        <section title="Technical Stuff" ref="index.html#qtbackgroundprocess_readme_label_7" />
+        <section title="Translations" ref="index.html#qtbackgroundprocess_readme_label_7" />
+        <section title="Technical Stuff" ref="index.html#qtbackgroundprocess_readme_label_8" />
         <section title="Namespaces">
           <section title="Namespace List" ref="namespaces.html">
             <section title="QtBackgroundProcess" ref="namespace_qt_background_process.html" />
@@ -117,7 +118,6 @@
                 <section title="QtBackgroundProcess::Terminal" ref="class_qt_background_process_1_1_terminal.html" />
               </section>
             </section>
-            <section title="typedef" ref="classtypedef.html" />
           </section>
           <section title="Class Members" ref="functions.html">
             <section title="All" ref="functions.html" />
@@ -141,7 +141,6 @@
       </section>
     </toc>
     <keywords>
-      <keyword name="typedef" id="typedef" ref="classtypedef.html" />
       <keyword name="QtBackgroundProcess" id="QtBackgroundProcess" ref="namespace_qt_background_process.html" />
       <keyword name="QtBackgroundProcess::App" id="QtBackgroundProcess::App" ref="class_qt_background_process_1_1_app.html" />
       <keyword name="createDefaultInstanceID" id="QtBackgroundProcess::App::createDefaultInstanceID" ref="class_qt_background_process_1_1_app.html#a1059954d51fd5aa275303a627ec13743" />
@@ -185,6 +184,7 @@
       <keyword name="thread" id="QObject::thread" ref="qobject.html#thread" />
       <keyword name="moveToThread" id="QObject::moveToThread" ref="qobject.html#moveToThread" />
       <keyword name="startTimer" id="QObject::startTimer" ref="qobject.html#startTimer" />
+      <keyword name="startTimer" id="QObject::startTimer" ref="qobject.html#startTimer-1" />
       <keyword name="killTimer" id="QObject::killTimer" ref="qobject.html#killTimer" />
       <keyword name="findChild" id="QObject::findChild" ref="qobject.html#findChild" />
       <keyword name="findChildren" id="QObject::findChildren" ref="qobject.html#findChildren" />
@@ -197,6 +197,8 @@
       <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-2" />
       <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-2" />
       <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-3" />
+      <keyword name="dumpObjectTree" id="QObject::dumpObjectTree" ref="qobject.html#dumpObjectTree-1" />
+      <keyword name="dumpObjectInfo" id="QObject::dumpObjectInfo" ref="qobject.html#dumpObjectInfo-1" />
       <keyword name="dumpObjectTree" id="QObject::dumpObjectTree" ref="qobject.html#dumpObjectTree" />
       <keyword name="dumpObjectInfo" id="QObject::dumpObjectInfo" ref="qobject.html#dumpObjectInfo" />
       <keyword name="setProperty" id="QObject::setProperty" ref="qobject.html#setProperty" />
@@ -352,6 +354,7 @@
       <keyword name="thread" id="QObject::thread" ref="qobject.html#thread" />
       <keyword name="moveToThread" id="QObject::moveToThread" ref="qobject.html#moveToThread" />
       <keyword name="startTimer" id="QObject::startTimer" ref="qobject.html#startTimer" />
+      <keyword name="startTimer" id="QObject::startTimer" ref="qobject.html#startTimer-1" />
       <keyword name="killTimer" id="QObject::killTimer" ref="qobject.html#killTimer" />
       <keyword name="findChild" id="QObject::findChild" ref="qobject.html#findChild" />
       <keyword name="findChildren" id="QObject::findChildren" ref="qobject.html#findChildren" />
@@ -364,6 +367,8 @@
       <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-2" />
       <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-2" />
       <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-3" />
+      <keyword name="dumpObjectTree" id="QObject::dumpObjectTree" ref="qobject.html#dumpObjectTree-1" />
+      <keyword name="dumpObjectInfo" id="QObject::dumpObjectInfo" ref="qobject.html#dumpObjectInfo-1" />
       <keyword name="dumpObjectTree" id="QObject::dumpObjectTree" ref="qobject.html#dumpObjectTree" />
       <keyword name="dumpObjectInfo" id="QObject::dumpObjectInfo" ref="qobject.html#dumpObjectInfo" />
       <keyword name="setProperty" id="QObject::setProperty" ref="qobject.html#setProperty" />
@@ -479,6 +484,7 @@
       <keyword name="thread" id="QObject::thread" ref="qobject.html#thread" />
       <keyword name="moveToThread" id="QObject::moveToThread" ref="qobject.html#moveToThread" />
       <keyword name="startTimer" id="QObject::startTimer" ref="qobject.html#startTimer" />
+      <keyword name="startTimer" id="QObject::startTimer" ref="qobject.html#startTimer-1" />
       <keyword name="killTimer" id="QObject::killTimer" ref="qobject.html#killTimer" />
       <keyword name="findChild" id="QObject::findChild" ref="qobject.html#findChild" />
       <keyword name="findChildren" id="QObject::findChildren" ref="qobject.html#findChildren" />
@@ -491,6 +497,8 @@
       <keyword name="connect" id="QObject::connect" ref="qobject.html#connect-2" />
       <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-2" />
       <keyword name="disconnect" id="QObject::disconnect" ref="qobject.html#disconnect-3" />
+      <keyword name="dumpObjectTree" id="QObject::dumpObjectTree" ref="qobject.html#dumpObjectTree-1" />
+      <keyword name="dumpObjectInfo" id="QObject::dumpObjectInfo" ref="qobject.html#dumpObjectInfo-1" />
       <keyword name="dumpObjectTree" id="QObject::dumpObjectTree" ref="qobject.html#dumpObjectTree" />
       <keyword name="dumpObjectInfo" id="QObject::dumpObjectInfo" ref="qobject.html#dumpObjectInfo" />
       <keyword name="setProperty" id="QObject::setProperty" ref="qobject.html#setProperty" />
@@ -567,7 +575,6 @@
       <file>_r_e_a_d_m_e_8md_source.html</file>
       <file>terminal_8cpp_source.html</file>
       <file>terminal_8h_source.html</file>
-      <file>classtypedef.html</file>
       <file>namespace_qt_background_process.html</file>
       <file>class_qt_background_process_1_1_app.html</file>
       <file>class_qt_background_process_1_1_app.png</file>
