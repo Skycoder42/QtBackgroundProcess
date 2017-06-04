@@ -49,7 +49,7 @@ There are multiple ways to install the Qt module, sorted by preference:
 	- `make qmake_all`
 	- `make`
 	- `make install`
-	- To include translations, run the `qmake && make install` once again
+	- To include translations and documentation, run the `qmake && make install` once again
 
 However, if you want to create an application to run silently in the background, and only interact with it to "control" it, you're at the right place.
 
@@ -67,24 +67,24 @@ The following example is a very simple background application, that logs all com
 
 int main(int argc, char *argv[])
 {
-    QtBackgroundProcess::App a(argc, argv);
-    QCoreApplication::setApplicationVersion("4.2.0");
+	QtBackgroundProcess::App a(argc, argv);
+	QCoreApplication::setApplicationVersion("4.2.0");
 
-    qApp->setForwardMasterLog(true);//forwards all debug log to terminals IF this becomes the master
-    a.setStartupFunction([](const QCommandLineParser &){
-        QObject::connect(qApp, &QtBackgroundProcess::App::commandReceived, qApp, [](QSharedPointer<QCommandLineParser> parser, bool isStarter){
-            qDebug() << "Received command with arguments:"
-                        << parser->positionalArguments()
-                        << "and options:"
-                        << parser->optionNames()
-                        << (isStarter ? "(starter)" : "");
-        });
+	qApp->setForwardMasterLog(true);//forwards all debug log to terminals IF this becomes the master
+	a.setStartupFunction([](const QCommandLineParser &){
+		QObject::connect(qApp, &QtBackgroundProcess::App::commandReceived, qApp, [](QSharedPointer<QCommandLineParser> parser, bool isStarter){
+			qDebug() << "Received command with arguments:"
+						<< parser->positionalArguments()
+						<< "and options:"
+						<< parser->optionNames()
+						<< (isStarter ? "(starter)" : "");
+		});
 
-        qDebug() << "Master process succsesfully stated!";
-        return EXIT_SUCCESS;
-    });
+		qDebug() << "Master process succsesfully stated!";
+		return EXIT_SUCCESS;
+	});
 
-    return a.exec();
+	return a.exec();
 }
 ```
 The first few commands (i.e. Version number) are done for every instance, including the terminals. The part inside of `setStartupFunction` will be executed on the master only.
