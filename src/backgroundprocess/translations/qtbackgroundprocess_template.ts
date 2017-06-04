@@ -12,7 +12,7 @@
 <context>
     <name>QtBackgroundProcess::AppPrivate</name>
     <message>
-        <location filename="../app_p.cpp" line="+151"/>
+        <location filename="../app_p.cpp" line="+161"/>
         <source>A control command to control the background application. Possible options are:
  - start: starts the application
  - stop: stops the application
@@ -77,7 +77,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+81"/>
         <source>Failed to start master process! No master lock was detected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -183,7 +183,7 @@ Press (Y) to purge, or (n) to cancel:</source>
 <context>
     <name>QtBackgroundProcess::MasterConnecter</name>
     <message>
-        <location filename="../masterconnecter.cpp" line="+69"/>
+        <location filename="../masterconnecter.cpp" line="+73"/>
         <source>Connection to Master process failed with error:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -201,7 +201,7 @@ Press (Y) to purge, or (n) to cancel:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+16"/>
         <source>Invalid Terminal status received. Data is corrupted. Terminal will be disconnected</source>
         <translation type="unfinished"></translation>
     </message>

@@ -49,6 +49,7 @@ There are multiple ways to install the Qt module, sorted by preference:
 	- `make qmake_all`
 	- `make`
 	- `make install`
+	- To include translations, run the `qmake && make install` once again
 
 However, if you want to create an application to run silently in the background, and only interact with it to "control" it, you're at the right place.
 
@@ -104,6 +105,9 @@ The master process is not meant to be directly run. Thus, it will for example, n
 ## Documentation
 The documentation is available on [github pages](https://skycoder42.github.io/QtBackgroundProcess/). It was created using [doxygen](http://www.doxygen.org/). The HTML-documentation and Qt-Help files are shipped
 together with the module for both the custom repository and the package on the release page. Please note that doxygen docs do not perfectly integrate with QtCreator/QtAssistant.
+
+## Translations
+The project is prepared for translation. But since I speak only english and german, those are the only languages I can provide translations for. However, you can easily create the translations yourself. The file `src/backgroundprocess/translations/qtbackgroundprocess_template.ts` is a ready-made TS file. Just rename it (e.g. to `qtbackgroundprocess_jp.ts`) and open it with the QtLinguist to create the translations.
 
 ## Technical Stuff
 Please not, that this library does **not** create a real daemon/service. It merely creates a background process, with advanced terminal connections. This approach allows more flexibility and an easier cross-platform implementation. In addition to that, interaction with the process becomes possible everywhere, without any additional code.

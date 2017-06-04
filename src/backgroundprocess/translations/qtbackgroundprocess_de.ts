@@ -12,7 +12,7 @@
 <context>
     <name>QtBackgroundProcess::AppPrivate</name>
     <message>
-        <location filename="../app_p.cpp" line="+151"/>
+        <location filename="../app_p.cpp" line="+161"/>
         <source>A control command to control the background application. Possible options are:
  - start: starts the application
  - stop: stops the application
@@ -39,7 +39,8 @@
         <translation>Setzt das gewünschte Log-&lt;level&gt;. Mögliche Werte sind:
  - 0: Nichts loggen
  - 1: Nur Kritische Fehler loggen
- - 2: Wie 1 plus Warnungen loggen</translation>
+ - 2: Wie 1 plus Warnungen loggen
+</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -86,7 +87,7 @@
         <translation>Konnte Master-Prozess nicht starten. Sperrung fehlgeschlagen mit Fehler:</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+81"/>
         <source>Failed to start master process! No master lock was detected.</source>
         <translation>Konnte Master-Prozess nicht starten. Keine Sperrdatei des Masters erkannt.</translation>
     </message>
@@ -105,7 +106,8 @@
         <source>
 Failed to stop the running master process.
 Do you want to restart it anyway? (y/N)</source>
-        <translation>Master-Prozess konnte nicht gestoppt werden.
+        <translation>
+Master-Prozess konnte nicht gestoppt werden.
 Trotzdem neustarten? (j/N)</translation>
     </message>
     <message>
@@ -158,19 +160,22 @@ Geben sie (J) ein zum säubern, oder (n) zum abbrechen:</translation>
         <location line="+3"/>
         <source>
  - PID: </source>
-        <translation> - PID: </translation>
+        <translation>
+ - PID: </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>
  - Hostname: </source>
-        <translation> - Hostname: </translation>
+        <translation>
+ - Hostname: </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>
  - Appname: </source>
-        <translation> - Anwendungsname: </translation>
+        <translation>
+ - Anwendungsname: </translation>
     </message>
     <message>
         <location line="+4"/>
@@ -196,7 +201,7 @@ Geben sie (J) ein zum säubern, oder (n) zum abbrechen:</translation>
 <context>
     <name>QtBackgroundProcess::MasterConnecter</name>
     <message>
-        <location filename="../masterconnecter.cpp" line="+69"/>
+        <location filename="../masterconnecter.cpp" line="+73"/>
         <source>Connection to Master process failed with error:</source>
         <translation>Verbindung mit Master-Process fehlgeschlagen. Fehler:</translation>
     </message>
@@ -214,7 +219,7 @@ Geben sie (J) ein zum säubern, oder (n) zum abbrechen:</translation>
         <translation>Terminal aufgrund von Fehler während der Verbindung geschlossen. Fehler:</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+16"/>
         <source>Invalid Terminal status received. Data is corrupted. Terminal will be disconnected</source>
         <translation>Ungültigen Terminal-Status erhalten. Daten sind corrumpiert. Das Terminal wird nun geschlossen</translation>
     </message>
