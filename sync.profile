@@ -2,5 +2,8 @@
     "QtBackgroundProcess" => "$basedir/src/backgroundprocess",
 );
 
-%moduleheaders = (
+%classnames = (
+	"app.h" => "NotAllowedInRunningStateException,App",
+	"globalterminal.h" => "GlobalTerminal",
+	"terminal.h" => "Terminal",
 );
