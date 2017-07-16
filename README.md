@@ -1,6 +1,10 @@
 # QtBackgroundProcess
 A Library to create background applications with simple, automated foreground control.
 
+[![Travis Build Status](https://travis-ci.org/Skycoder42/QtBackgroundProcess.svg?branch=master)](https://travis-ci.org/Skycoder42/QtBackgroundProcess)
+[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/v7y9q2oq209tx9q0?svg=true)](https://ci.appveyor.com/project/Skycoder42/qtbackgroundprocess)
+
+
 In short, with this library you can easly create cross platform applications, that are ment to run in the background, without any UI. This however, is fairly easy and would not require a library. This one however adds a few things, that make it much more comfortable to use those.
 
 Have a look at the features.
