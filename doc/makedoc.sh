@@ -21,7 +21,7 @@ doxme="$scriptDir/doxme.py"
 
 
 
-python "$doxme" "$srcDir/../README.md"
+python3 "$doxme" "$srcDir/../README.md"
 
 cat "$doxyTemplate" > Doxyfile
 echo "PROJECT_NUMBER = \"$version\"" >> Doxyfile
