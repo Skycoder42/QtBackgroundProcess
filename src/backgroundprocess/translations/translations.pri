@@ -4,8 +4,11 @@ TRANSLATIONS += $$PWD/qtbackgroundprocess_de.ts \
 OTHER_FILES += $$PWD/qtbackgroundprocess_de.ts \
 	$$PWD/qtbackgroundprocess_template.ts
 
+qtPrepareTool(LRELEASE, lrelease)
+LRELEASE += -nounfinished
+
 releaseTarget.target = lrelease
-releaseTarget.commands = lrelease -compress -nounfinished "$$_PRO_FILE_"
+releaseTarget.commands = $$LRELEASE "$$_PRO_FILE_"
 QMAKE_EXTRA_TARGETS += releaseTarget
 
 trInstall.path = $$[QT_INSTALL_TRANSLATIONS]
