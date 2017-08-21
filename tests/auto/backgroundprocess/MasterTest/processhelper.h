@@ -9,16 +9,18 @@ class ProcessHelper : public QObject
 	Q_OBJECT
 
 public:
-	static const QByteArray Stamp;
+	static const char Stamp;
 
 	explicit ProcessHelper(QObject *parent = nullptr);
 
 	void start(const QByteArrayList &commands);
-	void setExpectedLog(const QByteArrayList &log);
+	void setExpectedOutLog(const QByteArrayList &log);
+	void setExpectedErrLog(const QByteArrayList &log);
 
 	void waitForFinished();
 	static void waitForFinished(const QList<ProcessHelper*> &helpers);
 
+	static void clearLog();
 	static void verifyMasterLog(const QByteArrayList &log);
 
 private Q_SLOTS:
