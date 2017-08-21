@@ -5,7 +5,8 @@ const char ProcessHelper::Stamp = '%';
 
 ProcessHelper::ProcessHelper(QObject *parent) :
 	QObject(parent),
-	process(new QProcess(this))
+	process(new QProcess(this)),
+	exitCode(EXIT_SUCCESS)
 {
 	process->setProgram(QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/DemoApp"));
 
@@ -15,12 +16,18 @@ ProcessHelper::ProcessHelper(QObject *parent) :
 			this, &ProcessHelper::finished);
 }
 
-void ProcessHelper::start(const QByteArrayList &commands)
+void ProcessHelper::setExitCode(int code)
+{
+	exitCode = code;
+}
+
+void ProcessHelper::start(const QByteArrayList &commands, bool logpath)
 {
 	QStringList s;
 	foreach(auto c, commands)
 		s.append(QString::fromUtf8(c));
-	s.append({QStringLiteral("--logpath"), QDir::temp().absoluteFilePath(QStringLiteral("MasterTest.log"))});
+	if(logpath)
+		s.append({QStringLiteral("--logpath"), QDir::temp().absoluteFilePath(QStringLiteral("MasterTest.log"))});
 	process->setArguments(s);
 	process->start();
 	QVERIFY2(process->waitForStarted(5000), qUtf8Printable(process->errorString()));
@@ -78,7 +85,7 @@ void ProcessHelper::errorOccurred(QProcess::ProcessError error)
 void ProcessHelper::finished(int exitCode, QProcess::ExitStatus exitStatus)
 {
 	QCOMPARE(exitStatus, QProcess::NormalExit);
-	QCOMPARE(exitCode, EXIT_SUCCESS);
+	QCOMPARE(exitCode, this->exitCode);
 }
 
 void ProcessHelper::testLog(const QByteArrayList &log, QIODevice *device)

@@ -20,7 +20,7 @@ void TestApp::parseTerminalOptions()
 int TestApp::startupApp(const QCommandLineParser &parser)
 {
 	doCommand(parser);
-	qDebug() << "App Master Started with arguments:"
+	qDebug() << "App Master started with arguments:"
 			 << parser.positionalArguments()
 			 << "and options:"
 			 << parser.optionNames();
