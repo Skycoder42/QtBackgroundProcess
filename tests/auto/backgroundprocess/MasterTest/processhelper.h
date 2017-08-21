@@ -19,6 +19,7 @@ public:
 	void start(const QByteArrayList &commands, bool logpath = false, int timeout = 750);
 
 	void send(const QByteArray &message);
+	void termMaster();
 
 	void waitForFinished(bool terminate = true);
 	void verifyLog(const QByteArrayList &log, bool isError = false);

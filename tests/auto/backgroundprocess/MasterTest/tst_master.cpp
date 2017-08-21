@@ -19,11 +19,9 @@ private Q_SLOTS:
 	void statusTest();
 
 	void detachingTest();
-	void logLevelTest();
 #ifdef Q_OS_UNIX
 	void masterTermTest();
 #endif
-	void testCleanup();
 };
 
 void MasterTest::initTestCase()
@@ -418,21 +416,33 @@ void MasterTest::detachingTest()
 	p4->deleteLater();
 }
 
-void MasterTest::logLevelTest()
-{
-
-}
-
 #ifdef Q_OS_UNIX
 void MasterTest::masterTermTest()
 {
+	auto p1 = new ProcessHelper(this);
+	p1->start({"start", "-m", "pid"}, true);
+	p1->waitForFinished();
+
+	auto p2 = new ProcessHelper(this);
+	p2->start({});
+
+	p1->termMaster();
+	p2->waitForFinished();
+
+	ProcessHelper::verifyMasterLog({
+									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
+									   "[% Debug]    Master started in pid mode!",
+									   "[% Debug]    skipping starter args: (\"start\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
+									   "[% Debug]    pid written",
+									   "[% Debug]    received new command: () and options: (\"terminallog\")",
+									   "[% Debug]    I am quitting!"
+								   });
+
+	QCoreApplication::processEvents();
+	p1->deleteLater();
+	p2->deleteLater();
 }
 #endif
-
-void MasterTest::testCleanup()
-{
-
-}
 
 QTEST_MAIN(MasterTest)
 

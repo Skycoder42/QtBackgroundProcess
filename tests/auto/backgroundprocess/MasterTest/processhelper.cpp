@@ -1,5 +1,9 @@
 #include "processhelper.h"
 #include <QtTest>
+#ifdef Q_OS_UNIX
+#include <sys/types.h>
+#include <signal.h>
+#endif
 
 const char ProcessHelper::Stamp = '%';
 bool ProcessHelper::allGreen = true;
@@ -54,6 +58,18 @@ void ProcessHelper::send(const QByteArray &message)
 {
 	process->write(message + '\n');
 	QCoreApplication::processEvents();
+}
+
+void ProcessHelper::termMaster()
+{
+	auto line = process->readAll();
+	auto ok = false;
+	auto pid = line.toInt(&ok);
+	QVERIFY2(ok, line.constData());
+
+#ifdef Q_OS_UNIX
+	kill(pid, SIGTERM);
+#endif
 }
 
 void ProcessHelper::waitForFinished(bool terminate)
