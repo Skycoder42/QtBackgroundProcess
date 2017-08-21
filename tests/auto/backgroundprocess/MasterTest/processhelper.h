@@ -33,6 +33,7 @@ private:
 	int exitCode;
 	static bool allGreen;
 
+	static QString logPath();
 	static void testLog(const QByteArrayList &log, QIODevice *device);
 };
 

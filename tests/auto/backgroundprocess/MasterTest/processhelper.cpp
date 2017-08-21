@@ -28,7 +28,7 @@ void ProcessHelper::start(const QByteArrayList &commands, bool logpath, int time
 	foreach(auto c, commands)
 		s.append(QString::fromUtf8(c));
 	if(logpath)
-		s.append({QStringLiteral("--logpath"), QDir::temp().absoluteFilePath(QStringLiteral("MasterTest.log"))});
+		s.append({QStringLiteral("--logpath"), logPath()});
 	process->setArguments(s);
 	process->start();
 	QVERIFY2(process->waitForStarted(5000), qUtf8Printable(process->errorString()));
@@ -78,15 +78,16 @@ void ProcessHelper::waitForFinished(const QList<ProcessHelper *> &helpers)
 
 void ProcessHelper::clearLog()
 {
-	auto logFile = QDir::temp().absoluteFilePath(QStringLiteral("MasterTest.log"));
+	auto logFile = logPath();
 	if(QFile::exists(logFile))
 		QVERIFY(QFile::remove(logFile));
 }
 
 void ProcessHelper::verifyMasterLog(const QByteArrayList &log)
 {
-	auto logFile = QDir::temp().absoluteFilePath(QStringLiteral("MasterTest.log"));
+	auto logFile = logPath();
 	QFile file(logFile);
+	QVERIFY(file.exists());
 	QVERIFY2(file.open(QIODevice::ReadOnly | QIODevice::Text), qUtf8Printable(file.errorString()));
 
 	allGreen = false;
@@ -109,6 +110,11 @@ void ProcessHelper::finished(int exitCode, QProcess::ExitStatus exitStatus)
 {
 	QCOMPARE(exitStatus, QProcess::NormalExit);
 	QCOMPARE(exitCode, this->exitCode);
+}
+
+QString ProcessHelper::logPath()
+{
+	return QDir::current().absoluteFilePath(QStringLiteral("MasterTest.log"));
 }
 
 void ProcessHelper::testLog(const QByteArrayList &log, QIODevice *device)
