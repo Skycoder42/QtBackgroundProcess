@@ -2,6 +2,7 @@
 #include <QtTest>
 
 const char ProcessHelper::Stamp = '%';
+bool ProcessHelper::allGreen = true;
 
 ProcessHelper::ProcessHelper(QObject *parent) :
 	QObject(parent),
@@ -21,7 +22,7 @@ void ProcessHelper::setExitCode(int code)
 	exitCode = code;
 }
 
-void ProcessHelper::start(const QByteArrayList &commands, bool logpath)
+void ProcessHelper::start(const QByteArrayList &commands, bool logpath, int timeout)
 {
 	QStringList s;
 	foreach(auto c, commands)
@@ -31,7 +32,7 @@ void ProcessHelper::start(const QByteArrayList &commands, bool logpath)
 	process->setArguments(s);
 	process->start();
 	QVERIFY2(process->waitForStarted(5000), qUtf8Printable(process->errorString()));
-	QThread::msleep(500);
+	QThread::msleep(timeout);
 }
 
 void ProcessHelper::waitForFinished()
@@ -44,6 +45,8 @@ void ProcessHelper::waitForFinished()
 
 void ProcessHelper::verifyLog(const QByteArrayList &log, bool isError)
 {
+	allGreen = false;
+
 	if(isError) {
 		auto err = process->readAllStandardError();
 		QBuffer buffer(&err);
@@ -52,6 +55,14 @@ void ProcessHelper::verifyLog(const QByteArrayList &log, bool isError)
 		buffer.close();
 	} else
 		testLog(log, process);
+
+	if(!allGreen)
+		qDebug() << "on arguments:" << process->arguments();
+}
+
+void ProcessHelper::verifyLogEmpty(bool isError)
+{
+	verifyLog(QByteArrayList(), isError);
 }
 
 void ProcessHelper::waitForFinished(const QList<ProcessHelper *> &helpers)
@@ -72,13 +83,20 @@ void ProcessHelper::verifyMasterLog(const QByteArrayList &log)
 	auto logFile = QDir::temp().absoluteFilePath(QStringLiteral("MasterTest.log"));
 	QFile file(logFile);
 	QVERIFY2(file.open(QIODevice::ReadOnly | QIODevice::Text), qUtf8Printable(file.errorString()));
+
+	allGreen = false;
 	testLog(log, &file);
+	if(!allGreen)
+		qDebug() << "on master log";
+
 	file.close();
 	QVERIFY(file.remove());
+
 }
 
 void ProcessHelper::errorOccurred(QProcess::ProcessError error)
 {
+	Q_UNUSED(error)
 	QFAIL(qUtf8Printable(process->errorString()));
 }
 
@@ -107,4 +125,5 @@ void ProcessHelper::testLog(const QByteArrayList &log, QIODevice *device)
 			QCOMPARE(logStr, testStr);
 	}
 	QCOMPARE(index, log.size());
+	allGreen = true;
 }

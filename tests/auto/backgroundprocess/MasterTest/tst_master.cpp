@@ -14,6 +14,17 @@ private Q_SLOTS:
 
 	void simpleTest();
 	void commandsTest();
+
+	void echoTest();
+	void statusTest();
+	void screamTest();
+
+	void detachingTest();
+	void logLevelTest();
+#ifdef Q_OS_UNIX
+	void masterTermTest();
+#endif
+	void testCleanup();
 };
 
 void MasterTest::initTestCase()
@@ -45,6 +56,9 @@ void MasterTest::simpleTest()
 	p4->start({"stop", "Test", "4"});
 
 	ProcessHelper::waitForFinished({p1, p2, p3, p4});
+
+	p1->verifyLogEmpty();
+	p2->verifyLogEmpty();
 #ifdef Q_OS_WIN
 	p3->verifyLog({
 					  "[Warning]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is"
@@ -54,6 +68,7 @@ void MasterTest::simpleTest()
 					  "[\x1B[33mWarning\x1B[0m]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is"
 				  }, true);
 #endif
+	p4->verifyLogEmpty();
 	ProcessHelper::verifyMasterLog({
 									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test1\") and options: (\"logpath\")",
 									   "[% Debug]    skipping starter args: (\"start\", \"Test1\") and options: (\"logpath\")",
@@ -90,7 +105,7 @@ void MasterTest::commandsTest()
 	p5->start({"-a", "-i", "Test5"});
 
 	auto p6 = new ProcessHelper(this);
-	p6->start({"-i", "Test6"});
+	p6->start({"restart", "-f", "1", "-i", "Test6"}, true, 1000);
 
 	auto p7 = new ProcessHelper(this);
 	p7->start({"-f", "0", "Test", "7"});
@@ -119,18 +134,17 @@ void MasterTest::commandsTest()
 					  "[% Debug]    received new command: () and options: ()",
 					  "[% Debug]    received new command: (\"start\", \"Test\", \"4\") and options: ()",
 					  "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\")",
-					  "[% Debug]    received new command: (\"Test6\") and options: (\"i\")",
-					  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\")",
-					  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\")",
+					  "[% Debug]    received new command: (\"stop\") and options: ()",
+					  "[% Debug]    stop requested with (\"stop\") and options: ()",
 					  "[% Debug]    I am quitting!"
 				  });
+	p2->verifyLogEmpty();
 
 	p3->verifyLog({
 					  "[% Debug]    received new command: (\"start\", \"Test\", \"4\") and options: ()",
 					  "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\")",
-					  "[% Debug]    received new command: (\"Test6\") and options: (\"i\")",
-					  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\")",
-					  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\")",
+					  "[% Debug]    received new command: (\"stop\") and options: ()",
+					  "[% Debug]    stop requested with (\"stop\") and options: ()",
 					  "[% Debug]    I am quitting!"
 				  });
 #ifdef Q_OS_WIN
@@ -145,9 +159,8 @@ void MasterTest::commandsTest()
 
 	p4->verifyLog({
 					  "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\")",
-					  "[% Debug]    received new command: (\"Test6\") and options: (\"i\")",
-					  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\")",
-					  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\")",
+					  "[% Debug]    received new command: (\"stop\") and options: ()",
+					  "[% Debug]    stop requested with (\"stop\") and options: ()",
 					  "[% Debug]    I am quitting!"
 				  });
 #ifdef Q_OS_WIN
@@ -161,33 +174,48 @@ void MasterTest::commandsTest()
 #endif
 
 	p5->verifyLog({
-					  "[% Debug]    received new command: (\"Test6\") and options: (\"i\")",
-					  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\")",
-					  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\")",
+					  "[% Debug]    received new command: (\"stop\") and options: ()",
+					  "[% Debug]    stop requested with (\"stop\") and options: ()",
 					  "[% Debug]    I am quitting!"
 				  });
+	p5->verifyLogEmpty();
 
 	p6->verifyLog({
+					  "[% Debug]    I am quitting!",
+					  "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test6\") and options: (\"f\", \"i\", \"logpath\")",
+					  "[% Debug]    skipping starter args: (\"restart\", \"Test6\") and options: (\"f\", \"i\", \"logpath\")",
 					  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\")",
 					  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\")",
 					  "[% Debug]    I am quitting!"
 				  });
+#ifdef Q_OS_WIN
+	p6->verifyLog({
+					  "[Debug]    QtBackgroundProcess: Master process successfully stopped"
+				  }, true);
+#else
+	p6->verifyLog({
+					  "[\x1B[32mDebug\x1B[0m]    QtBackgroundProcess: Master process successfully stopped"
+				  }, true);
+#endif
 
 	p7->verifyLog({
 					  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\")",
 					  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\")",
 					  "[% Debug]    I am quitting!"
 				  });
+	p7->verifyLogEmpty();
 
 	p8->verifyLog({
 					  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\")",
 					  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\")",
 					  "[% Debug]    I am quitting!"
 				  });
+	p8->verifyLogEmpty();
 
 	p9->verifyLog({
 					  "[% Debug]    I am quitting!"
 				  });
+	p9->verifyLogEmpty();
 
 	ProcessHelper::verifyMasterLog({
 									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\")",
@@ -195,7 +223,11 @@ void MasterTest::commandsTest()
 									   "[% Debug]    received new command: () and options: ()",
 									   "[% Debug]    received new command: (\"start\", \"Test\", \"4\") and options: ()",
 									   "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\")",
-									   "[% Debug]    received new command: (\"Test6\") and options: (\"i\")",
+									   "[% Debug]    received new command: (\"stop\") and options: ()",
+									   "[% Debug]    stop requested with (\"stop\") and options: ()",
+									   "[% Debug]    I am quitting!",
+									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test6\") and options: (\"f\", \"i\", \"logpath\")",
+									   "[% Debug]    skipping starter args: (\"restart\", \"Test6\") and options: (\"f\", \"i\", \"logpath\")",
 									   "[% Debug]    received new command: (\"Test\", \"7\") and options: (\"f\")",
 									   "[% Debug]    received new command: (\"Test\", \"8\") and options: ()",
 									   "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\")",
@@ -213,6 +245,43 @@ void MasterTest::commandsTest()
 	p7->deleteLater();
 	p8->deleteLater();
 	p9->deleteLater();
+}
+
+void MasterTest::echoTest()
+{
+
+}
+
+void MasterTest::statusTest()
+{
+
+}
+
+void MasterTest::screamTest()
+{
+
+}
+
+void MasterTest::detachingTest()
+{
+
+}
+
+void MasterTest::logLevelTest()
+{
+
+}
+
+#ifdef Q_OS_UNIX
+void MasterTest::masterTermTest()
+{
+
+}
+#endif
+
+void MasterTest::testCleanup()
+{
+
 }
 
 QTEST_MAIN(MasterTest)

@@ -14,10 +14,11 @@ public:
 	explicit ProcessHelper(QObject *parent = nullptr);
 
 	void setExitCode(int code);
-	void start(const QByteArrayList &commands, bool logpath = false);
+	void start(const QByteArrayList &commands, bool logpath = false, int timeout = 500);
 
 	void waitForFinished();
 	void verifyLog(const QByteArrayList &log, bool isError = false);
+	void verifyLogEmpty(bool isError = true);
 	static void waitForFinished(const QList<ProcessHelper*> &helpers);
 
 	static void clearLog();
@@ -30,6 +31,7 @@ private Q_SLOTS:
 private:
 	QProcess *process;
 	int exitCode;
+	static bool allGreen;
 
 	static void testLog(const QByteArrayList &log, QIODevice *device);
 };
