@@ -314,7 +314,55 @@ void MasterTest::echoTest()
 
 void MasterTest::statusTest()
 {
+	auto p1 = new ProcessHelper(this);
+	p1->start({"start", "-m", "status"}, true);
 
+	auto p2 = new ProcessHelper(this);
+	p2->start({});
+
+	auto p3 = new ProcessHelper(this);
+	p3->start({"hello", "world"});
+
+	auto p4 = new ProcessHelper(this);
+	p4->start({"stop", "me"});
+
+	ProcessHelper::waitForFinished({p1, p2, p3, p4});
+
+	p1->verifyLog({
+					  "[]",
+					  "[hello, world]",
+					  "[stop, me]"
+				  });
+	p1->verifyLogEmpty();
+	p2->verifyLog({
+					  "[hello, world]",
+					  "[stop, me]"
+				  });
+	p2->verifyLogEmpty();
+	p3->verifyLog({
+					  "[stop, me]"
+				  });
+	p3->verifyLogEmpty();
+
+	p4->verifyLogEmpty(false);
+	p4->verifyLogEmpty();
+
+	ProcessHelper::verifyMasterLog({
+									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
+									   "[% Debug]    Master started in status mode!",
+									   "[% Debug]    skipping starter args: (\"start\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
+									   "[% Debug]    received new command: () and options: (\"terminallog\")",
+									   "[% Debug]    received new command: (\"hello\", \"world\") and options: (\"terminallog\")",
+									   "[% Debug]    received new command: (\"stop\", \"me\") and options: (\"terminallog\")",
+									   "[% Debug]    stop requested with (\"stop\", \"me\") and options: (\"terminallog\")",
+									   "[% Debug]    I am quitting!"
+								   });
+
+	QCoreApplication::processEvents();
+	p1->deleteLater();
+	p2->deleteLater();
+	p3->deleteLater();
+	p4->deleteLater();
 }
 
 void MasterTest::screamTest()
