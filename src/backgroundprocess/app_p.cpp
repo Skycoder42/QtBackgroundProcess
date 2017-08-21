@@ -335,8 +335,9 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 					ShowWindow(GetConsoleWindow(), SW_HIDE);
 			}
 
-			auto sigHandler = QCtrlSignalHandler::instance();
-			sigHandler->setAutoQuitActive(true);
+			//TODO temporary disable for testing
+			//auto sigHandler = QCtrlSignalHandler::instance();
+			//sigHandler->setAutoQuitActive(true);
 
 			//set current directory
 			QDir::setCurrent(QDir::rootPath());
