@@ -56,11 +56,12 @@ void ProcessHelper::send(const QByteArray &message)
 	QCoreApplication::processEvents();
 }
 
-void ProcessHelper::waitForFinished()
+void ProcessHelper::waitForFinished(bool terminate)
 {
 	if(!process->waitForFinished(5000)) {
-		process->terminate();
-		QFAIL("Process did not stop by itself");
+		if(terminate)
+			process->terminate();
+		QVERIFY2(false, "Process did not stop by itself");
 	}
 }
 

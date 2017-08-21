@@ -20,7 +20,7 @@ public:
 
 	void send(const QByteArray &message);
 
-	void waitForFinished();
+	void waitForFinished(bool terminate = true);
 	void verifyLog(const QByteArrayList &log, bool isError = false);
 	void verifyLogEmpty(bool isError = true);
 	static void waitForFinished(const QList<ProcessHelper*> &helpers);

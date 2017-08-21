@@ -17,7 +17,6 @@ private Q_SLOTS:
 
 	void echoTest();
 	void statusTest();
-	void screamTest();
 
 	void detachingTest();
 	void logLevelTest();
@@ -288,7 +287,6 @@ void MasterTest::echoTest()
 					  "[% Debug]    I am quitting!"
 				  });
 	p3->verifyLogEmpty();
-
 	p4->verifyLog({
 					  "[% Debug]    I am quitting!"
 				  });
@@ -343,7 +341,6 @@ void MasterTest::statusTest()
 					  "[stop, me]"
 				  });
 	p3->verifyLogEmpty();
-
 	p4->verifyLogEmpty(false);
 	p4->verifyLogEmpty();
 
@@ -365,14 +362,60 @@ void MasterTest::statusTest()
 	p4->deleteLater();
 }
 
-void MasterTest::screamTest()
-{
-
-}
-
 void MasterTest::detachingTest()
 {
+	auto p1 = new ProcessHelper(this);
+	p1->start({"start", "-f", "1", "--detached"}, true);
+	p1->waitForFinished();
 
+	auto p2 = new ProcessHelper(this);
+	p2->start({});
+	QEXPECT_FAIL("", "Undetached process does not finish", Continue);
+	p2->waitForFinished(false);
+
+	auto p3 = new ProcessHelper(this);
+	p3->start({"--detached"});
+	p3->waitForFinished();
+
+	auto p4 = new ProcessHelper(this);
+	p4->start({"stop"});
+
+	ProcessHelper::waitForFinished({p2, p4});
+
+	p1->verifyLogEmpty(false);
+	p1->verifyLogEmpty();
+	p2->verifyLog({
+					  "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"f\", \"detached\", \"logpath\", \"loglevel\", \"terminallog\")",
+					  "[% Debug]    skipping starter args: (\"start\") and options: (\"f\", \"detached\", \"logpath\", \"loglevel\", \"terminallog\")",
+					  "[% Debug]    received new command: () and options: (\"terminallog\")",
+					  "[% Debug]    received new command: () and options: (\"detached\", \"terminallog\")",
+					  "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
+					  "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
+					  "[% Debug]    I am quitting!"
+				  });
+	p2->verifyLogEmpty();
+	p3->verifyLogEmpty(false);
+	p3->verifyLogEmpty();
+	p4->verifyLog({
+					  "[% Debug]    I am quitting!"
+				  });
+	p4->verifyLogEmpty();
+
+	ProcessHelper::verifyMasterLog({
+									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"f\", \"detached\", \"logpath\", \"loglevel\", \"terminallog\")",
+									   "[% Debug]    skipping starter args: (\"start\") and options: (\"f\", \"detached\", \"logpath\", \"loglevel\", \"terminallog\")",
+									   "[% Debug]    received new command: () and options: (\"terminallog\")",
+									   "[% Debug]    received new command: () and options: (\"detached\", \"terminallog\")",
+									   "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
+									   "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
+									   "[% Debug]    I am quitting!"
+								   });
+
+	QCoreApplication::processEvents();
+	p1->deleteLater();
+	p2->deleteLater();
+	p3->deleteLater();
+	p4->deleteLater();
 }
 
 void MasterTest::logLevelTest()
@@ -383,7 +426,6 @@ void MasterTest::logLevelTest()
 #ifdef Q_OS_UNIX
 void MasterTest::masterTermTest()
 {
-
 }
 #endif
 
