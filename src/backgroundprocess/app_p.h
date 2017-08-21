@@ -93,13 +93,13 @@ Q_DECLARE_LOGGING_CATEGORY(loggingCategory)
 
 //custom logging operators
 #undef qInfo
-#define qInfo() qCDebug(loggingCategory).noquote()
+#define qInfo() qCInfo(loggingCategory).noquote()
 #undef qDebug
 #define qDebug() qCDebug(loggingCategory).noquote()
 #undef qWarning
-#define qWarning() qCDebug(loggingCategory).noquote()
+#define qWarning() qCWarning(loggingCategory).noquote()
 #undef qCritical
-#define qCritical() qCDebug(loggingCategory).noquote()
+#define qCritical() qCCritical(loggingCategory).noquote()
 
 }
 

@@ -27,22 +27,24 @@ void ProcessHelper::start(const QByteArrayList &commands)
 	QThread::msleep(500);
 }
 
-void ProcessHelper::setExpectedOutLog(const QByteArrayList &log)
-{
-
-}
-
-void ProcessHelper::setExpectedErrLog(const QByteArrayList &log)
-{
-
-}
-
 void ProcessHelper::waitForFinished()
 {
 	if(!process->waitForFinished(5000)) {
 		process->terminate();
 		QFAIL("Process did not stop by itself");
 	}
+}
+
+void ProcessHelper::verifyLog(const QByteArrayList &log, bool isError)
+{
+	if(isError) {
+		auto err = process->readAllStandardError();
+		QBuffer buffer(&err);
+		buffer.open(QIODevice::ReadOnly | QIODevice::Text);
+		testLog(log, &buffer);
+		buffer.close();
+	} else
+		testLog(log, process);
 }
 
 void ProcessHelper::waitForFinished(const QList<ProcessHelper *> &helpers)
@@ -63,10 +65,27 @@ void ProcessHelper::verifyMasterLog(const QByteArrayList &log)
 	auto logFile = QDir::temp().absoluteFilePath(QStringLiteral("MasterTest.log"));
 	QFile file(logFile);
 	QVERIFY2(file.open(QIODevice::ReadOnly | QIODevice::Text), qUtf8Printable(file.errorString()));
+	testLog(log, &file);
+	file.close();
+	QVERIFY(file.remove());
+}
 
+void ProcessHelper::errorOccurred(QProcess::ProcessError error)
+{
+	QFAIL(qUtf8Printable(process->errorString()));
+}
+
+void ProcessHelper::finished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+	QCOMPARE(exitStatus, QProcess::NormalExit);
+	QCOMPARE(exitCode, EXIT_SUCCESS);
+}
+
+void ProcessHelper::testLog(const QByteArrayList &log, QIODevice *device)
+{
 	auto index = 0;
-	while(!file.atEnd()) {
-		auto logStr = file.readLine().trimmed();
+	while(!device->atEnd()) {
+		auto logStr = device->readLine().trimmed();
 		if(logStr.isEmpty())
 			continue;
 
@@ -81,18 +100,4 @@ void ProcessHelper::verifyMasterLog(const QByteArrayList &log)
 			QCOMPARE(logStr, testStr);
 	}
 	QCOMPARE(index, log.size());
-
-	file.close();
-	QVERIFY(file.remove());
-}
-
-void ProcessHelper::errorOccurred(QProcess::ProcessError error)
-{
-	QFAIL(qUtf8Printable(process->errorString()));
-}
-
-void ProcessHelper::finished(int exitCode, QProcess::ExitStatus exitStatus)
-{
-	QCOMPARE(exitStatus, QProcess::NormalExit);
-	QCOMPARE(exitCode, EXIT_SUCCESS);
 }
