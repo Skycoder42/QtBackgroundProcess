@@ -6,13 +6,13 @@
 #include <QtCore/QProcess>
 #include <QtCore/QStandardPaths>
 
+#include <QCtrlSignals>
 #include <iostream>
 #ifdef Q_OS_WIN
 #include <qt_windows.h>
 #else
 #include <unistd.h>
 #include <sys/types.h>
-#include <QCtrlSignals>
 #endif
 
 using namespace QtBackgroundProcess;
