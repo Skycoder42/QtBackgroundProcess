@@ -269,8 +269,10 @@ void AppPrivate::updateLoggingPath(const QString &path)
 	if(!path.isEmpty()) {
 		logFile = new QFile(path, this);
 		if(!logFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) {
+			auto error = logFile->errorString();
 			logFile->deleteLater();
 			logFile.clear();
+			qWarning() << "Failed to open logfile with error:" << error;
 		}
 	}
 }

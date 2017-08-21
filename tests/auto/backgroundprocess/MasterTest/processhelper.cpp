@@ -55,12 +55,20 @@ void ProcessHelper::verifyLog(const QByteArrayList &log, bool isError)
 
 	if(isError) {
 		auto err = process->readAllStandardError();
+		qDebug() << err;
 		QBuffer buffer(&err);
 		buffer.open(QIODevice::ReadOnly | QIODevice::Text);
 		testLog(log, &buffer);
 		buffer.close();
-	} else
-		testLog(log, process);
+	} else {
+		auto out = process->readAllStandardOutput();
+		qDebug() << out;
+		QBuffer buffer(&out);
+		buffer.open(QIODevice::ReadOnly | QIODevice::Text);
+		testLog(log, &buffer);
+		buffer.close();
+	}
+	//	testLog(log, process);
 
 	if(!allGreen)
 		qDebug() << "on arguments:" << process->arguments();
@@ -89,7 +97,6 @@ void ProcessHelper::verifyMasterLog(const QByteArrayList &log)
 	auto logFile = logPath();
 	QFile file(logFile);
 	QVERIFY(file.exists());
-	qDebug() << file.size();
 	QVERIFY2(file.open(QIODevice::ReadOnly | QIODevice::Text), qUtf8Printable(file.errorString()));
 
 	allGreen = false;
@@ -124,7 +131,6 @@ void ProcessHelper::testLog(const QByteArrayList &log, QIODevice *device)
 	auto index = 0;
 	while(!device->atEnd()) {
 		auto logStr = device->readLine().trimmed();
-		qDebug() << logStr;
 		if(logStr.isEmpty())
 			continue;
 
