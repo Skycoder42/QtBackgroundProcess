@@ -37,8 +37,7 @@ void MasterTest::initTestCase()
 
 void MasterTest::cleanupTestCase()
 {
-	QProcess::execute(QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/DemoApp"),
-					  {QStringLiteral("stop")});
+	QProcess::execute(ProcessHelper::binPath(), {QStringLiteral("stop")});
 }
 
 void MasterTest::simpleTest()
@@ -70,8 +69,8 @@ void MasterTest::simpleTest()
 #endif
 	p4->verifyLogEmpty();
 	ProcessHelper::verifyMasterLog({
-									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test1\") and options: (\"logpath\")",
-									   "[% Debug]    skipping starter args: (\"start\", \"Test1\") and options: (\"logpath\")",
+									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test1\") and options: (\"logpath\", \"loglevel\")",
+									   "[% Debug]    skipping starter args: (\"start\", \"Test1\") and options: (\"logpath\", \"loglevel\")",
 									   "[% Debug]    received new command: (\"Test2\") and options: ()",
 									   "[% Debug]    received new command: (\"start\", \"Test\", \"3\") and options: ()",
 									   "[% Debug]    received new command: (\"stop\", \"Test\", \"4\") and options: ()",
@@ -129,8 +128,8 @@ void MasterTest::commandsTest()
 #endif
 
 	p2->verifyLog({
-					  "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\")",
-					  "[% Debug]    skipping starter args: (\"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\")",
+					  "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\", \"loglevel\")",
+					  "[% Debug]    skipping starter args: (\"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\", \"loglevel\")",
 					  "[% Debug]    received new command: () and options: ()",
 					  "[% Debug]    received new command: (\"start\", \"Test\", \"4\") and options: ()",
 					  "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\")",
@@ -182,8 +181,8 @@ void MasterTest::commandsTest()
 
 	p6->verifyLog({
 					  "[% Debug]    I am quitting!",
-					  "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test6\") and options: (\"f\", \"i\", \"logpath\")",
-					  "[% Debug]    skipping starter args: (\"restart\", \"Test6\") and options: (\"f\", \"i\", \"logpath\")",
+					  "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test6\") and options: (\"f\", \"i\", \"logpath\", \"loglevel\")",
+					  "[% Debug]    skipping starter args: (\"restart\", \"Test6\") and options: (\"f\", \"i\", \"logpath\", \"loglevel\")",
 					  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\")",
 					  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\")",
 					  "[% Debug]    I am quitting!"
@@ -218,16 +217,16 @@ void MasterTest::commandsTest()
 	p9->verifyLogEmpty();
 
 	ProcessHelper::verifyMasterLog({
-									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\")",
-									   "[% Debug]    skipping starter args: (\"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\")",
+									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\", \"loglevel\")",
+									   "[% Debug]    skipping starter args: (\"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\", \"loglevel\")",
 									   "[% Debug]    received new command: () and options: ()",
 									   "[% Debug]    received new command: (\"start\", \"Test\", \"4\") and options: ()",
 									   "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\")",
 									   "[% Debug]    received new command: (\"stop\") and options: ()",
 									   "[% Debug]    stop requested with (\"stop\") and options: ()",
 									   "[% Debug]    I am quitting!",
-									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test6\") and options: (\"f\", \"i\", \"logpath\")",
-									   "[% Debug]    skipping starter args: (\"restart\", \"Test6\") and options: (\"f\", \"i\", \"logpath\")",
+									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test6\") and options: (\"f\", \"i\", \"logpath\", \"loglevel\")",
+									   "[% Debug]    skipping starter args: (\"restart\", \"Test6\") and options: (\"f\", \"i\", \"logpath\", \"loglevel\")",
 									   "[% Debug]    received new command: (\"Test\", \"7\") and options: (\"f\")",
 									   "[% Debug]    received new command: (\"Test\", \"8\") and options: ()",
 									   "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\")",

@@ -11,6 +11,8 @@ class ProcessHelper : public QObject
 public:
 	static const char Stamp;
 
+	static QString binPath();
+
 	explicit ProcessHelper(QObject *parent = nullptr);
 
 	void setExitCode(int code);

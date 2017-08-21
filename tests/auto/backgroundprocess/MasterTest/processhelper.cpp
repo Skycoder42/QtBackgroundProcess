@@ -4,18 +4,23 @@
 const char ProcessHelper::Stamp = '%';
 bool ProcessHelper::allGreen = true;
 
+QString ProcessHelper::binPath()
+{
+#if defined(Q_OS_WIN)
+	return QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/") + QStringLiteral(RMODE) + QStringLiteral("/DemoApp");
+#elif defined(Q_OS_MAC)
+	return QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/DemoApp.app/Contents/MacOS/DemoApp");
+#else
+	return QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/DemoApp");
+#endif
+}
+
 ProcessHelper::ProcessHelper(QObject *parent) :
 	QObject(parent),
 	process(new QProcess(this)),
 	exitCode(EXIT_SUCCESS)
 {
-#if defined(Q_OS_WIN)
-	process->setProgram(QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/") + QStringLiteral(RMODE) + QStringLiteral("/DemoApp"));
-#elif defined(Q_OS_MAC)
-	process->setProgram(QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/DemoApp.app/Contents/MacOS/DemoApp"));
-#else
-	process->setProgram(QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/DemoApp"));
-#endif
+	process->setProgram(binPath());
 
 	connect(process, &QProcess::errorOccurred,
 			this, &ProcessHelper::errorOccurred);
@@ -33,8 +38,10 @@ void ProcessHelper::start(const QByteArrayList &commands, bool logpath, int time
 	QStringList s;
 	foreach(auto c, commands)
 		s.append(QString::fromUtf8(c));
-	if(logpath)
+	if(logpath) {
 		s.append({QStringLiteral("--logpath"), logPath()});
+		s.append({QStringLiteral("--loglevel"), QStringLiteral("4")});
+	}
 	process->setArguments(s);
 	process->start();
 	QVERIFY2(process->waitForStarted(5000), qUtf8Printable(process->errorString()));
@@ -55,20 +62,12 @@ void ProcessHelper::verifyLog(const QByteArrayList &log, bool isError)
 
 	if(isError) {
 		auto err = process->readAllStandardError();
-		qDebug() << err;
 		QBuffer buffer(&err);
 		buffer.open(QIODevice::ReadOnly | QIODevice::Text);
 		testLog(log, &buffer);
 		buffer.close();
-	} else {
-		auto out = process->readAllStandardOutput();
-		qDebug() << out;
-		QBuffer buffer(&out);
-		buffer.open(QIODevice::ReadOnly | QIODevice::Text);
-		testLog(log, &buffer);
-		buffer.close();
-	}
-	//	testLog(log, process);
+	} else
+		testLog(log, process);
 
 	if(!allGreen)
 		qDebug() << "on arguments:" << process->arguments();
