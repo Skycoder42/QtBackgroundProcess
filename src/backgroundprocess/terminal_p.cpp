@@ -64,8 +64,8 @@ void TerminalPrivate::error(QLocalSocket::LocalSocketError socketError)
 {
 	if(socketError != QLocalSocket::PeerClosedError) {
 		if(isLoading) {
-			qCWarning(loggingCategory) << tr("Terminal closed due to connection error while loading terminal status:")
-					   << qUtf8Printable(socket->errorString());
+			qWarning() << tr("Terminal closed due to connection error while loading terminal status:")
+					   << socket->errorString();
 		}
 		socket->disconnectFromServer();
 	}
@@ -80,7 +80,7 @@ void TerminalPrivate::readyRead()
 		if(stream.commitTransaction()) {
 			auto doc = QJsonDocument::fromBinaryData(data);
 			if(doc.isNull()) {
-				qCWarning(loggingCategory) << tr("Invalid Terminal status received. Data is corrupted. Terminal will be disconnected");
+				qWarning() << tr("Invalid Terminal status received. Data is corrupted. Terminal will be disconnected");
 				socket->disconnectFromServer();
 			} else {
 				status = doc.object();

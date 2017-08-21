@@ -199,10 +199,7 @@ NotAllowedInRunningStateException::NotAllowedInRunningStateException() :
 
 const char *NotAllowedInRunningStateException::what() const noexcept
 {
-	const static auto trWhat = QCoreApplication::translate("NotAllowedInRunningStateException",
-														   "You are not allowed to perform this operation while the application is running!")
-							   .toUtf8();
-	return trWhat.constData();
+	return "You are not allowed to perform this operation while the application is running!";
 }
 
 void NotAllowedInRunningStateException::raise() const

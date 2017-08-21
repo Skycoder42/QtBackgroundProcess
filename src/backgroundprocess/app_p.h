@@ -12,6 +12,8 @@
 #include <QtCore/QPointer>
 #include <QtCore/QLoggingCategory>
 #include <QtCore/QFile>
+#include <QtCore/QDebug>
+#include <QtCore/QMessageLogger>
 
 #include <QtNetwork/QLocalServer>
 
@@ -88,6 +90,16 @@ private:
 };
 
 Q_DECLARE_LOGGING_CATEGORY(loggingCategory)
+
+//custom logging operators
+#undef qInfo
+#define qInfo() qCDebug(loggingCategory).noquote()
+#undef qDebug
+#define qDebug() qCDebug(loggingCategory).noquote()
+#undef qWarning
+#define qWarning() qCDebug(loggingCategory).noquote()
+#undef qCritical
+#define qCritical() qCDebug(loggingCategory).noquote()
 
 }
 

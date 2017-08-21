@@ -57,7 +57,7 @@ QString AppPrivate::generateSingleId(const QString &seed)
 	auto fullId = QCoreApplication::applicationName().toLower();
 	fullId.remove(QRegularExpression(QStringLiteral("[^a-zA-Z0-9_]")));
 	fullId.truncate(8);
-	fullId.prepend(QStringLiteral("qbackproc-"));
+	fullId.prepend(QStringLiteral("qtbackproc-"));
 	QByteArray hashBase = (QCoreApplication::organizationName() +
 						   QCoreApplication::organizationDomain() +
 						   seed).toUtf8();
@@ -180,12 +180,12 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 					 #ifdef QT_NO_DEBUG
 						 tr(" - 3: like 2 plus information messages (default)\n"
 							" - 4: verbose - log everything"),
-						 QStringLiteral("level"),
+						 tr("level"),
 						 QStringLiteral("3")
 					 #else
 						 tr(" - 3: like 2 plus information messages\n"
 							" - 4: verbose - log everything (default)"),
-						 QStringLiteral("level"),
+						 tr("level"),
 						 QStringLiteral("4")
 					 #endif
 					 });
@@ -210,14 +210,14 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 							"For this instance, it defaults to \"%1\". NOTE: The application can override the value internally. "
 							"Pass an empty string (--logpath \"\") to disable logging to a file.")
 						 .arg(defaultPath),
-						 QStringLiteral("path"),
+						 tr("path"),
 						 defaultPath
 					 });
 	parser.addOption({
 						 QStringLiteral("terminallog"),
 						 tr("Sets the log <level> for terminal only messages. This does not include messages forwarded from the master. "
 							"Log levels are the same as for the <loglevel> option."),
-						 QStringLiteral("level"),
+						 tr("level"),
 					 #ifdef QT_NO_DEBUG
 						 QStringLiteral("3")
 					 #else
@@ -305,16 +305,16 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 			this, &AppPrivate::newTerminalConnected,
 			Qt::QueuedConnection);
 	if(!masterServer->listen(instanceId)) {
-		qCCritical(loggingCategory) << tr("Failed to create local server with error:")
-					<< qUtf8Printable(masterServer->errorString());
+		qCritical() << tr("Failed to create local server with error:")
+					<< masterServer->errorString();
 		return EXIT_FAILURE;
 	}
 
 	//get the lock
 	if(!masterLock->tryLock(5000)) {//wait at most 5 sec
 		masterServer->close();
-		qCCritical(loggingCategory) << tr("Unable to start master process. Failed with lock error:")
-					<< qUtf8Printable(masterLock->error());
+		qCritical() << tr("Unable to start master process. Failed with lock error:")
+					<< masterLock->error();
 		return EXIT_FAILURE;
 	} else {
 		//setup master logging stuff
@@ -332,6 +332,9 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 				if(console)
 					ShowWindow(GetConsoleWindow(), SW_HIDE);
 			}
+
+			auto sigHandler = QCtrlSignalHandler::instance();
+			sigHandler->setAutoQuitActive(true);
 
 			//set current directory
 			QDir::setCurrent(QDir::rootPath());
@@ -394,12 +397,12 @@ int AppPrivate::startMaster(bool isAutoStart, bool isRestart)
 									  Q_ARG(bool, true));
 			return EXIT_SUCCESS;
 		} else {
-			qCCritical(loggingCategory) << tr("Failed to start master process! No master lock was detected.");
+			qCritical() << tr("Failed to start master process! No master lock was detected.");
 			return EXIT_FAILURE;
 		}
 	} else {//master is running --> ok
 		if(!isAutoStart && ignoreExtraStart) {// ignore only on normal starts, not on auto start
-			qCWarning(loggingCategory) << tr("Start commands ignored because master is already running! "
+			qWarning() << tr("Start commands ignored because master is already running! "
 											 "The terminal will connect with an empty argument list!");
 			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
 									  Q_ARG(QStringList, QStringList()),
@@ -407,7 +410,7 @@ int AppPrivate::startMaster(bool isAutoStart, bool isRestart)
 			return EXIT_SUCCESS;
 		} else {
 			if(!isAutoStart)
-				qCWarning(loggingCategory) << tr("Master is already running. Start arguments will be passed to it as is");
+				qWarning() << tr("Master is already running. Start arguments will be passed to it as is");
 			QMetaObject::invokeMethod(this, "beginMasterConnect", Qt::QueuedConnection,
 									  Q_ARG(QStringList, arguments),//send original arguments
 									  Q_ARG(bool, false));
@@ -428,7 +431,7 @@ int AppPrivate::restartMaster(const QCommandLineParser &parser)
 		if(res != tr("y") && res != tr("Y"))
 			return EXIT_FAILURE;
 	} else
-		qDebug() << "Master process successfully stopped";
+		qDebug() << tr("Master process successfully stopped");
 
 	//step 2 -> start master
 	return startMaster(false, true);
@@ -440,7 +443,7 @@ int AppPrivate::commandMaster()
 	arguments.removeFirst();//remove app name
 	if(masterLock->tryLock()) {
 		masterLock->unlock();
-		qCCritical(loggingCategory) << tr("Master process is not running! Please launch it by using:")
+		qCritical() << tr("Master process is not running! Please launch it by using:")
 					<< QCoreApplication::applicationFilePath() + QStringLiteral(" start");
 		return EXIT_FAILURE;
 	} else {
@@ -513,8 +516,8 @@ void AppPrivate::terminalLoaded(TerminalPrivate *terminal, bool success)
 		terminal->parser.reset(new QCommandLineParser());
 		qApp->setupParser(*terminal->parser.data());
 		if(!terminal->loadParser()) {
-			qCWarning(loggingCategory) << tr("Terminal with invalid commands discarded. Error:")
-									   << terminal->parser->errorText();
+			qWarning() << tr("Terminal with invalid commands discarded. Error:")
+					   << terminal->parser->errorText();
 			terminal->deleteLater();
 			return;
 		}
