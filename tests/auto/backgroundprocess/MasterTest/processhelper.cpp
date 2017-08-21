@@ -9,7 +9,13 @@ ProcessHelper::ProcessHelper(QObject *parent) :
 	process(new QProcess(this)),
 	exitCode(EXIT_SUCCESS)
 {
+#if defined(Q_OS_WIN)
+	process->setProgram(QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/") + QStringLiteral(RMODE) + QStringLiteral("/DemoApp"));
+#elif defined(Q_OS_MAC)
+	process->setProgram(QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/DemoApp.app/Contents/MacOS/DemoApp"));
+#else
 	process->setProgram(QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/DemoApp"));
+#endif
 
 	connect(process, &QProcess::errorOccurred,
 			this, &ProcessHelper::errorOccurred);

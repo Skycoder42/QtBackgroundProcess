@@ -20,6 +20,8 @@ SOURCES += \
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 DEFINES += OUTDIR=\\\"$$OUT_PWD/\\\"
+CONFIG(release, debug|release): DEFINES += RMODE=\\\"release\\\"
+CONFIG(debug, debug|release): DEFINES += RMODE=\\\"debug\\\"
 
 HEADERS += \
 	processhelper.h
