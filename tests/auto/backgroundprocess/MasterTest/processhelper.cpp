@@ -132,6 +132,9 @@ void ProcessHelper::testLog(const QByteArrayList &log, QIODevice *device)
 		auto logStr = device->readLine().trimmed();
 		if(logStr.isEmpty())
 			continue;
+		//TODO win debug
+		if(logStr.contains("QCtrlSignals"))
+			continue;
 
 		QVERIFY2(index < log.size(), logStr.constData());
 		auto testStr = log[index++];
