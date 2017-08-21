@@ -2,7 +2,7 @@ TARGET = QtBackgroundProcess
 
 QT = core network
 
-include(../3rdparty/QCtrlSignals/qctrlsignals.pri)
+include(../3rdparty/vendor/vendor.pri)
 
 HEADERS += \
 	app.h \
