@@ -53,8 +53,13 @@ void ProcessHelper::verifyLog(const QByteArrayList &log, bool isError)
 		buffer.open(QIODevice::ReadOnly | QIODevice::Text);
 		testLog(log, &buffer);
 		buffer.close();
-	} else
-		testLog(log, process);
+	} else {
+		auto out = process->readAllStandardOutput();
+		QBuffer buffer(&out);
+		buffer.open(QIODevice::ReadOnly | QIODevice::Text);
+		testLog(log, &buffer);
+		buffer.close();
+	}
 
 	if(!allGreen)
 		qDebug() << "on arguments:" << process->arguments();
