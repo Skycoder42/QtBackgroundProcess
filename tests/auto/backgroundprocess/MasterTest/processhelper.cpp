@@ -42,6 +42,8 @@ void ProcessHelper::start(const QByteArrayList &commands, bool logpath, int time
 		s.append({QStringLiteral("--logpath"), logPath()});
 		s.append({QStringLiteral("--loglevel"), QStringLiteral("4")});
 	}
+	s.append({QStringLiteral("--terminallog"), QStringLiteral("4")});
+
 	process->setArguments(s);
 	process->start();
 	QVERIFY2(process->waitForStarted(5000), qUtf8Printable(process->errorString()));

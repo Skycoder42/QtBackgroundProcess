@@ -16,7 +16,7 @@ public:
 	explicit ProcessHelper(QObject *parent = nullptr);
 
 	void setExitCode(int code);
-	void start(const QByteArrayList &commands, bool logpath = false, int timeout = 500);
+	void start(const QByteArrayList &commands, bool logpath = false, int timeout = 750);
 
 	void waitForFinished();
 	void verifyLog(const QByteArrayList &log, bool isError = false);

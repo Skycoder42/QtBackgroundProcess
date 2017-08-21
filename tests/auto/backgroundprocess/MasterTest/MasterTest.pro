@@ -13,6 +13,8 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
+HEADERS += \
+	processhelper.h
 
 SOURCES += \
 		tst_master.cpp \
@@ -23,5 +25,4 @@ DEFINES += OUTDIR=\\\"$$OUT_PWD/\\\"
 CONFIG(release, debug|release): DEFINES += RMODE=\\\"release\\\"
 CONFIG(debug, debug|release): DEFINES += RMODE=\\\"debug\\\"
 
-HEADERS += \
-	processhelper.h
+mac: QMAKE_LFLAGS += '-Wl,-rpath,\'$$OUT_PWD/../../../../lib\''
