@@ -15,6 +15,11 @@ TEMPLATE = app
 
 
 SOURCES += \
-		tst_master.cpp
+		tst_master.cpp \
+	processhelper.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
+DEFINES += OUTDIR=\\\"$$OUT_PWD/\\\"
+
+HEADERS += \
+	processhelper.h
