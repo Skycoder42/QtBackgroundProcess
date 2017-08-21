@@ -2,14 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
-    <name>NotAllowedInRunningStateException</name>
-    <message>
-        <location filename="../app.cpp" line="+202"/>
-        <source>You are not allowed to perform this operation while the application is running!</source>
-        <translation>Diese Operation ist nicht erlaubt während die Anwendung läuft!</translation>
-    </message>
-</context>
-<context>
     <name>QtBackgroundProcess::AppPrivate</name>
     <message>
         <location filename="../app_p.cpp" line="+161"/>
@@ -36,7 +28,7 @@
  - 1: critical errors only
  - 2: like 1 plus warnings
 </source>
-        <translation>Setzt das gewünschte Log-&lt;level&gt;. Mögliche Werte sind:
+        <translation>Setzt das gewünschte Log-&lt;Level&gt;. Mögliche Werte sind:
  - 0: Nichts loggen
  - 1: Nur Kritische Fehler loggen
  - 2: Wie 1 plus Warnungen loggen
@@ -50,7 +42,14 @@
  - 4: Alles loggen</translation>
     </message>
     <message>
+        <location line="+2"/>
         <location line="+5"/>
+        <location line="+32"/>
+        <source>level</source>
+        <translation>Level</translation>
+    </message>
+    <message>
+        <location line="-34"/>
         <source> - 3: like 2 plus information messages
  - 4: verbose - log everything (default)</source>
         <translation> - 3: Wie 2 plus Informationen loggen
@@ -59,12 +58,17 @@
     <message>
         <location line="+23"/>
         <source>Overwrites the default log &lt;path&gt;. The default path is platform and application specific. For this instance, it defaults to &quot;%1&quot;. NOTE: The application can override the value internally. Pass an empty string (--logpath &quot;&quot;) to disable logging to a file.</source>
-        <translation>Überschreibt den standard Log-Pfad &lt;path&gt;. Dieser ist Plattform-abhängig und Anwendungs-spezifisch. Für diese Instanz ist es &quot;%1&quot;. HINWEIS: The Anwendung kann diesen Wert intern überschreiben. Übergeben sie einen leeren String (--logpath &quot;&quot;) um das Logging in eine Datei komplett zu deaktivieren.</translation>
+        <translation>Überschreibt den standard Log-&lt;Pfad&gt;. Dieser ist Plattform-abhängig und Anwendungs-spezifisch. Für diese Instanz ist es &quot;%1&quot;. HINWEIS: The Anwendung kann diesen Wert intern überschreiben. Übergeben sie einen leeren String (--logpath &quot;&quot;) um das Logging in eine Datei komplett zu deaktivieren.</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+4"/>
+        <source>path</source>
+        <translation>Pfad</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Sets the log &lt;level&gt; for terminal only messages. This does not include messages forwarded from the master. Log levels are the same as for the &lt;loglevel&gt; option.</source>
-        <translation>Setzt das gewünschte Log-&lt;level&gt; für Terminal Ausgaben. Die schließt nicht die Ausgaben des Master-Prozesses ein. Die Level sind identisch zu denen der &lt;loglevel&gt; Option.</translation>
+        <translation>Setzt das gewünschte Log-&lt;Level&gt; für Terminal Ausgaben. Die schließt nicht die Ausgaben des Master-Prozesses ein. Die Level sind identisch zu denen der &lt;loglevel&gt; Option.</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -77,7 +81,7 @@
         <translation>Überspringt Bestätigungen und akzeptiert sie, wo möglich.</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+73"/>
         <source>Failed to create local server with error:</source>
         <translation>Konnte lokalen Server nicht erstellen, mit Fehler:</translation>
     </message>
@@ -87,7 +91,7 @@
         <translation>Konnte Master-Prozess nicht starten. Sperrung fehlgeschlagen mit Fehler:</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+84"/>
         <source>Failed to start master process! No master lock was detected.</source>
         <translation>Konnte Master-Prozess nicht starten. Keine Sperrdatei des Masters erkannt.</translation>
     </message>
@@ -121,7 +125,12 @@ Trotzdem neustarten? (j/N)</translation>
         <translation>J</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+3"/>
+        <source>Master process successfully stopped</source>
+        <translation>Master-Prozess erfolgreich gestoppt</translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>Master process is not running! Please launch it by using:</source>
         <translation>Master-Prozess läuft nicht! Bitte starten Sie diesen mit:</translation>
     </message>

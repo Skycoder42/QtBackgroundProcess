@@ -2,14 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>NotAllowedInRunningStateException</name>
-    <message>
-        <location filename="../app.cpp" line="+202"/>
-        <source>You are not allowed to perform this operation while the application is running!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QtBackgroundProcess::AppPrivate</name>
     <message>
         <location filename="../app_p.cpp" line="+161"/>
@@ -41,7 +33,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+2"/>
         <location line="+5"/>
+        <location line="+32"/>
+        <source>level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-34"/>
         <source> - 3: like 2 plus information messages
  - 4: verbose - log everything (default)</source>
         <translation type="unfinished"></translation>
@@ -52,7 +51,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+4"/>
+        <source>path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Sets the log &lt;level&gt; for terminal only messages. This does not include messages forwarded from the master. Log levels are the same as for the &lt;loglevel&gt; option.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -67,7 +71,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+73"/>
         <source>Failed to create local server with error:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -77,7 +81,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+84"/>
         <source>Failed to start master process! No master lock was detected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -109,7 +113,12 @@ Do you want to restart it anyway? (y/N)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+3"/>
+        <source>Master process successfully stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>Master process is not running! Please launch it by using:</source>
         <translation type="unfinished"></translation>
     </message>
