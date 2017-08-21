@@ -45,9 +45,15 @@ void ProcessHelper::start(const QByteArrayList &commands, bool logpath, int time
 	s.append({QStringLiteral("--terminallog"), QStringLiteral("4")});
 
 	process->setArguments(s);
-	process->start();
+	process->start(QIODevice::ReadWrite);
 	QVERIFY2(process->waitForStarted(5000), qUtf8Printable(process->errorString()));
 	QThread::msleep(timeout);
+}
+
+void ProcessHelper::send(const QByteArray &message)
+{
+	process->write(message + '\n');
+	QCoreApplication::processEvents();
 }
 
 void ProcessHelper::waitForFinished()

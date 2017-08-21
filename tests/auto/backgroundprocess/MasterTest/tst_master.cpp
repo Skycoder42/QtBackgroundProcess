@@ -248,7 +248,68 @@ void MasterTest::commandsTest()
 
 void MasterTest::echoTest()
 {
+	auto p1 = new ProcessHelper(this);
+	p1->start({"start", "-m", "echo"}, true);
+	p1->send("test1");
 
+	auto p2 = new ProcessHelper(this);
+	p2->start({});
+
+	auto p3 = new ProcessHelper(this);
+	p3->start({"-f", "1"});
+	p2->send("test2");
+	p3->send("test3");
+
+	auto p4 = new ProcessHelper(this);
+	p4->start({"stop"});
+
+	ProcessHelper::waitForFinished({p1, p2, p3, p4});
+
+	p1->verifyLog({
+					  "test1",
+					  "[% Debug]    received new command: () and options: (\"f\", \"terminallog\")",
+					  "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
+					  "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
+					  "[% Debug]    I am quitting!"
+				  });
+	p1->verifyLogEmpty();
+	p2->verifyLog({
+					  "[% Debug]    received new command: () and options: (\"f\", \"terminallog\")",
+					  "test2",
+					  "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
+					  "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
+					  "[% Debug]    I am quitting!"
+				  });
+	p2->verifyLogEmpty();
+	p3->verifyLog({
+					  "test3",
+					  "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
+					  "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
+					  "[% Debug]    I am quitting!"
+				  });
+	p3->verifyLogEmpty();
+
+	p4->verifyLog({
+					  "[% Debug]    I am quitting!"
+				  });
+	p4->verifyLogEmpty();
+
+	ProcessHelper::verifyMasterLog({
+									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
+									   "[% Debug]    Master started in echo mode!",
+									   "[% Debug]    skipping starter args: (\"start\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
+									   "[% Debug]    received new command: () and options: (\"terminallog\")",
+									   "[% Debug]    received new command: () and options: (\"f\", \"terminallog\")",
+									   "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
+									   "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
+									   "[% Debug]    I am quitting!"
+								   });
+
+	QCoreApplication::processEvents();
+	p1->deleteLater();
+	p2->deleteLater();
+	p3->deleteLater();
+	p4->deleteLater();
 }
 
 void MasterTest::statusTest()

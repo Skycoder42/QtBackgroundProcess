@@ -18,6 +18,8 @@ public:
 	void setExitCode(int code);
 	void start(const QByteArrayList &commands, bool logpath = false, int timeout = 750);
 
+	void send(const QByteArray &message);
+
 	void waitForFinished();
 	void verifyLog(const QByteArrayList &log, bool isError = false);
 	void verifyLogEmpty(bool isError = true);
