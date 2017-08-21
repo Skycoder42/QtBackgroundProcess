@@ -239,6 +239,8 @@ void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOpt
 void AppPrivate::updateLoggingMode(int level)
 {
 	QString logStr;
+	QT_WARNING_PUSH
+	QT_WARNING_DISABLE_GCC("-Wimplicit-fallthrough=")
 	switch (level) {
 	case 0:
 		logStr.prepend(QStringLiteral("\n*.critical=false"));
@@ -253,6 +255,7 @@ void AppPrivate::updateLoggingMode(int level)
 	default:
 		return;
 	}
+	QT_WARNING_POP
 	QLoggingCategory::setFilterRules(logStr);
 }
 

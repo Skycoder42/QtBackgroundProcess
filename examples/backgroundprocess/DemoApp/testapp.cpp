@@ -13,8 +13,8 @@ void TestApp::parseTerminalOptions()
 	QCommandLineParser parser;
 	setupParser(parser, true);
 	parser.process(*this);
-	setAutoStartMaster(parser.isSet("a"));
-	setIgnoreMultiStarts(parser.isSet("i"));
+	setAutoStartMaster(parser.isSet(QStringLiteral("a")));
+	setIgnoreMultiStarts(parser.isSet(QStringLiteral("i")));
 }
 
 int TestApp::startupApp(const QCommandLineParser &parser)
@@ -28,15 +28,15 @@ int TestApp::startupApp(const QCommandLineParser &parser)
 	connect(this, &TestApp::commandReceived,
 			this, &TestApp::handleCommand);
 
-	if(parser.isSet("m")) {
-		if(parser.value("m") == "echo") {
+	if(parser.isSet(QStringLiteral("m"))) {
+		if(parser.value(QStringLiteral("m")) == QStringLiteral("echo")) {
 			connect(this, &TestApp::newTerminalConnected,
 					this, &TestApp::addTerminal);
 			qDebug() << "Master started in echo mode!";
-		} else if(parser.value("m") == "status"){
+		} else if(parser.value(QStringLiteral("m")) == QStringLiteral("status")){
 			statusTerm = new GlobalTerminal(this);
 			qDebug() << "Master started in status mode!";
-		} else if(parser.value("m") == "scream"){
+		} else if(parser.value(QStringLiteral("m")) == QStringLiteral("scream")){
 			auto term = new GlobalTerminal(this);
 			auto timer = new QTimer(this);
 			timer->setInterval(500);
@@ -74,25 +74,25 @@ void TestApp::setupParser(QCommandLineParser &parser, bool useShortOptions)
 	App::setupParser(parser, useShortOptions);
 
 	parser.addOption({
-						 {"a", "autostart"},
-						 "Starts the master automatically, if not already running."
+						 {QStringLiteral("a"), QStringLiteral("autostart")},
+						 QStringLiteral("Starts the master automatically, if not already running.")
 					 });
 	parser.addOption({
-						 {"i", "ignoreStart"},
-						 "If start is called a second time, the arguments will be omitted."
+						 {QStringLiteral("i"), QStringLiteral("ignoreStart")},
+						 QStringLiteral("If start is called a second time, the arguments will be omitted.")
 					 });
 	parser.addOption({
-						 {"f", "forward"},
-						 "forwards master debug output to all terminals if <active> = 1, disables it if <active> = 0.",
-						 "active",
-						 "1"
+						 {QStringLiteral("f"), QStringLiteral("forward")},
+						 QStringLiteral("forwards master debug output to all terminals if <active> = 1, disables it if <active> = 0."),
+						 QStringLiteral("active"),
+						 QStringLiteral("1")
 					 });
 	parser.addOption({
-						 {"m", "mode"},
-						 "Tells the master to run <mode>. Can be \"echo\" to simply echo all terminals, "
+						 {QStringLiteral("m"), QStringLiteral("mode")},
+						 QStringLiteral("Tells the master to run <mode>. Can be \"echo\" to simply echo all terminals, "
 						 "\"status\" to simply broadcast new arguments to all terminals, or \"scream\" to permanently "
-						 "print stuff to all terminals. Unless explicitly set, nothing will be done",
-						 "mode"
+						 "print stuff to all terminals. Unless explicitly set, nothing will be done"),
+						 QStringLiteral("mode")
 					 });
 }
 
@@ -112,7 +112,7 @@ void TestApp::handleCommand(QSharedPointer<QCommandLineParser> parser, bool star
 	}
 
 	if(statusTerm)
-		statusTerm->writeLine("[" + parser->positionalArguments().join(", ").toUtf8() + "]");
+		statusTerm->writeLine('[' + parser->positionalArguments().join(QStringLiteral(", ")).toUtf8() + ']');
 }
 
 void TestApp::addTerminal(Terminal *terminal)
@@ -125,14 +125,14 @@ void TestApp::addTerminal(Terminal *terminal)
 
 void TestApp::doCommand(const QCommandLineParser &parser)
 {
-	if(parser.isSet("f"))
-		setForwardMasterLog(parser.value("f").toInt());
+	if(parser.isSet(QStringLiteral("f")))
+		setForwardMasterLog(parser.value(QStringLiteral("f")).toInt());
 }
 
 int main(int argc, char *argv[])
 {
 	TestApp a(argc, argv);
-	TestApp::setApplicationVersion("4.2.0");
+	TestApp::setApplicationVersion(QStringLiteral("4.2.0"));
 
 	a.parseTerminalOptions();
 	return a.exec();
