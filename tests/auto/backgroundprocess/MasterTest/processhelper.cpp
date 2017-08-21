@@ -12,8 +12,6 @@ QString ProcessHelper::binPath()
 {
 #if defined(Q_OS_WIN)
 	return QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/") + QStringLiteral(RMODE) + QStringLiteral("/DemoApp");
-#elif defined(Q_OS_MAC)
-	return QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/DemoApp.app/Contents/MacOS/DemoApp");
 #else
 	return QStringLiteral(OUTDIR) + QStringLiteral("../../../../examples/backgroundprocess/DemoApp/DemoApp");
 #endif
@@ -24,6 +22,7 @@ ProcessHelper::ProcessHelper(QObject *parent) :
 	process(new QProcess(this)),
 	exitCode(EXIT_SUCCESS)
 {
+	qDebug() << binPath();
 	process->setProgram(binPath());
 
 	connect(process, &QProcess::errorOccurred,
