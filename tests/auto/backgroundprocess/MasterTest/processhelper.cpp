@@ -22,7 +22,6 @@ ProcessHelper::ProcessHelper(QObject *parent) :
 	process(new QProcess(this)),
 	exitCode(EXIT_SUCCESS)
 {
-	qDebug() << binPath();
 	process->setProgram(binPath());
 
 	connect(process, &QProcess::errorOccurred,
