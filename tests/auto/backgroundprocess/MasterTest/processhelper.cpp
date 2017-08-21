@@ -89,6 +89,7 @@ void ProcessHelper::verifyMasterLog(const QByteArrayList &log)
 	auto logFile = logPath();
 	QFile file(logFile);
 	QVERIFY(file.exists());
+	qDebug() << file.size();
 	QVERIFY2(file.open(QIODevice::ReadOnly | QIODevice::Text), qUtf8Printable(file.errorString()));
 
 	allGreen = false;
@@ -115,7 +116,7 @@ void ProcessHelper::finished(int exitCode, QProcess::ExitStatus exitStatus)
 
 QString ProcessHelper::logPath()
 {
-	return QDir::current().absoluteFilePath(QStringLiteral("MasterTest.log"));
+	return QDir::temp().absoluteFilePath(QStringLiteral("MasterTest.log"));
 }
 
 void ProcessHelper::testLog(const QByteArrayList &log, QIODevice *device)
@@ -123,6 +124,7 @@ void ProcessHelper::testLog(const QByteArrayList &log, QIODevice *device)
 	auto index = 0;
 	while(!device->atEnd()) {
 		auto logStr = device->readLine().trimmed();
+		qDebug() << logStr;
 		if(logStr.isEmpty())
 			continue;
 
