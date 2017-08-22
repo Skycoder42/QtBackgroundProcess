@@ -4,9 +4,11 @@
 #include "qtbackgroundprocess_global.h"
 
 #include <QtCore/QObject>
-#include <QtCore/QThread>
+#include <QtCore/QFile>
 
 #include <QtNetwork/QLocalSocket>
+
+class QConsole;
 
 namespace QtBackgroundProcess {
 
@@ -25,24 +27,17 @@ private Q_SLOTS:
 	void connected();
 	void disconnected();
 	void error(QLocalSocket::LocalSocketError socketError);
-	void readyRead();
+	void socketReady();
 
-	void doWrite(const QByteArray &data);
+	void stdinReady();
 
 private:
-	class Q_BACKGROUNDPROCESS_EXPORT InThread : public QThread {
-	public:
-		InThread(MasterConnecter *parent);
-
-	protected:
-		void run() override;
-	};
-
 	const QStringList arguments;
 	const bool isStarter;
 
 	QLocalSocket *socket;
-	InThread *readThread;
+	QConsole *console;
+	QFile *outFile;
 };
 
 }

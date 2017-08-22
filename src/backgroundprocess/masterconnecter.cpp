@@ -7,10 +7,7 @@
 #include <QtCore/QDataStream>
 #include <QtCore/QFile>
 
-#include <iostream>
-#ifdef Q_OS_UNIX
-#include <unistd.h>
-#endif
+#include <qconsole.h>
 
 using namespace QtBackgroundProcess;
 
@@ -19,7 +16,8 @@ MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &a
 	arguments(arguments),
 	isStarter(isStarter),
 	socket(new QLocalSocket(this)),
-	readThread(new InThread(this))
+	console(new QConsole(this)),
+	outFile(QConsole::qStdOut(this))
 {
 	connect(socket, &QLocalSocket::connected,
 			this, &MasterConnecter::connected);
@@ -28,22 +26,17 @@ MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &a
 	connect(socket, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error),
 			this, &MasterConnecter::error);
 	connect(socket, &QLocalSocket::readyRead,
-			this, &MasterConnecter::readyRead);
+			this, &MasterConnecter::socketReady);
+
+	connect(console, &QConsole::readyRead,
+			this, &MasterConnecter::stdinReady);
 
 	socket->connectToServer(instanceId);
 }
 
 MasterConnecter::~MasterConnecter()
 {
-	readThread->requestInterruption();
-#ifdef Q_OS_UNIX
-	//close stdin to "cancel" the blocking read
-	close(fileno(stdin));
-#endif
-	if(!readThread->wait(500)) {
-		readThread->terminate();
-		readThread->wait(100);//additional wait, to complete termination
-	}
+	console->close();
 }
 
 void MasterConnecter::connected()
@@ -58,7 +51,7 @@ void MasterConnecter::connected()
 	socket->flush();
 
 	//begin stdin reading
-	readThread->start();
+	console->open();
 }
 
 void MasterConnecter::disconnected()
@@ -77,45 +70,17 @@ void MasterConnecter::error(QLocalSocket::LocalSocketError socketError)
 	}
 }
 
-void MasterConnecter::readyRead()
+void MasterConnecter::socketReady()
 {
 	auto data  = socket->readAll();
-	std::cout.write(data.constData(), data.size());
-	std::cout.flush();
+	outFile->write(data);
+	outFile->flush();
 }
 
-void MasterConnecter::doWrite(const QByteArray &data)
+void MasterConnecter::stdinReady()
 {
+	auto bytes = console->bytesAvailable();
+	auto data  = console->read(bytes);
 	socket->write(data);
 	socket->flush();
-}
-
-
-
-MasterConnecter::InThread::InThread(MasterConnecter *parent) :
-	QThread(parent)
-{
-	setTerminationEnabled(true);
-}
-
-void MasterConnecter::InThread::run()
-{
-	QFile inFile;
-	inFile.open(stdin, QIODevice::ReadOnly);
-	while(!isInterruptionRequested()) {
-		if(inFile.error() != QFile::NoError)
-			break;
-
-		auto data = inFile.readLine();
-		if(data.isEmpty())
-			QThread::msleep(100);
-		else {
-			QMetaObject::invokeMethod(parent(), "doWrite", Qt::QueuedConnection,
-									  Q_ARG(const QByteArray &, data));
-		}
-	}
-
-	inFile.close();
-	if(!isInterruptionRequested())
-		qCritical() << tr("stdin was unexpectedly closed! The terminal will not be able to foreward input to the master anymore!");
 }
