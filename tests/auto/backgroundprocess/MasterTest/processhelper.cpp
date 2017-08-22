@@ -164,10 +164,12 @@ void ProcessHelper::testLog(const QByteArrayList &log, QIODevice *device)
 
 		auto testSplit = testStr.split(Stamp);
 		if(testSplit.size() == 2) {
-			QVERIFY2(logStr.startsWith(testSplit[0]), logStr.constData());
-			QVERIFY2(logStr.endsWith(testSplit[1]), logStr.constData());
-		} else
-			QCOMPARE(logStr, testStr);
+			if(logStr.startsWith(testSplit[0]) &&
+			   logStr.endsWith(testSplit[1]))
+				continue;
+		}
+
+		QCOMPARE(logStr, testStr);
 	}
 	QCOMPARE(index, log.size());
 	allGreen = true;
