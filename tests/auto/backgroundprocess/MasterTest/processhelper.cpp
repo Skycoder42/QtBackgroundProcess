@@ -6,7 +6,6 @@
 #endif
 
 const char ProcessHelper::Stamp = '%';
-bool ProcessHelper::allGreen = true;
 
 QString ProcessHelper::binPath()
 {
@@ -79,26 +78,31 @@ void ProcessHelper::waitForFinished(bool terminate)
 	}
 }
 
-void ProcessHelper::verifyLog(const QByteArrayList &log, bool isError)
+bool ProcessHelper::verifyLog(const QByteArrayList &log, bool isError, const char *file, int line)
 {
-	allGreen = false;
+	QByteArray data;
+	if(isError)
+		data = process->readAllStandardError();
+	else
+		data = process->readAllStandardOutput();
+	auto dataList = data.split('\n');
 
-	if(isError) {
-		auto err = process->readAllStandardError();
-		QBuffer buffer(&err);
-		buffer.open(QIODevice::ReadOnly | QIODevice::Text);
-		testLog(log, &buffer);
-		buffer.close();
+	if(!testLog(log, dataList, isError)) {
+		QByteArray resStr = "Log does not contain device output for ";
+		if(isError)
+			resStr += "stderr:\n";
+		else
+			resStr += "stdout:\n";
+		resStr += "Expected Log:";
+		foreach(auto line, log)
+			resStr += "\n\t" + line;
+		resStr += "\nActual Log:";
+		foreach(auto line, dataList)
+			resStr += "\n\t" + line;
+		QTest::qFail(resStr.constData(), file, line);
+		return false;
 	} else
-		testLog(log, process);
-
-	if(!allGreen)
-		qDebug() << "on arguments:" << process->arguments();
-}
-
-void ProcessHelper::verifyLogEmpty(bool isError)
-{
-	verifyLog(QByteArrayList(), isError);
+		return true;
 }
 
 void ProcessHelper::waitForFinished(const QList<ProcessHelper *> &helpers)
@@ -114,21 +118,32 @@ void ProcessHelper::clearLog()
 		QVERIFY(QFile::remove(logFile));
 }
 
-void ProcessHelper::verifyMasterLog(const QByteArrayList &log)
+bool ProcessHelper::verifyMasterLog(const QByteArrayList &log, const char *file, int line)
 {
 	auto logFile = logPath();
-	QFile file(logFile);
-	QVERIFY(file.exists());
-	QVERIFY2(file.open(QIODevice::ReadOnly | QIODevice::Text), qUtf8Printable(file.errorString()));
+	QFile masterFile(logFile);
+	if (!QTest::qVerify(masterFile.exists(), "masterLog.exists", "File does not exist", file, line))
+		return false;
+	if (!QTest::qVerify(masterFile.open(QIODevice::ReadOnly | QIODevice::Text), "masterLog.open", qUtf8Printable(masterFile.errorString()), file, line))
+		return false;
 
-	allGreen = false;
-	testLog(log, &file);
-	if(!allGreen)
-		qDebug() << "on master log";
+	auto dataList = masterFile.readAll().split('\n');
+	auto res = testLog(log, dataList, true);
+	if(!res) {
+		QByteArray resStr = "Master Log is not as expected:\nExpected Log:";
+		foreach(auto line, log)
+			resStr += "\n\t" + line;
+		resStr += "\nActual Log:";
+		foreach(auto line, dataList)
+			resStr += "\n\t" + line;
+		QTest::qFail(resStr.constData(), file, line);
+	}
 
-	file.close();
-	QVERIFY(file.remove());
+	masterFile.close();
+	if (!QTest::qVerify(masterFile.remove(), "masterLog.remove", qUtf8Printable(masterFile.errorString()), file, line))
+		return false;
 
+	return res;
 }
 
 void ProcessHelper::errorOccurred(QProcess::ProcessError error)
@@ -148,29 +163,41 @@ QString ProcessHelper::logPath()
 	return QDir::temp().absoluteFilePath(QStringLiteral("MasterTest.log"));
 }
 
-void ProcessHelper::testLog(const QByteArrayList &log, QIODevice *device)
+bool ProcessHelper::testLog(const QByteArrayList &log, const QByteArrayList &device, bool fullEqual)
 {
 	auto index = 0;
-	while(!device->atEnd()) {
-		auto logStr = device->readLine().trimmed();
+
+	foreach(auto line, device) {
+		auto logStr = line.trimmed();
 		if(logStr.isEmpty())
 			continue;
 		//TODO win debug
 		if(logStr.contains("QCtrlSignals"))
 			continue;
 
-		QVERIFY2(index < log.size(), logStr.constData());
-		auto testStr = log[index++];
+		bool fullOk;
+		do {
+			fullOk = true;
+			if(index >= log.size())
+				return false;
+			auto testStr = log[index++];
 
-		auto testSplit = testStr.split(Stamp);
-		if(testSplit.size() == 2) {
-			if(logStr.startsWith(testSplit[0]) &&
-			   logStr.endsWith(testSplit[1]))
-				continue;
-		}
+			auto testSplit = testStr.split(Stamp);
+			if(testSplit.size() == 2) {
+				if(logStr.startsWith(testSplit[0]) &&
+				   logStr.endsWith(testSplit[1]))
+					break;
+			}
 
-		QCOMPARE(logStr, testStr);
+			if(logStr == testStr)
+				break;
+
+			fullOk = false;
+		} while(!fullEqual);
+
+		if(!fullOk)
+			return false;
 	}
-	QCOMPARE(index, log.size());
-	allGreen = true;
+
+	return !fullEqual || index == log.size();
 }

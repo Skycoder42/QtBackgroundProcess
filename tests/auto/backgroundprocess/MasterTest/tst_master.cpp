@@ -53,27 +53,23 @@ void MasterTest::simpleTest()
 
 	ProcessHelper::waitForFinished({p1, p2, p3, p4});
 
-	p1->verifyLogEmpty();
-	p2->verifyLogEmpty();
+	QVERIFYERRLOG(p1);
+	QVERIFYERRLOG(p2);
 #ifdef Q_OS_WIN
-	p3->verifyLog({
-					  "[Warning]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is"
-				  }, true);
+	QVERIFYERRLOG(p3, "[Warning]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is");
 #else
-	p3->verifyLog({
-					  "[\x1B[33mWarning\x1B[0m]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is"
-				  }, true);
+	QVERIFYERRLOG(p3, "[\x1B[33mWarning\x1B[0m]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is");
 #endif
-	p4->verifyLogEmpty();
-	ProcessHelper::verifyMasterLog({
-									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test1\") and options: (\"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    skipping starter args: (\"start\", \"Test1\") and options: (\"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    received new command: (\"Test2\") and options: (\"terminallog\")",
-									   "[% Debug]    received new command: (\"start\", \"Test\", \"3\") and options: (\"terminallog\")",
-									   "[% Debug]    received new command: (\"stop\", \"Test\", \"4\") and options: (\"terminallog\")",
-									   "[% Debug]    stop requested with (\"stop\", \"Test\", \"4\") and options: (\"terminallog\")",
-									   "[% Debug]    I am quitting!"
-								   });
+	QVERIFYERRLOG(p4);
+	QVERIFYMASTERLOG(
+				"[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test1\") and options: (\"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    skipping starter args: (\"start\", \"Test1\") and options: (\"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    received new command: (\"Test2\") and options: (\"terminallog\")",
+				"[% Debug]    received new command: (\"start\", \"Test\", \"3\") and options: (\"terminallog\")",
+				"[% Debug]    received new command: (\"stop\", \"Test\", \"4\") and options: (\"terminallog\")",
+				"[% Debug]    stop requested with (\"stop\", \"Test\", \"4\") and options: (\"terminallog\")",
+				"[% Debug]    I am quitting!"
+	);
 
 	QCoreApplication::processEvents();
 	p1->deleteLater();
@@ -101,7 +97,7 @@ void MasterTest::commandsTest()
 	p5->start({"-a", "-i", "Test5"});
 
 	auto p6 = new ProcessHelper(this);
-	p6->start({"restart", "-f", "1", "-i", "Test6"}, true, 1500);
+	p6->start({"restart", "-f", "1", "-i", "Test6"}, true, 2000);
 
 	auto p7 = new ProcessHelper(this);
 	p7->start({"-f", "0", "Test", "7"});
@@ -115,121 +111,103 @@ void MasterTest::commandsTest()
 	ProcessHelper::waitForFinished({p1, p2, p3, p4, p5, p6, p7, p8, p9});
 
 #ifdef Q_OS_WIN
-	p1->verifyLog({
-					  "[Critical] QtBackgroundProcess: Master process is not running! Please launch it by using: % start"
-				  }, true);
+	QVERIFYERRLOG(p1, "[Critical] QtBackgroundProcess: Master process is not running! Please launch it by using: % start");
 #else
-	p1->verifyLog({
-					  "[\x1B[31mCritical\x1B[0m] QtBackgroundProcess: Master process is not running! Please launch it by using: % start"
-				  }, true);
+	QVERIFYERRLOG(p1, "[\x1B[31mCritical\x1B[0m] QtBackgroundProcess: Master process is not running! Please launch it by using: % start");
 #endif
 
-	p2->verifyLog({
-					  "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
-					  "[% Debug]    skipping starter args: (\"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
-					  "[% Debug]    received new command: () and options: ()",
-					  "[% Debug]    received new command: (\"start\", \"Test\", \"4\") and options: (\"terminallog\")",
-					  "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\", \"terminallog\")",
-					  "[% Debug]    received new command: (\"stop\") and options: ()",
-					  "[% Debug]    stop requested with (\"stop\") and options: ()",
-					  "[% Debug]    I am quitting!"
-				  });
-	p2->verifyLogEmpty();
+	QVERIFYOUTLOG(p2,
+				  "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
+				  "[% Debug]    skipping starter args: (\"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
+				  "[% Debug]    received new command: () and options: ()",
+				  "[% Debug]    received new command: (\"start\", \"Test\", \"4\") and options: (\"terminallog\")",
+				  "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\", \"terminallog\")",
+				  "[% Debug]    received new command: (\"stop\") and options: ()",
+				  "[% Debug]    stop requested with (\"stop\") and options: ()",
+				  "[% Debug]    I am quitting!"
+	);
+	QVERIFYERRLOG(p2);
 
-	p3->verifyLog({
-					  "[% Debug]    received new command: (\"start\", \"Test\", \"4\") and options: (\"terminallog\")",
-					  "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\", \"terminallog\")",
-					  "[% Debug]    received new command: (\"stop\") and options: ()",
-					  "[% Debug]    stop requested with (\"stop\") and options: ()",
-					  "[% Debug]    I am quitting!"
-				  });
+	QVERIFYOUTLOG(p3,
+				  "[% Debug]    received new command: (\"start\", \"Test\", \"4\") and options: (\"terminallog\")",
+				  "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\", \"terminallog\")",
+				  "[% Debug]    received new command: (\"stop\") and options: ()",
+				  "[% Debug]    stop requested with (\"stop\") and options: ()",
+				  "[% Debug]    I am quitting!"
+	);
 #ifdef Q_OS_WIN
-	p3->verifyLog({
-					  "[Warning]  QtBackgroundProcess: Start commands ignored because master is already running! The terminal will connect with an empty argument list!"
-				  }, true);
+	QVERIFYERRLOG(p3, "[Warning]  QtBackgroundProcess: Start commands ignored because master is already running! The terminal will connect with an empty argument list!");
 #else
-	p3->verifyLog({
-					  "[\x1B[33mWarning\x1B[0m]  QtBackgroundProcess: Start commands ignored because master is already running! The terminal will connect with an empty argument list!"
-				  }, true);
+	QVERIFYERRLOG(p3, "[\x1B[33mWarning\x1B[0m]  QtBackgroundProcess: Start commands ignored because master is already running! The terminal will connect with an empty argument list!");
 #endif
 
-	p4->verifyLog({
-					  "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\", \"terminallog\")",
-					  "[% Debug]    received new command: (\"stop\") and options: ()",
-					  "[% Debug]    stop requested with (\"stop\") and options: ()",
-					  "[% Debug]    I am quitting!"
-				  });
+	QVERIFYOUTLOG(p4,
+				  "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\", \"terminallog\")",
+				  "[% Debug]    received new command: (\"stop\") and options: ()",
+				  "[% Debug]    stop requested with (\"stop\") and options: ()",
+				  "[% Debug]    I am quitting!"
+	);
 #ifdef Q_OS_WIN
-	p4->verifyLog({
-					  "[Warning]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is"
-				  }, true);
+	QVERIFYERRLOG(p4, "[Warning]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is");
 #else
-	p4->verifyLog({
-					  "[\x1B[33mWarning\x1B[0m]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is"
-				  }, true);
+	QVERIFYERRLOG(p4, "[\x1B[33mWarning\x1B[0m]  QtBackgroundProcess: Master is already running. Start arguments will be passed to it as is");
 #endif
 
-	p5->verifyLog({
-					  "[% Debug]    received new command: (\"stop\") and options: ()",
-					  "[% Debug]    stop requested with (\"stop\") and options: ()",
-					  "[% Debug]    I am quitting!"
-				  });
-	p5->verifyLogEmpty();
+	QVERIFYOUTLOG(p5,
+				  "[% Debug]    received new command: (\"stop\") and options: ()",
+				  "[% Debug]    stop requested with (\"stop\") and options: ()",
+				  "[% Debug]    I am quitting!"
+	);
+	QVERIFYERRLOG(p5);
 
-	p6->verifyLog({
-					  "[% Debug]    I am quitting!",
-					  "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test6\") and options: (\"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
-					  "[% Debug]    skipping starter args: (\"restart\", \"Test6\") and options: (\"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
-					  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
-					  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
-					  "[% Debug]    I am quitting!"
-				  });
+	QVERIFYOUTLOG(p6,
+				  "[% Debug]    I am quitting!",
+				  "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test6\") and options: (\"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
+				  "[% Debug]    skipping starter args: (\"restart\", \"Test6\") and options: (\"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
+				  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
+				  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
+				  "[% Debug]    I am quitting!"
+	);
 #ifdef Q_OS_WIN
-	p6->verifyLog({
-					  "[Debug]    QtBackgroundProcess: Master process successfully stopped"
-				  }, true);
+	QVERIFYERRLOG(p6, "[Debug]    QtBackgroundProcess: Master process successfully stopped");
 #else
-	p6->verifyLog({
-					  "[\x1B[32mDebug\x1B[0m]    QtBackgroundProcess: Master process successfully stopped"
-				  }, true);
+	QVERIFYERRLOG(p6, "[\x1B[32mDebug\x1B[0m]    QtBackgroundProcess: Master process successfully stopped");
 #endif
 
-	p7->verifyLog({
-					  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
-					  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
-					  "[% Debug]    I am quitting!"
-				  });
-	p7->verifyLogEmpty();
+	QVERIFYOUTLOG(p7,
+				  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
+				  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
+				   "[% Debug]    I am quitting!"
+	);
+	QVERIFYERRLOG(p7);
 
-	p8->verifyLog({
-					  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
-					  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
-					  "[% Debug]    I am quitting!"
-				  });
-	p8->verifyLogEmpty();
+	QVERIFYOUTLOG(p8,
+				  "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
+				  "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
+				  "[% Debug]    I am quitting!"
+	);
+	QVERIFYERRLOG(p8);
 
-	p9->verifyLog({
-					  "[% Debug]    I am quitting!"
-				  });
-	p9->verifyLogEmpty();
+	QVERIFYOUTLOG(p9, "[% Debug]    I am quitting!");
+	QVERIFYERRLOG(p9);
 
-	ProcessHelper::verifyMasterLog({
-									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    skipping starter args: (\"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    received new command: () and options: ()",
-									   "[% Debug]    received new command: (\"start\", \"Test\", \"4\") and options: (\"terminallog\")",
-									   "[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\", \"terminallog\")",
-									   "[% Debug]    received new command: (\"stop\") and options: ()",
-									   "[% Debug]    stop requested with (\"stop\") and options: ()",
-									   "[% Debug]    I am quitting!",
-									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test6\") and options: (\"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    skipping starter args: (\"restart\", \"Test6\") and options: (\"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    received new command: (\"Test\", \"7\") and options: (\"f\", \"terminallog\")",
-									   "[% Debug]    received new command: (\"Test\", \"8\") and options: (\"terminallog\")",
-									   "[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
-									   "[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
-									   "[% Debug]    I am quitting!"
-								   });
+	QVERIFYMASTERLOG(
+				"[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    skipping starter args: (\"Test2\") and options: (\"a\", \"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    received new command: () and options: ()",
+				"[% Debug]    received new command: (\"start\", \"Test\", \"4\") and options: (\"terminallog\")",
+				"[% Debug]    received new command: (\"Test5\") and options: (\"a\", \"i\", \"terminallog\")",
+				"[% Debug]    received new command: (\"stop\") and options: ()",
+				"[% Debug]    stop requested with (\"stop\") and options: ()",
+				"[% Debug]    I am quitting!",
+				"[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\", \"Test6\") and options: (\"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    skipping starter args: (\"restart\", \"Test6\") and options: (\"f\", \"i\", \"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    received new command: (\"Test\", \"7\") and options: (\"f\", \"terminallog\")",
+				"[% Debug]    received new command: (\"Test\", \"8\") and options: (\"terminallog\")",
+				"[% Debug]    received new command: (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
+				"[% Debug]    stop requested with (\"stop\", \"Test9\") and options: (\"f\", \"terminallog\")",
+				"[% Debug]    I am quitting!"
+	);
 
 	QCoreApplication::processEvents();
 	p1->deleteLater();
@@ -262,44 +240,42 @@ void MasterTest::echoTest()
 
 	ProcessHelper::waitForFinished({p1, p2, p3, p4});
 
-	p1->verifyLog({
-					  "test1",
-					  "[% Debug]    received new command: () and options: (\"f\", \"terminallog\")",
-					  "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
-					  "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
-					  "[% Debug]    I am quitting!"
-				  });
-	p1->verifyLogEmpty();
-	p2->verifyLog({
-					  "[% Debug]    received new command: () and options: (\"f\", \"terminallog\")",
-					  "test2",
-					  "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
-					  "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
-					  "[% Debug]    I am quitting!"
-				  });
-	p2->verifyLogEmpty();
-	p3->verifyLog({
-					  "test3",
-					  "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
-					  "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
-					  "[% Debug]    I am quitting!"
-				  });
-	p3->verifyLogEmpty();
-	p4->verifyLog({
-					  "[% Debug]    I am quitting!"
-				  });
-	p4->verifyLogEmpty();
+	QVERIFYOUTLOG(p1,
+				  "test1",
+				  "[% Debug]    received new command: () and options: (\"f\", \"terminallog\")",
+				  "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
+				  "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
+				   "[% Debug]    I am quitting!"
+	);
+	QVERIFYERRLOG(p1);
+	QVERIFYOUTLOG(p2,
+				  "[% Debug]    received new command: () and options: (\"f\", \"terminallog\")",
+				  "test2",
+				  "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
+				  "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
+				  "[% Debug]    I am quitting!"
+	);
+	QVERIFYERRLOG(p2);
+	QVERIFYOUTLOG(p3,
+				  "test3",
+				  "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
+				  "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
+				  "[% Debug]    I am quitting!"
+	);
+	QVERIFYERRLOG(p3);
+	QVERIFYOUTLOG(p4, "[% Debug]    I am quitting!");
+	QVERIFYERRLOG(p4);
 
-	ProcessHelper::verifyMasterLog({
-									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    Master started in echo mode!",
-									   "[% Debug]    skipping starter args: (\"start\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    received new command: () and options: (\"terminallog\")",
-									   "[% Debug]    received new command: () and options: (\"f\", \"terminallog\")",
-									   "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
-									   "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
-									   "[% Debug]    I am quitting!"
-								   });
+	QVERIFYMASTERLOG(
+				"[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    Master started in echo mode!",
+				"[% Debug]    skipping starter args: (\"start\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    received new command: () and options: (\"terminallog\")",
+				"[% Debug]    received new command: () and options: (\"f\", \"terminallog\")",
+				"[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
+				"[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
+				"[% Debug]    I am quitting!"
+	);
 
 	QCoreApplication::processEvents();
 	p1->deleteLater();
@@ -324,34 +300,32 @@ void MasterTest::statusTest()
 
 	ProcessHelper::waitForFinished({p1, p2, p3, p4});
 
-	p1->verifyLog({
-					  "[]",
-					  "[hello, world]",
-					  "[stop, me]"
-				  });
-	p1->verifyLogEmpty();
-	p2->verifyLog({
-					  "[hello, world]",
-					  "[stop, me]"
-				  });
-	p2->verifyLogEmpty();
-	p3->verifyLog({
-					  "[stop, me]"
-				  });
-	p3->verifyLogEmpty();
-	p4->verifyLogEmpty(false);
-	p4->verifyLogEmpty();
+	QVERIFYOUTLOG(p1,
+				  "[]",
+				  "[hello, world]",
+				  "[stop, me]"
+	);
+	QVERIFYERRLOG(p1);
+	QVERIFYOUTLOG(p2,
+				  "[hello, world]",
+				  "[stop, me]"
+	);
+	QVERIFYERRLOG(p2);
+	QVERIFYOUTLOG(p3, "[stop, me]");
+	QVERIFYERRLOG(p3);
+	QVERIFYOUTLOG(p4);
+	QVERIFYERRLOG(p4);
 
-	ProcessHelper::verifyMasterLog({
-									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    Master started in status mode!",
-									   "[% Debug]    skipping starter args: (\"start\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    received new command: () and options: (\"terminallog\")",
-									   "[% Debug]    received new command: (\"hello\", \"world\") and options: (\"terminallog\")",
-									   "[% Debug]    received new command: (\"stop\", \"me\") and options: (\"terminallog\")",
-									   "[% Debug]    stop requested with (\"stop\", \"me\") and options: (\"terminallog\")",
-									   "[% Debug]    I am quitting!"
-								   });
+	QVERIFYMASTERLOG(
+				"[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    Master started in status mode!",
+				"[% Debug]    skipping starter args: (\"start\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    received new command: () and options: (\"terminallog\")",
+				"[% Debug]    received new command: (\"hello\", \"world\") and options: (\"terminallog\")",
+				"[% Debug]    received new command: (\"stop\", \"me\") and options: (\"terminallog\")",
+				"[% Debug]    stop requested with (\"stop\", \"me\") and options: (\"terminallog\")",
+				"[% Debug]    I am quitting!"
+	);
 
 	QCoreApplication::processEvents();
 	p1->deleteLater();
@@ -380,34 +354,32 @@ void MasterTest::detachingTest()
 
 	ProcessHelper::waitForFinished({p2, p4});
 
-	p1->verifyLogEmpty(false);
-	p1->verifyLogEmpty();
-	p2->verifyLog({
-					  "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"f\", \"detached\", \"logpath\", \"loglevel\", \"terminallog\")",
-					  "[% Debug]    skipping starter args: (\"start\") and options: (\"f\", \"detached\", \"logpath\", \"loglevel\", \"terminallog\")",
-					  "[% Debug]    received new command: () and options: (\"terminallog\")",
-					  "[% Debug]    received new command: () and options: (\"detached\", \"terminallog\")",
-					  "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
-					  "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
-					  "[% Debug]    I am quitting!"
-				  });
-	p2->verifyLogEmpty();
-	p3->verifyLogEmpty(false);
-	p3->verifyLogEmpty();
-	p4->verifyLog({
-					  "[% Debug]    I am quitting!"
-				  });
-	p4->verifyLogEmpty();
+	QVERIFYOUTLOG(p1);
+	QVERIFYERRLOG(p1);
+	QVERIFYOUTLOG(p2,
+				  "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"f\", \"detached\", \"logpath\", \"loglevel\", \"terminallog\")",
+				  "[% Debug]    skipping starter args: (\"start\") and options: (\"f\", \"detached\", \"logpath\", \"loglevel\", \"terminallog\")",
+				  "[% Debug]    received new command: () and options: (\"terminallog\")",
+				  "[% Debug]    received new command: () and options: (\"detached\", \"terminallog\")",
+				  "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
+				  "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
+				  "[% Debug]    I am quitting!"
+	);
+	QVERIFYERRLOG(p2);
+	QVERIFYOUTLOG(p3);
+	QVERIFYERRLOG(p3);
+	QVERIFYOUTLOG(p4,  "[% Debug]    I am quitting!");
+	QVERIFYERRLOG(p4);
 
-	ProcessHelper::verifyMasterLog({
-									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"f\", \"detached\", \"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    skipping starter args: (\"start\") and options: (\"f\", \"detached\", \"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    received new command: () and options: (\"terminallog\")",
-									   "[% Debug]    received new command: () and options: (\"detached\", \"terminallog\")",
-									   "[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
-									   "[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
-									   "[% Debug]    I am quitting!"
-								   });
+	QVERIFYMASTERLOG(
+				"[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"f\", \"detached\", \"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    skipping starter args: (\"start\") and options: (\"f\", \"detached\", \"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    received new command: () and options: (\"terminallog\")",
+				"[% Debug]    received new command: () and options: (\"detached\", \"terminallog\")",
+				"[% Debug]    received new command: (\"stop\") and options: (\"terminallog\")",
+				"[% Debug]    stop requested with (\"stop\") and options: (\"terminallog\")",
+				"[% Debug]    I am quitting!"
+	);
 
 	QCoreApplication::processEvents();
 	p1->deleteLater();
@@ -429,14 +401,14 @@ void MasterTest::masterTermTest()
 	p1->termMaster();
 	p2->waitForFinished();
 
-	ProcessHelper::verifyMasterLog({
-									   "[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    Master started in pid mode!",
-									   "[% Debug]    skipping starter args: (\"start\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
-									   "[% Debug]    pid written",
-									   "[% Debug]    received new command: () and options: (\"terminallog\")",
-									   "[% Debug]    I am quitting!"
-								   });
+	QVERIFYMASTERLOG(
+				"[% Debug]    App Master started with arguments: (\"__qbckgrndprcss$start#master~\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    Master started in pid mode!",
+				"[% Debug]    skipping starter args: (\"start\") and options: (\"m\", \"logpath\", \"loglevel\", \"terminallog\")",
+				"[% Debug]    pid written",
+				"[% Debug]    received new command: () and options: (\"terminallog\")",
+				"[% Debug]    I am quitting!"
+	);
 
 	QCoreApplication::processEvents();
 	p1->deleteLater();
