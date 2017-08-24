@@ -26,6 +26,7 @@ var searchData=
   ['sensitivity',['sensitivity',['https://doc.qt.io/qt-5/qt3dinput-qmousedevice.html#sensitivity-prop',0,'Qt3DInput::QMouseDevice']]],
   ['separatorscollapsible',['separatorsCollapsible',['https://doc.qt.io/qt-5/qmenu.html#separatorsCollapsible-prop',0,'QMenu']]],
   ['serialnumber',['serialNumber',['https://doc.qt.io/qt-5/qscreen.html#serialNumber-prop',0,'QScreen']]],
+  ['serversecret',['serverSecret',['https://doc.qt.io/qt-5/class_qt_data_sync_1_1_ws_authenticator.html#a96290386827ef22368eb95ede5014f0b',0,'QtDataSync::WsAuthenticator']]],
   ['sessionid',['sessionId',['https://doc.qt.io/qt-5/qscxmlstatemachine.html#sessionId-prop',0,'QScxmlStateMachine']]],
   ['setfocusontouchrelease',['setFocusOnTouchRelease',['https://doc.qt.io/qt-5/qstylehints.html#setFocusOnTouchRelease-prop',0,'QStyleHints']]],
   ['shaderprogram',['shaderProgram',['https://doc.qt.io/qt-5/qt3drender-qrenderpass.html#shaderProgram-prop',0,'Qt3DRender::QRenderPass']]],
@@ -38,6 +39,7 @@ var searchData=
   ['showgroupseparator',['showGroupSeparator',['https://doc.qt.io/qt-5/qabstractspinbox.html#showGroupSeparator-prop',0,'QAbstractSpinBox']]],
   ['showisfullscreen',['showIsFullScreen',['https://doc.qt.io/qt-5/qstylehints.html#showIsFullScreen-prop',0,'QStyleHints']]],
   ['showismaximized',['showIsMaximized',['https://doc.qt.io/qt-5/qstylehints.html#showIsMaximized-prop',0,'QStyleHints']]],
+  ['showresult',['showResult',['https://doc.qt.io/qt-5/class_qt_auto_updater_1_1_update_button.html#a1f8896a26f98af3b772a6acea73a8e1a',0,'QtAutoUpdater::UpdateButton']]],
   ['showsortindicator',['showSortIndicator',['https://doc.qt.io/qt-5/qheaderview.html#showSortIndicator-prop',0,'QHeaderView']]],
   ['signal',['signal',['https://doc.qt.io/qt-5/qsignaltransition.html#signal-prop',0,'QSignalTransition']]],
   ['singleclickactivation',['singleClickActivation',['https://doc.qt.io/qt-5/qstylehints.html#singleClickActivation-prop',0,'QStyleHints']]],
@@ -83,7 +85,7 @@ var searchData=
   ['speed',['speed',['https://doc.qt.io/qt-5/qmovie.html#speed-prop',0,'QMovie']]],
   ['spellcheckenabled',['spellCheckEnabled',['https://doc.qt.io/qt-5/qquickwebengineprofile.html#spellCheckEnabled-prop',0,'QQuickWebEngineProfile']]],
   ['spellchecklanguages',['spellCheckLanguages',['https://doc.qt.io/qt-5/qquickwebengineprofile.html#spellCheckLanguages-prop',0,'QQuickWebEngineProfile']]],
-  ['sslconfiguration',['sslConfiguration',['https://doc.qt.io/qt-5/class_qt_rest_client_1_1_rest_client.html#a6ac3912a6e07fd57f4f89ebb186a2ee1',0,'QtRestClient::RestClient']]],
+  ['sslconfiguration',['sslConfiguration',['https://doc.qt.io/qt-5/class_qt_rest_client_1_1_rest_client.html#aaf54e4989f4f32c6293dd5592c5d7325',0,'QtRestClient::RestClient']]],
   ['stackingmode',['stackingMode',['https://doc.qt.io/qt-5/qstackedlayout.html#stackingMode-prop',0,'QStackedLayout']]],
   ['standardbuttons',['standardButtons',['https://doc.qt.io/qt-5/qmessagebox.html#standardButtons-prop',0,'QMessageBox::standardButtons()'],['https://doc.qt.io/qt-5/qdialogbuttonbox.html#standardButtons-prop',0,'QDialogButtonBox::standardButtons()']]],
   ['startcenterpoint',['startCenterPoint',['https://doc.qt.io/qt-5/qpinchgesture.html#startCenterPoint-prop',0,'QPinchGesture']]],
@@ -114,5 +116,8 @@ var searchData=
   ['surface',['surface',['https://doc.qt.io/qt-5/qt3drender-qrendersurfaceselector.html#surface-prop',0,'Qt3DRender::QRenderSurfaceSelector::surface()'],['https://doc.qt.io/qt-5/qt3dextras-qforwardrenderer.html#surface-prop',0,'Qt3DExtras::QForwardRenderer::surface()']]],
   ['surfacepixelratio',['surfacePixelRatio',['https://doc.qt.io/qt-5/qt3drender-qrendersurfaceselector.html#surfacePixelRatio-prop',0,'Qt3DRender::QRenderSurfaceSelector']]],
   ['swipeangle',['swipeAngle',['https://doc.qt.io/qt-5/qswipegesture.html#swipeAngle-prop',0,'QSwipeGesture']]],
-  ['syncdata',['syncData',['https://doc.qt.io/qt-5/qt3drender-qbuffer.html#syncData-prop',0,'Qt3DRender::QBuffer']]]
+  ['syncdata',['syncData',['https://doc.qt.io/qt-5/qt3drender-qbuffer.html#syncData-prop',0,'Qt3DRender::QBuffer']]],
+  ['syncenabled',['syncEnabled',['https://doc.qt.io/qt-5/class_qt_data_sync_1_1_sync_controller.html#a2ec0fe9610dfce2dfe8f176b56b143b9',0,'QtDataSync::SyncController']]],
+  ['syncpolicy',['syncPolicy',['https://doc.qt.io/qt-5/class_qt_data_sync_1_1_data_merger.html#a0dc4627679825189c6cdecc3c560fc6a',0,'QtDataSync::DataMerger']]],
+  ['syncstate',['syncState',['https://doc.qt.io/qt-5/class_qt_data_sync_1_1_sync_controller.html#aa8ea8b1342be92b312a8cdbfee99cbf4',0,'QtDataSync::SyncController']]]
 ];

@@ -22,35 +22,35 @@
       <type>void</type>
       <name>setForwardMasterLog</name>
       <anchorfile>class_qt_background_process_1_1_app.html</anchorfile>
-      <anchor>a8ae6d0e91bff937510e0d4bbdc1018b2</anchor>
+      <anchor>a1bf514b05ab3e6a6dabd227a46ab668e</anchor>
       <arglist>(bool forwardMasterLog)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
       <name>setAutoStartMaster</name>
       <anchorfile>class_qt_background_process_1_1_app.html</anchorfile>
-      <anchor>ae2b20271277525d37912bb13828a7232</anchor>
+      <anchor>a761b0ebf6a1c93c89d74fd59c6846195</anchor>
       <arglist>(bool autoStartMaster)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
       <name>setIgnoreMultiStarts</name>
       <anchorfile>class_qt_background_process_1_1_app.html</anchorfile>
-      <anchor>a1af92dd061a660565e0ef79a525dd928</anchor>
+      <anchor>ae2466b83af9b54c617e388bee21a6e85</anchor>
       <arglist>(bool ignoreMultiStarts)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
       <name>setAutoDeleteTerminals</name>
       <anchorfile>class_qt_background_process_1_1_app.html</anchorfile>
-      <anchor>a62090e7840cdb362dc69786240b6fd7c</anchor>
+      <anchor>a8b91d0a5d4bb783c5d14a8594244e7f5</anchor>
       <arglist>(bool autoDeleteTerminals, bool changeCurrent=false)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
       <name>setAutoKillTerminals</name>
       <anchorfile>class_qt_background_process_1_1_app.html</anchorfile>
-      <anchor>ae5787f7ba8c5de626e7f7ca9ab751612</anchor>
+      <anchor>a1854751505180d87f0f3b0f36372be72</anchor>
       <arglist>(bool autoKillTerminals, bool killCurrent=false)</arglist>
     </member>
     <member kind="signal">
@@ -78,14 +78,14 @@
       <type></type>
       <name>App</name>
       <anchorfile>class_qt_background_process_1_1_app.html</anchorfile>
-      <anchor>a58257f482a592c573d3f95e5fe56e3f0</anchor>
+      <anchor>a19633ac219a5e17512dfbcc27d47f9da</anchor>
       <arglist>(int &amp;argc, char **argv, int flags=ApplicationFlags)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>~App</name>
       <anchorfile>class_qt_background_process_1_1_app.html</anchorfile>
-      <anchor>a34f1f253b1cef5f4ecbac66eaf6964ec</anchor>
+      <anchor>a69b7dd6516826acb64ad51b29f0e011f</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -251,14 +251,14 @@
       <type>void</type>
       <name>writeLine</name>
       <anchorfile>class_qt_background_process_1_1_global_terminal.html</anchorfile>
-      <anchor>a4145f421608696e79cceaa0b74a6676b</anchor>
+      <anchor>ad76097d2e5a55f51dae47e0e4755c32d</anchor>
       <arglist>(const QByteArray &amp;line, bool doFlush=true)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
       <name>flush</name>
       <anchorfile>class_qt_background_process_1_1_global_terminal.html</anchorfile>
-      <anchor>a7c170a3a196375ddc7631a59602b9cee</anchor>
+      <anchor>a141ebe4f6338811117249652f49fc97d</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -272,35 +272,35 @@
       <type></type>
       <name>~GlobalTerminal</name>
       <anchorfile>class_qt_background_process_1_1_global_terminal.html</anchorfile>
-      <anchor>a0f0e1ab757d594193f77c67ef2d19892</anchor>
+      <anchor>ae0511b160f42b2e6656559c6edcdffa5</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>isSequential</name>
       <anchorfile>class_qt_background_process_1_1_global_terminal.html</anchorfile>
-      <anchor>a3a35b0957aaaae78fab2ea0e4d088abc</anchor>
+      <anchor>a47e52d6cb658b6bc53bc45b833f087b2</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>canReadLine</name>
       <anchorfile>class_qt_background_process_1_1_global_terminal.html</anchorfile>
-      <anchor>ae4928ea9df77fab6e16e52bd024fb095</anchor>
+      <anchor>a6da7d64a10f072d792577869814caeaf</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>qint64</type>
       <name>readData</name>
       <anchorfile>class_qt_background_process_1_1_global_terminal.html</anchorfile>
-      <anchor>a4bd39e77cfab7aa5a02e48aaa7870ca9</anchor>
+      <anchor>ae44c526c04e5999ebfe16a2b83cb5fbe</anchor>
       <arglist>(char *data, qint64 maxlen) override</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>qint64</type>
       <name>writeData</name>
       <anchorfile>class_qt_background_process_1_1_global_terminal.html</anchorfile>
-      <anchor>a24b79b52f74b51854e8b3a8a507fcd38</anchor>
+      <anchor>a8b75e6f182a96c960365e692fdbdcdec</anchor>
       <arglist>(const char *data, qint64 len) override</arglist>
     </member>
   </compound>
@@ -312,21 +312,21 @@
       <type>const char *</type>
       <name>what</name>
       <anchorfile>class_qt_background_process_1_1_not_allowed_in_running_state_exception.html</anchorfile>
-      <anchor>ac456ca7bcd02cf6e68f607cd5b6c1bfa</anchor>
+      <anchor>a1e7af0f3911b553809c2c36a436eb489</anchor>
       <arglist>() const noexcept override</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>raise</name>
       <anchorfile>class_qt_background_process_1_1_not_allowed_in_running_state_exception.html</anchorfile>
-      <anchor>a04913dcdfed822566b8fbe8625597cf7</anchor>
+      <anchor>ab4bb27cb4131241c2a560ce8fd84fb3a</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
       <type>QException *</type>
       <name>clone</name>
       <anchorfile>class_qt_background_process_1_1_not_allowed_in_running_state_exception.html</anchorfile>
-      <anchor>a952fdaed3480b75541ebc1ac2040560d</anchor>
+      <anchor>a7184365b76d4f835c8c492e6e711c222</anchor>
       <arglist>() const override</arglist>
     </member>
   </compound>
@@ -345,21 +345,21 @@
       <type>void</type>
       <name>setAutoDelete</name>
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
-      <anchor>ad2825b538be19b0e74aac422e7050c63</anchor>
+      <anchor>a7952b2a444e6f5fedfbb08e8f942cf52</anchor>
       <arglist>(bool autoDelete)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
       <name>writeLine</name>
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
-      <anchor>aed92af28b4b46a07b290e0e584bb55f0</anchor>
+      <anchor>a6cc8b7619cd95f874ed9d0e5b0286324</anchor>
       <arglist>(const QByteArray &amp;line, bool flush=true)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
       <name>flush</name>
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
-      <anchor>a908cdfa64167279ed565d43b45470c3d</anchor>
+      <anchor>a2f1ad50e8bfb55e62c44ef373fd59d38</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="signal">
@@ -380,21 +380,21 @@
       <type></type>
       <name>Terminal</name>
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
-      <anchor>aa305d31d4d1713a0b6d693c95f7491e7</anchor>
+      <anchor>a636cfbdd35ac73610566e93078e3e9b1</anchor>
       <arglist>(TerminalPrivate *d_ptr, QObject *parent=nullptr)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>~Terminal</name>
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
-      <anchor>add5a7d4dd45b68af9a0afb1cc845af2f</anchor>
+      <anchor>a2592245cfdf6246f6b51e430b6d27173</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>isStarter</name>
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
-      <anchor>ae2f639c26137bd9c0ec9fc5e25d4d514</anchor>
+      <anchor>a290b8deb5b68513d1aea4f5d2bf3ab34</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
@@ -408,42 +408,42 @@
       <type>bool</type>
       <name>isAutoDelete</name>
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
-      <anchor>a70d816f30c1583467305d91f6a5b65bd</anchor>
+      <anchor>a39bf85b51ad592f8a7c63a6ec5bf2038</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>isSequential</name>
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
-      <anchor>a29f0725fb75fea1d89cd2d66872a3076</anchor>
+      <anchor>ab6beca9f66e97f9b6444846db6df8381</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>close</name>
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
-      <anchor>a25c49802e89f7ee98ed51e6d20fde074</anchor>
+      <anchor>aaf801835c3e3760d8ecd879c31fdf2af</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
       <type>qint64</type>
       <name>bytesAvailable</name>
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
-      <anchor>a603fca794cfa89b943a58da4eb7f22c8</anchor>
+      <anchor>af61c275e032b14f13fda4d738c588353</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>qint64</type>
       <name>readData</name>
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
-      <anchor>ab9f0fd818c8c278ddd6704bab8f7e6f2</anchor>
+      <anchor>ad608c7324f9ad3ef9b4270a43debd22a</anchor>
       <arglist>(char *data, qint64 maxlen) override</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>qint64</type>
       <name>writeData</name>
       <anchorfile>class_qt_background_process_1_1_terminal.html</anchorfile>
-      <anchor>ad0eb73759057f03b5fc6b1f333fc251d</anchor>
+      <anchor>a6025cb766138fa1d527a8c66312f961e</anchor>
       <arglist>(const char *data, qint64 len) override</arglist>
     </member>
     <member kind="property">
