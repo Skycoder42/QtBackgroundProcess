@@ -26,7 +26,8 @@ MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &a
 	connect(socket, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error),
 			this, &MasterConnecter::error);
 	connect(socket, &QLocalSocket::readyRead,
-			this, &MasterConnecter::socketReady);
+			this, &MasterConnecter::socketReady,
+			Qt::QueuedConnection); //queued connection, because of "socket not ready" errors on win
 
 	connect(console, &QConsole::readyRead,
 			this, &MasterConnecter::stdinReady);
@@ -72,9 +73,7 @@ void MasterConnecter::error(QLocalSocket::LocalSocketError socketError)
 
 void MasterConnecter::socketReady()
 {
-	qDebug() << "socket read ready (ignore with QCtrlSignals)";
 	auto data  = socket->readAll();
-	qDebug() << "socket read done (ignore with QCtrlSignals)";
 	outFile->write(data);
 	outFile->flush();
 }
