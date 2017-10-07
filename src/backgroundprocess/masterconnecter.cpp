@@ -72,7 +72,9 @@ void MasterConnecter::error(QLocalSocket::LocalSocketError socketError)
 
 void MasterConnecter::socketReady()
 {
+	qDebug() << "socket read ready (ignore with QCtrlSignals)";
 	auto data  = socket->readAll();
+	qDebug() << "socket read done (ignore with QCtrlSignals)";
 	outFile->write(data);
 	outFile->flush();
 }
