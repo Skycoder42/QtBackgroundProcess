@@ -120,6 +120,7 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	autoDelete(true),
 	autoKill(false),
 	instanceId(),
+	globalInstance(false),
 	masterLock(nullptr),
 	masterServer(nullptr),
 	parserFunc(),
@@ -136,10 +137,34 @@ void AppPrivate::setInstanceId(const QString &id)
 	if(running)
 		throw NotAllowedInRunningStateException();
 
+	auto lockDir = QDir::temp();
+	if(!globalInstance) {
+		auto dirName = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);
+		QDir dir(dirName);
+		if(!dirName.isEmpty() && dir.exists())
+			lockDir = dir;
+	}
+
 	instanceId = id;
-	auto lockPath = QDir::temp().absoluteFilePath(id + QStringLiteral(".lock"));
+	auto lockPath = lockDir.absoluteFilePath(id + QStringLiteral(".lock"));
 	masterLock.reset(new QLockFile(lockPath));
 	masterLock->setStaleLockTime(0);
+}
+
+QString AppPrivate::socketName() const
+{
+#ifdef Q_OS_UNIX
+	QString socket = instanceId + QStringLiteral(".socket");
+	if(!globalInstance) {
+		auto dirName = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);
+		QDir dir(dirName);
+		if(!dirName.isEmpty() && dir.exists())
+			socket = dir.absoluteFilePath(socket);
+	}
+	return socket;
+#else
+	return instanceId;
+#endif
 }
 
 void AppPrivate::setupDefaultParser(QCommandLineParser &parser, bool useShortOptions)
@@ -303,10 +328,11 @@ int AppPrivate::makeMaster(const QCommandLineParser &parser)
 {
 	//create local server --> do first to make shure clients only see a "valid" master lock if the master started successfully
 	masterServer = new QLocalServer(this);
+	masterServer->setSocketOptions(globalInstance ? QLocalServer::WorldAccessOption : QLocalServer::UserAccessOption);
 	connect(masterServer, &QLocalServer::newConnection,
 			this, &AppPrivate::newTerminalConnected,
 			Qt::QueuedConnection);
-	if(!masterServer->listen(instanceId)) {
+	if(!masterServer->listen(socketName())) {
 		qCritical() << tr("Failed to create local server with error:")
 					<< masterServer->errorString();
 		return EXIT_FAILURE;
@@ -492,7 +518,7 @@ int AppPrivate::purgeMaster(const QCommandLineParser &parser)
 	} else
 		std::cout << tr("No lock file detected").toStdString() << std::endl;
 
-	if(QLocalServer::removeServer(instanceId))
+	if(QLocalServer::removeServer(socketName()))
 		std::cout << tr("Master server successfully removed").toStdString() << std::endl;
 	else {
 		std::cout << tr("Failed to remove master server").toStdString() << std::endl;
@@ -577,5 +603,5 @@ void AppPrivate::doExit(int code)
 
 void AppPrivate::beginMasterConnect(const QStringList &arguments, bool isStarter)
 {
-	master = new MasterConnecter(instanceId, arguments, isStarter, this);
+	master = new MasterConnecter(socketName(), arguments, isStarter, this);
 }

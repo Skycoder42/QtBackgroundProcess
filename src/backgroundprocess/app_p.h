@@ -47,6 +47,7 @@ public:
 	bool autoKill;
 
 	QString instanceId;
+	bool globalInstance;
 
 	QScopedPointer<QLockFile> masterLock;
 	QLocalServer *masterServer;
@@ -63,6 +64,7 @@ public:
 	AppPrivate(App *q_ptr);
 
 	void setInstanceId(const QString &id);
+	QString socketName() const;
 
 	void setupDefaultParser(QCommandLineParser &parser, bool useShortOptions = true);
 	void updateLoggingMode(int level);

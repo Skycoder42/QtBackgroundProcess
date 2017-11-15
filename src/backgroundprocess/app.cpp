@@ -29,6 +29,11 @@ QString App::instanceID() const
 	return d->instanceId;
 }
 
+bool App::globalInstance() const
+{
+	return d->globalInstance;
+}
+
 bool App::forwardMasterLog() const
 {
 	return d->masterLogging;
@@ -120,6 +125,11 @@ void App::setInstanceID(QString instanceID, bool useAsSeed)
 		d->setInstanceId(AppPrivate::generateSingleId(instanceID));
 	else
 		d->setInstanceId(instanceID);
+}
+
+void App::setGlobalInstance(bool globalInstance)
+{
+	d->globalInstance = globalInstance;
 }
 
 void App::setForwardMasterLog(bool forwardMasterLog)

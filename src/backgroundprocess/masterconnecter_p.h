@@ -17,7 +17,7 @@ class Q_BACKGROUNDPROCESS_EXPORT MasterConnecter : public QObject
 	Q_OBJECT
 
 public:
-	explicit MasterConnecter(const QString &instanceId,
+	explicit MasterConnecter(const QString &socketName,
 							 const QStringList &arguments,
 							 bool isStarter,
 							 QObject *parent = nullptr);

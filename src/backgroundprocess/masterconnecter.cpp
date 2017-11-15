@@ -11,7 +11,7 @@
 
 using namespace QtBackgroundProcess;
 
-MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &arguments, bool isStarter, QObject *parent) :
+MasterConnecter::MasterConnecter(const QString &socketName, const QStringList &arguments, bool isStarter, QObject *parent) :
 	QObject(parent),
 	arguments(arguments),
 	isStarter(isStarter),
@@ -32,7 +32,7 @@ MasterConnecter::MasterConnecter(const QString &instanceId, const QStringList &a
 	connect(console, &QConsole::readyRead,
 			this, &MasterConnecter::stdinReady);
 
-	socket->connectToServer(instanceId);
+	socket->connectToServer(socketName);
 }
 
 MasterConnecter::~MasterConnecter()

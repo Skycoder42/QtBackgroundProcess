@@ -38,6 +38,7 @@ class Q_BACKGROUNDPROCESS_EXPORT App : public QCoreApplication
 
 	//! The current id of the singleton instance of the master process
 	Q_PROPERTY(QString instanceID READ instanceID WRITE setInstanceID RESET createDefaultInstanceID)
+	Q_PROPERTY(bool globalInstance READ globalInstance WRITE setGlobalInstance)
 	//! Specifies, whether the master should forward debug output to all terminals
 	Q_PROPERTY(bool forwardMasterLog READ forwardMasterLog WRITE setForwardMasterLog)
 	//! If true, the master process will always be started, not only with "start"
@@ -59,6 +60,7 @@ public:
 
 	//! @readAcFn{App::instanceID}
 	QString instanceID() const;
+	bool globalInstance() const;
 	//! @readAcFn{App::forwardMasterLog}
 	bool forwardMasterLog() const;
 	//! @readAcFn{App::autoStartMaster}
@@ -90,6 +92,7 @@ public Q_SLOTS:
 	void createDefaultInstanceID(bool overwrite = true);
 	//! @writeAcFn{App::instanceID}
 	void setInstanceID(QString instanceID, bool useAsSeed = true);
+	void setGlobalInstance(bool globalInstance);
 	//! @writeAcFn{App::forwardMasterLog}
 	void setForwardMasterLog(bool forwardMasterLog);
 	//! @writeAcFn{App::autoStartMaster}
