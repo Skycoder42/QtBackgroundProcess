@@ -3,10 +3,8 @@ Description=<myapp>
 After=network.target
 
 [Service]
-Type=forking
-PIDFile=/run/<myapp>.pid
-ExecStart=/usr/bin/<myapp> start
-ExecReload=/usr/bin/<myapp> restart
+Type=simple
+ExecStart=/usr/bin/<myapp> '__qbckgrndprcss$start#master~' --no-daemon
 ExecStop=/usr/bin/<myapp> stop
 Restart=on-abnormal
 

@@ -33,7 +33,7 @@ const QString AppPrivate::terminalMessageFormat(QStringLiteral("%{if-debug}[Debu
 															   "%{if-critical}[Critical] %{endif}"
 															   "%{if-fatal}[Fatal]    %{endif}"
 															   "%{if-category}%{category}: %{endif}"
-															   "%{message}\n"));
+															   "%{message}"));
 #else
 const QString AppPrivate::terminalMessageFormat(QStringLiteral("%{if-debug}[\033[32mDebug\033[0m]    %{endif}"
 															   "%{if-info}[\033[36mInfo\033[0m]     %{endif}"
@@ -41,7 +41,7 @@ const QString AppPrivate::terminalMessageFormat(QStringLiteral("%{if-debug}[\033
 															   "%{if-critical}[\033[31mCritical\033[0m] %{endif}"
 															   "%{if-fatal}[\033[35mFatal\033[0m]    %{endif}"
 															   "%{if-category}%{category}: %{endif}"
-															   "%{message}\n"));
+															   "%{message}"));
 #endif
 const QString AppPrivate::masterMessageFormat(QStringLiteral("[%{time} "
 															 "%{if-debug}Debug]    %{endif}"
@@ -50,7 +50,7 @@ const QString AppPrivate::masterMessageFormat(QStringLiteral("[%{time} "
 															 "%{if-critical}Critical] %{endif}"
 															 "%{if-fatal}Fatal]    %{endif}"
 															 "%{if-category}%{category}: %{endif}"
-															 "%{message}\n"));
+															 "%{message}"));
 
 QString AppPrivate::generateSingleId(const QString &seed)
 {
@@ -83,7 +83,8 @@ AppPrivate *AppPrivate::p_ptr()
 
 void AppPrivate::qbackProcMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-	auto message = qFormatLogMessage(type, context, msg).toUtf8();
+	auto fMsg = qFormatLogMessage(type, context, msg);
+	QByteArray message = fMsg.toUtf8() + "\n";
 	auto any = false;
 
 	if(p_valid) {
@@ -102,10 +103,8 @@ void AppPrivate::qbackProcMessageHandler(QtMsgType type, const QMessageLogContex
 		}
 	}
 
-	if(!any) {
-		std::cerr << qFormatLogMessage(type, context, msg).toStdString();
-		std::cerr.flush();
-	}
+	if(!any)
+		std::cerr << fMsg.toStdString() << std::endl;
 
 	if(type == QtMsgType::QtFatalMsg)
 		std::abort();
