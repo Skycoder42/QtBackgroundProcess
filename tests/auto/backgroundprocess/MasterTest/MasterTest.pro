@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += testlib backgroundprocess
+QT       += testlib backgroundprocess network #explicitly?
 QT       -= gui
 
 TARGET = tst_master
