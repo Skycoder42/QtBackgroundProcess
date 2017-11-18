@@ -22,7 +22,7 @@ matrix:
         - PLATFORM=clang_64
 
 before_install:
-  - git clone https://github.com/Skycoder42/QtModules.git ./qtmodules-travis
+  - git clone https://github.com/Skycoder42/QtModules.git --branch qpmx ./qtmodules-travis
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then travis_wait 40 ./qtmodules-travis/ci/$TRAVIS_OS_NAME/setup.sh; else ./qtmodules-travis/ci/$TRAVIS_OS_NAME/setup.sh; fi
 
 script:

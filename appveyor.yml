@@ -25,8 +25,7 @@ matrix:
       image: Visual Studio 2017
 
 install:
-  - git submodule update --init --recursive #recursive clone, as appveyor does not do that
-  - git clone https://github.com/Skycoder42/QtModules.git .\qtmodules-travis
+  - git clone https://github.com/Skycoder42/QtModules.git --branch qpmx .\qtmodules-travis
   - .\qtmodules-travis\ci\win\setup.bat
 
 build_script:
