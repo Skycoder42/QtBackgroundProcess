@@ -172,7 +172,8 @@ bool ProcessHelper::testLog(const QByteArrayList &log, const QByteArrayList &dev
 		if(logStr.isEmpty())
 			continue;
 		//TODO win debug
-		if(logStr.contains("QCtrlSignals"))
+		if(logStr.contains("QCtrlSignals") ||
+		   logStr.contains("XDG_RUNTIME_DIR"))
 			continue;
 
 		bool fullOk;
