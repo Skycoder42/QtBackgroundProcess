@@ -19,7 +19,8 @@ SOURCES += \
 	terminal_p.cpp \
 	terminal.cpp
 
-include(./translations/translations.pri)
+TRANSLATIONS += translations/qtbackgroundprocess_de.ts \
+	translations/qtbackgroundprocess_template.ts
 
 load(qt_module)
 
@@ -34,7 +35,16 @@ win32 {
 }
 
 DISTFILES += \
-	systemd.service
+	systemd.service \
+	$$TRANSLATIONS
+
+qpmx_ts_target.path = $$[QT_INSTALL_TRANSLATIONS]
+qpmx_ts_target.depends += lrelease
+!win32-g++: INSTALLS += qpmx_ts_target
 
 !ReleaseBuild:!DebugBuild:!system(qpmx -d $$shell_quote($$_PRO_FILE_PWD_) --qmake-run init $$QPMX_EXTRA_OPTIONS $$shell_quote($$QMAKE_QMAKE) $$shell_quote($$OUT_PWD)): error(qpmx initialization failed. Check the compilation log for details.)
 else: include($$OUT_PWD/qpmx_generated.pri)
+
+#replace template qm by ts
+qpmx_ts_target.files -= $$OUT_PWD/$$QPMX_WORKINGDIR/qtbackgroundprocess_template.qm
+qpmx_ts_target.files += translations/qtbackgroundprocess_template.ts
