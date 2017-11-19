@@ -32,7 +32,6 @@ public:
 	static const QString terminalMessageFormat;
 	static const QString masterMessageFormat;
 
-	static QString generateSingleId(const QString &seed = QString());
 	static AppPrivate *p_ptr();
 
 	static void qbackProcMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
@@ -63,6 +62,7 @@ public:
 
 	AppPrivate(App *q_ptr);
 
+	QString generateSingleId(const QString &seed = QString());
 	void setInstanceId(const QString &id);
 	QString socketName() const;
 

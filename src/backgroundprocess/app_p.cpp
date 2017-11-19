@@ -52,30 +52,6 @@ const QString AppPrivate::masterMessageFormat(QStringLiteral("[%{time} "
 															 "%{if-category}%{category}: %{endif}"
 															 "%{message}"));
 
-QString AppPrivate::generateSingleId(const QString &seed)
-{
-	auto fullId = QCoreApplication::applicationName().toLower();
-	fullId.remove(QRegularExpression(QStringLiteral("[^a-zA-Z0-9_]")));
-	fullId.truncate(8);
-	fullId.prepend(QStringLiteral("qtbackproc-"));
-	QByteArray hashBase = (QCoreApplication::organizationName() +
-						   QCoreApplication::organizationDomain() +
-						   seed).toUtf8();
-	fullId += QLatin1Char('-') +
-			  QString::number(qChecksum(hashBase.data(), hashBase.size()), 16) +
-			  QLatin1Char('-');
-
-#ifdef Q_OS_WIN
-	DWORD sessID;
-	if(::ProcessIdToSessionId(::GetCurrentProcessId(), &sessID))
-		fullId += QString::number(sessID, 16);
-#else
-	fullId += QString::number(::getuid(), 16);
-#endif
-
-	return fullId;
-}
-
 AppPrivate *AppPrivate::p_ptr()
 {
 	return qApp->d;
@@ -130,6 +106,32 @@ AppPrivate::AppPrivate(App *q_ptr) :
 	logFile(nullptr),
 	q(q_ptr)
 {}
+
+QString AppPrivate::generateSingleId(const QString &seed)
+{
+	auto fullId = QCoreApplication::applicationName().toLower();
+	fullId.remove(QRegularExpression(QStringLiteral("[^a-zA-Z0-9_]")));
+	fullId.truncate(8);
+	fullId.prepend(QStringLiteral("qtbackproc-"));
+	QByteArray hashBase = (QCoreApplication::organizationName() +
+						   QCoreApplication::organizationDomain() +
+						   seed).toUtf8();
+	fullId += QLatin1Char('-') +
+			  QString::number(qChecksum(hashBase.data(), hashBase.size()), 16);
+
+	if(!globalInstance) {
+		fullId += QLatin1Char('-');
+#ifdef Q_OS_WIN
+		DWORD sessID;
+		if(::ProcessIdToSessionId(::GetCurrentProcessId(), &sessID))
+			fullId += QString::number(sessID, 16);
+#else
+		fullId += QString::number(::getuid(), 16);
+#endif
+	}
+
+	return fullId;
+}
 
 void AppPrivate::setInstanceId(const QString &id)
 {

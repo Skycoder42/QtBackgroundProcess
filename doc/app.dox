@@ -32,7 +32,31 @@ shure to do so after those initializations.
 	@resetAc{createDefaultInstanceID()}
 }
 
-@sa App::exec
+@sa App::exec, App::globalInstance
+*/
+
+/*!
+@property QtBackgroundProcess::App::globalInstance
+
+@default{`false`}
+
+By default, the instance is a singleton per user, which means if multiple users are logged in,
+there can be multiple instances of the app, but just one per user.
+
+When set as a global instance, there can only be one instance per machine, for any user. Any user
+can start that instance, and once running, all user have access to it. There will always be only
+one instance in global mode for the whole system.
+
+@warning In global mode, ANY user has access to that global instance, and can send commands to
+it. You should be very careful when exposing an instance to the whole system, as it can lead to
+potential security risks, especially when exposing the instance to the system as root/admin
+
+@accessors{
+	@readAc{globalInstance()}
+	@writeAc{setGlobalInstance()}
+}
+
+@sa App::exec, App::instanceID
 */
 
 /*!

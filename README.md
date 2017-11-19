@@ -30,6 +30,8 @@ Have a look at the features.
 ## Use Case
 The QtBackgroundProcess is a library for console applications. It is not intended to be used with GUI-Apps or similar, and probably won't work with them. If you are looking for simply a "singleton instance", i.e. a library that will make shure only one instance of your application runs at a time, have a look at [QSingleInstance](https://github.com/Skycoder42/QSingleInstance).
 
+However, if you want to create an application to run silently in the background, and only interact with it to "control" it, you're at the right place.
+
 ## Download/Installation
 There are multiple ways to install the Qt module, sorted by preference:
 
@@ -47,14 +49,11 @@ There are multiple ways to install the Qt module, sorted by preference:
 	7. You can install either all of my modules, or select the one you need: `Qt Background Process`
 	8. Continue the setup and thats it! you can now use the module for all of your installed Kits for that Qt Version
 3. Download the compiled modules from the release page. **Note:** You will have to add the correct ones yourself and may need to adjust some paths to fit your installation!
-4. Build it yourself! **Note:** This requires perl to be installed. If you don't have/need cmake, you can ignore the related warnings. To automatically build and install to your Qt installation, run:
+4. Build it yourself! **Note:** This requires perl and [qpmx](https://github.com/Skycoder42/qpmx) to be installed. If you don't have/need cmake, you can ignore the related warnings. To automatically build and install to your Qt installation, run:
 	- `qmake`
 	- `make qmake_all`
 	- `make`
 	- `make install`
-	- To include translations and documentation, run the `qmake && make install` once again
-
-However, if you want to create an application to run silently in the background, and only interact with it to "control" it, you're at the right place.
 
 ## Usage
 The background process is provided as a Qt module. Thus, all you have to do is add the module, and then, in your project, add `QT += backgroundprocess` to your `.pro` file!
@@ -113,4 +112,4 @@ together with the module for both the custom repository and the package on the r
 The project is prepared for translation. But since I speak only english and german, those are the only languages I can provide translations for. However, you can easily create the translations yourself. The file `src/backgroundprocess/translations/qtbackgroundprocess_template.ts` is a ready-made TS file. Just rename it (e.g. to `qtbackgroundprocess_jp.ts`) and open it with the QtLinguist to create the translations.
 
 ## Technical Stuff
-Please not, that this library does **not** create a real daemon/service. It merely creates a background process, with advanced terminal connections. This approach allows more flexibility and an easier cross-platform implementation. In addition to that, interaction with the process becomes possible everywhere, without any additional code.
+Please not, that this library does **not** create a real daemon/service. It merely creates a background process, with advanced terminal connections. This approach allows more flexibility and an easier cross-platform implementation. In addition to that, interaction with the process becomes possible everywhere, without any additional code. It tries however to "daemonize" itself as much as possible.

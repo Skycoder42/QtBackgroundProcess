@@ -38,6 +38,7 @@ class Q_BACKGROUNDPROCESS_EXPORT App : public QCoreApplication
 
 	//! The current id of the singleton instance of the master process
 	Q_PROPERTY(QString instanceID READ instanceID WRITE setInstanceID RESET createDefaultInstanceID)
+	//! Specify whether the app should be a systemwide or userwide single instance
 	Q_PROPERTY(bool globalInstance READ globalInstance WRITE setGlobalInstance)
 	//! Specifies, whether the master should forward debug output to all terminals
 	Q_PROPERTY(bool forwardMasterLog READ forwardMasterLog WRITE setForwardMasterLog)
@@ -60,6 +61,7 @@ public:
 
 	//! @readAcFn{App::instanceID}
 	QString instanceID() const;
+	//! @readAcFn{App::globalInstance}
 	bool globalInstance() const;
 	//! @readAcFn{App::forwardMasterLog}
 	bool forwardMasterLog() const;
@@ -92,6 +94,7 @@ public Q_SLOTS:
 	void createDefaultInstanceID(bool overwrite = true);
 	//! @writeAcFn{App::instanceID}
 	void setInstanceID(QString instanceID, bool useAsSeed = true);
+	//! @writeAcFn{App::globalInstance}
 	void setGlobalInstance(bool globalInstance);
 	//! @writeAcFn{App::forwardMasterLog}
 	void setForwardMasterLog(bool forwardMasterLog);
