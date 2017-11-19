@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += core backgroundprocess
+QT += core backgroundprocess network
 QT -= gui
 CONFIG += c++11 console
 CONFIG -= app_bundle
@@ -27,5 +27,5 @@ unix:!mac {
 	LIBS += -L$$[QT_INSTALL_LIBS] -licuuc
 }
 
-#add lib dir to rpath
-mac: QMAKE_LFLAGS += '-Wl,-rpath,\'$$OUT_PWD/../../../lib\''
+#add lib dir and qt install libs to rpath
+mac: QMAKE_LFLAGS += '-Wl,-rpath,\'$$OUT_PWD/../../../lib\'' '-Wl,-rpath,\'$$[QT_INSTALL_LIBS]\''
