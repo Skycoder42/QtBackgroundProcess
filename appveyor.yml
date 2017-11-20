@@ -25,7 +25,7 @@ matrix:
       image: Visual Studio 2017
 
 install:
-  - git clone https://github.com/Skycoder42/QtModules.git --branch qpmx .\qtmodules-travis
+  - git clone https://github.com/Skycoder42/QtModules.git .\qtmodules-travis
   - .\qtmodules-travis\ci\win\setup.bat
 
 build_script:
