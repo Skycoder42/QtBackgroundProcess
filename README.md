@@ -3,6 +3,7 @@ A Library to create background applications with simple, automated foreground co
 
 [![Travis Build Status](https://travis-ci.org/Skycoder42/QtBackgroundProcess.svg?branch=master)](https://travis-ci.org/Skycoder42/QtBackgroundProcess)
 [![Appveyor Build status](https://ci.appveyor.com/api/projects/status/v7y9q2oq209tx9q0/branch/master?svg=true)](https://ci.appveyor.com/project/Skycoder42/qtbackgroundprocess/branch/master)
+[![AUR](https://img.shields.io/aur/version/qt5-backgroundprocess.svg)](https://aur.archlinux.org/packages/qt5-backgroundprocess/)
 
 In short, with this library you can easly create cross platform applications, that are ment to run in the background, without any UI. This however, is fairly easy and would not require a library. This one however adds a few things, that make it much more comfortable to use those.
 
@@ -35,7 +36,15 @@ However, if you want to create an application to run silently in the background,
 ## Download/Installation
 There are multiple ways to install the Qt module, sorted by preference:
 
-1. **Arch-Linux only:** If you are building against your system Qt, you can use my AUR-Repository: [qt5-backgroundprocess](https://aur.archlinux.org/packages/qt5-backgroundprocess/)
+1. Package Managers: The library is available via:
+	- **Arch-Linux:** AUR-Repository: [`qt5-backgroundprocess`](https://aur.archlinux.org/packages/qt5-backgroundprocess/)
+	- **Ubuntu:** Launchpad-PPA:
+		- Artful: [ppa:skycoder42/qt-modules](https://launchpad.net/~skycoder42/+archive/ubuntu/qt-modules), package `libqt5backgroundprocess[1/-dev]`
+		- Xenial: [ppa:skycoder42/qt-modules-opt](https://launchpad.net/~skycoder42/+archive/ubuntu/qt-modules-opt), package `qtbackgroundprocess`
+	- **MacOs:**
+		- Tap: [`brew tap Skycoder42/qt-modules`](https://github.com/Skycoder42/homebrew-qt-modules)
+		- Package: `qtbackgroundprocess`
+		- **IMPORTANT:** Due to limitations of homebrew, you must run `source /usr/local/opt/qtbackgroundprocess/bashrc.sh` before you can use the module. Some goes for the `qtjsonserializer` dependency
 2. Simply add my repository to your Qt MaintenanceTool (Image-based How-To here: [Add custom repository](https://github.com/Skycoder42/QtModules/blob/master/README.md#add-my-repositories-to-qt-maintenancetool)):
 	1. Open the MaintenanceTool, located in your Qt install directory (e.g. `~/Qt/MaintenanceTool`)
 	2. Select `Add or remove components` and click on the `Settings` button
@@ -49,7 +58,7 @@ There are multiple ways to install the Qt module, sorted by preference:
 	7. You can install either all of my modules, or select the one you need: `Qt Background Process`
 	8. Continue the setup and thats it! you can now use the module for all of your installed Kits for that Qt Version
 3. Download the compiled modules from the release page. **Note:** You will have to add the correct ones yourself and may need to adjust some paths to fit your installation!
-4. Build it yourself! **Note:** This requires perl and [qpmx](https://github.com/Skycoder42/qpmx) to be installed. If you don't have/need cmake, you can ignore the related warnings. To automatically build and install to your Qt installation, run:
+4. Build it yourself! **Note:** This requires perl, [qpmx](https://github.com/Skycoder42/qpmx) and [qpm](https://github.com/Cutehacks/qpm) to be installed. If you don't have/need cmake, you can ignore the related warnings. To automatically build and install to your Qt installation, run:
 	- `qmake`
 	- `make qmake_all`
 	- `make`
