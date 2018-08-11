@@ -1,6 +1,8 @@
 # QtBackgroundProcess
 A Library to create background applications with simple, automated foreground control.
 
+> This project was superseded by https://github.com/Skycoder42/QtService
+
 [![Travis Build Status](https://travis-ci.org/Skycoder42/QtBackgroundProcess.svg?branch=master)](https://travis-ci.org/Skycoder42/QtBackgroundProcess)
 [![Appveyor Build status](https://ci.appveyor.com/api/projects/status/v7y9q2oq209tx9q0/branch/master?svg=true)](https://ci.appveyor.com/project/Skycoder42/qtbackgroundprocess/branch/master)
 [![AUR](https://img.shields.io/aur/version/qt5-backgroundprocess.svg)](https://aur.archlinux.org/packages/qt5-backgroundprocess/)
